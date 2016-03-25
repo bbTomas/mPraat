@@ -1,0 +1,19 @@
+monost pouít jméno vrstvy místo indexu
+
+protoe v M není mechanismus $jmeno, tak ještì udìlat dodateènou funkci, která pøevede jméno na index
+musí to mít nìjakı krátkı název, napø. tgi('phone') nebo TG('phone') nebo T('phone') ? Hlavnì, a není kolize s interním názvem
+
+%%%%%%%%%%
+%
+% move boundary
+% a) krajní - pøepoèítat xmin a xmax (vdy jen rozšiøovat, nezuovat. zuování mùe provádìt uivatel jen vìdomì pøímou modifikací xmin a xmax
+(v praatu se s krajními hıbat nemùe)
+% b) jiné - vdy je to T2 levého a T1 pravého intervalu.
+% 
+% Pro oba pøípady je moné pohybovat jen tak, aby to nezasáhlo do jiného intervalu, ne kterıch se to tıká - buï ádnı pro a) nebo
+% ty dva pro b)
+
+move point
+- mono kamkoliv kromì ji existujícího èasu, take "jen" seøadit body podle èasové velikosti
+pøepoèítat xmin a xmax
+%%%%%%%%%%;;

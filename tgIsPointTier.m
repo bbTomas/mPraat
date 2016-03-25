@@ -1,0 +1,23 @@
+function b = tgIsPointTier(tg, tierInd)
+% function b = tgIsPointTier(tg, tierInd)
+% Vrátí true/false, zda tier je typus PointTier
+% v1.0, Tomáš Boøil, borilt@gmail.com
+%
+% tierInd ... index vrstvy (tier)
+
+% ntiers = length(tg.tier);
+
+% if ~isInt(tierInd)
+%     error(['index tier musí být celé èíslo od 1 výše [' num2str(tierInd) ']']);
+% end
+tierInd = tgI(tg, tierInd);
+
+% if tierInd < 1 || tierInd>ntiers
+%     error(['index tier mimo rozsah, tierInd = ' num2str(tierInd) ', ntiers = ' num2str(ntiers)]);
+% end
+
+if strcmp(tg.tier{tierInd}.type, 'point') == 1
+    b = true;
+else
+    b = false;
+end
