@@ -1,13 +1,21 @@
 function tgNew = tgRepairContinuity(tg, verbose)
 % function tgNew = tgInsertNewIntervalTier(tg, verbose)
-% Opravi problem s navaznosti T2 a T1 v intervalovych vrstvach, ktery vznikl diky chybnemu zaokrouhlovani
-% napr. v automatickem segmentatoru Prague Labeller, diky cemu nebylo mozne tyto hranice v Praatu manualne presunovat.
-% 
-% Parametrem verbose = true lze vypnout vypis problemovych mist.
+%
+% Repairs problem of continuity of T2 and T1 in interval tiers. This
+% problem is very rare and it should not appear. However, e.g., 
+% automatic segmentation tool Prague Labeller produces random numeric
+% round-up errors featuring, e.g., T2 of preceding interval is slightly
+% higher than the T1 of the current interval. Because of that, the boundary
+% cannot be manually moved in Praat edit window.
+%
+% verbose ... [optional] if true, the function performs everything quietly.
+%
 % v1.0, Tomas Boril, borilt@gmail.com
-%     tgProblem = tgRead('demo/H_problem.TextGrid')
-%     tgNew = tgRepairContinuity(tgProblem)
-%     tgWrite(tgNew, 'demo/H_problem_OK.TextGrid')
+%
+% Example
+%   tgProblem = tgRead('demo/H_problem.TextGrid');
+%   tgNew = tgRepairContinuity(tgProblem);
+%   tgWrite(tgNew, 'demo/H_problem_OK.TextGrid');
 
 
 

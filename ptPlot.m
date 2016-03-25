@@ -1,7 +1,20 @@
 function ptPlot(pt)
 % function ptPlot(pt)
-% Vykresli PitchTier.
+%
+% Plots PitchTier.
+%
 % v1.0, Tomas Boril, borilt@gmail.com
+%
+% Example
+%   pt = ptRead('demo/H.PitchTier');
+%   ptPlot(pt);
+%
+%   figure
+%   tg = tgRead('demo/H.TextGrid');
+%   tgPlot(tg, 2);
+%   subplot(tgGetNumberOfTiers(tg)+1, 1, 1);
+%   ptPlot(pt);
+
 
 if nargin  ~= 1
     error('Wrong number of arguments.')

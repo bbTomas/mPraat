@@ -1,20 +1,23 @@
 function lab = tgGetLabel(tg, tierInd, index)
 % function lab = tgGetLabel(tg, tierInd, index)
-% Vrati label intervalu ci bodu s danym indexem ve vybrane vrstve (tier) typu IntervalTier ci PointTier.
+%
+% Return label of point or interval at the specified index.
+%
+% tierInd ... tier index or 'name'
+% index ... index of point or interval
+%
 % v1.0, Tomas Boril, borilt@gmail.com
+% Example
+%   tg = tgRead('demo/H.TextGrid');
+%   tgGetLabel(tg, 'phoneme', 4)
+%   tgGetLabel(tg, 'phone', 4)
+
 
 if nargin ~= 3
     error('Wrong number of arguments.')
 end
 
-% if ~isInt(tierInd)
-%     error(['index tier musi byt cele cislo od 1 vyse [' num2str(tierInd) ']']);
-% end
 tierInd = tgI(tg, tierInd);
-% ntiers = tgGetNumberOfTiers(tg);
-% if tierInd < 1 || tierInd > ntiers
-%     error(['index tier mimo rozsah, tierInd = ' num2str(tierInd) ', ntiers = ' num2str(ntiers)]);
-% end
 
 
 if tgIsIntervalTier(tg, tierInd)

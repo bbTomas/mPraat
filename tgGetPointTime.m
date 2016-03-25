@@ -1,21 +1,23 @@
 function t = tgGetPointTime(tg, tierInd, index)
 % function t = tgGetPointTime(tg, tierInd, index)
-% Vrati cas bodu s danym indexem ve vybrane vrstve (tier) typu PointTier.
+%
+% Return time of point at the specified index in point tier.
+%
+% tierInd ... tier index or 'name'
+% index ... index of point
+%
 % v1.0, Tomas Boril, borilt@gmail.com
+% Example
+%   tg = tgRead('demo/H.TextGrid');
+%   tgGetPointTime(tg, 'phoneme', 4)
+
 
 if nargin ~= 3
     error('Wrong number of arguments.')
 end
 
-% if ~isInt(tierInd)
-%     error(['index tier musi byt cele cislo od 1 vyse [' num2str(tierInd) ']']);
-% end
 tierInd = tgI(tg, tierInd);
 
-% ntiers = tgGetNumberOfTiers(tg);
-% if tierInd < 1 || tierInd>ntiers
-%     error(['index tier mimo rozsah, tierInd = ' num2str(tierInd) ', ntiers = ' num2str(ntiers)]);
-% end
 if ~tgIsPointTier(tg, tierInd)
     error(['tier ' num2str(tierInd) ' is not PointTier']);
 end

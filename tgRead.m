@@ -1,31 +1,30 @@
-function textgrid = tgRead(soubor)
-% function textgrid = tgRead(soubor)
-% Nacte TextGrid z Praat ve formatu Short text file ci plnem Text file, UTF-8,
-% jednotlive vrstvy mohou byt jak typu IntervalTier, tak PointTier.
+function textgrid = tgRead(fileName)
+% function textgrid = tgRead(fileName)
 %
-% Zvlada i labely obsahujici vice radek ci uvozovky.
+% Loads TextGrid from Praat in Text or Short text format (UTF-8),
+% it handles both Interval and Point tiers.
+% Labels can may contain quotation marks and new lines.
 % v1.4, Tomas Boril, borilt@gmail.com
-
-% close all
-% clear all
-% clc
-% soubor = ('Milanek.TextGrid')
+%
+% Example
+%   tg = tgRead('demo/H.TextGrid');
+%   tgPlot(tg);
 
 textgrid = [];
 
-[fid, message] = fopen(soubor, 'r', 'n', 'UTF-8');
+[fid, message] = fopen(fileName, 'r', 'n', 'UTF-8');
 if fid == -1
-    error(['cannot open file [' soubor ']: ' message]);
+    error(['cannot open file [' fileName ']: ' message]);
 end
 
 for I = 1: 3
-    r = fgetl(fid); % ignorujeme
+    r = fgetl(fid); % ignore
 end
 
 xminStr = fgetl(fid); % xmin
 xmaxStr = fgetl(fid); % xmax
 
-r = fgetl(fid); % bud '<exists>' -> shorttext nebo 'tiers? <exists> ' -> plny format
+r = fgetl(fid); % either '<exists>' -> shorttext or 'tiers? <exists> ' -> full text format
 if strcmp(r, '<exists>')
     shortFormat = true;
 elseif strcmp(r(1:6), 'tiers?')
@@ -44,13 +43,13 @@ else
 end
 
 if shortFormat
-    pocetTiers = str2double(fgetl(fid));
+    numberOfTiers = str2double(fgetl(fid));
 else
     r = textscan(fgetl(fid), 'size = %d');
-    pocetTiers = r{1};
+    numberOfTiers = r{1};
 end
 
-for tier = 1: pocetTiers
+for tier = 1: numberOfTiers
     if shortFormat
         typ = fgetl(fid);
     else
@@ -64,7 +63,7 @@ for tier = 1: pocetTiers
         typ = r(9:end);
     end
     if strcmp(typ, '"IntervalTier"') == 1  % IntervalTier
-        r = fgetl(fid); % jmeno
+        r = fgetl(fid); % name
         if shortFormat
             textgrid.tier{tier}.name = r(2: end-1);
         else
@@ -73,23 +72,23 @@ for tier = 1: pocetTiers
         end
         textgrid.tier{tier}.type = 'interval';
 
-        r = fgetl(fid); % ignorujeme xmin a xmax
+        r = fgetl(fid); % ignore xmin and xmax
         r = fgetl(fid);
 
         if shortFormat
-            pocetIntervalu = str2double(fgetl(fid));
+            numberOfIntervals = str2double(fgetl(fid));
         else
             r = strtrim(fgetl(fid));
-            pocetIntervalu = str2double(r(19:end));
+            numberOfIntervals = str2double(r(19:end));
         end
         
         textgrid.tier{tier}.T1 = [];
         textgrid.tier{tier}.T2 = [];
         textgrid.tier{tier}.Label = {};
 
-        for I = 1: pocetIntervalu
+        for I = 1: numberOfIntervals
             if ~shortFormat
-                r = fgetl(fid); % ignorujeme radek intervals [..]:
+                r = fgetl(fid); % ignore line intervals [..]:
             end
             
             if shortFormat
@@ -111,26 +110,25 @@ for tier = 1: pocetTiers
                     fclose(fid); error('unknown textgrid format');
                 end
                 rind = strfind(r, '"');
-                pocetUvozovek = sum(r == '"');
-                if mod(pocetUvozovek, 2) ~= 1 % odstranit mezeru na konci, ktera pouze v pripade, ze je sudy pocet uvozovek
+                numberOfQuotationMarks = sum(r == '"');
+                if mod(numberOfQuotationMarks, 2) ~= 1 % remove whitespace at the end of line, it is only in the case of even number of quotation marks
                     r = r(rind(1): end-1);
                 else
                     r = r(rind(1): end);
                 end
             end
-            pocetUvozovek = sum(r == '"');
+            numberOfQuotationMarks = sum(r == '"');
             label = r(2:end);
-            if mod(pocetUvozovek, 2) == 1
+            if mod(numberOfQuotationMarks, 2) == 1
                 label = [label sprintf('\n')];
                 while 1
                     r = fgetl(fid);
-                    pocetUvozovek = sum(r == '"');
-                    if ~shortFormat && mod(pocetUvozovek, 2) == 1 % odstranit mezeru na konci, ktera pouze v pripade, ze je lichy pocet uvozovek
+                    numberOfQuotationMarks = sum(r == '"');
+                    if ~shortFormat && mod(numberOfQuotationMarks, 2) == 1 % remove whitespace at the end of line, it is only in the case of odd number of quotation marks
                         r = r(1: end-1);
                     end
 
-                    if mod(pocetUvozovek, 2) == 1 && r(end) == '"'
-                        %label = [label r(1:end-1) sprintf('\n') '"'];
+                    if mod(numberOfQuotationMarks, 2) == 1 && r(end) == '"'
                         label = [label r(1:end-1) '"'];
                         break
                     else
@@ -143,7 +141,7 @@ for tier = 1: pocetTiers
 
             textgrid.tier{tier}.T1 = [textgrid.tier{tier}.T1 t];
             textgrid.tier{tier}.T2 = [textgrid.tier{tier}.T2 t2];
-            textgrid.tier{tier}.Label{I, 1} = label; % oriznuti uvozovek
+            textgrid.tier{tier}.Label{I, 1} = label; % trim quotation marks
             
             xmin = min(t, xmin); xmin = min(t2, xmin);
             xmax = max(t, xmax); xmax = max(t2, xmax);
@@ -151,7 +149,7 @@ for tier = 1: pocetTiers
         
         
     elseif strcmp(typ, '"TextTier"') == 1  % PointTier
-        r = fgetl(fid); % jmeno
+        r = fgetl(fid); % name
         if shortFormat
             textgrid.tier{tier}.name = r(2: end-1);
         else
@@ -160,22 +158,22 @@ for tier = 1: pocetTiers
         end
         textgrid.tier{tier}.type = 'point';
 
-        r = fgetl(fid); % ignorujeme xmin a xmax
+        r = fgetl(fid); % ignore xmin and xmax
         r = fgetl(fid);
 
         if shortFormat
-            pocetIntervalu = str2double(fgetl(fid));
+            numberOfIntervals = str2double(fgetl(fid));
         else
             r = strtrim(fgetl(fid));
-            pocetIntervalu = str2double(r(16:end));
+            numberOfIntervals = str2double(r(16:end));
         end
 
         textgrid.tier{tier}.T = [];
         textgrid.tier{tier}.Label = {};
 
-        for I = 1: pocetIntervalu
+        for I = 1: numberOfIntervals
             if ~shortFormat
-                r = fgetl(fid); % ignorujeme radek points [..]:
+                r = fgetl(fid); % ignore line points [..]:
             end
             
             if shortFormat
@@ -194,26 +192,25 @@ for tier = 1: pocetTiers
                     fclose(fid); error('unknown textgrid format');
                 end
                 rind = strfind(r, '"');
-                pocetUvozovek = sum(r == '"');
-                if mod(pocetUvozovek, 2) ~= 1 % odstranit mezeru na konci, ktera pouze v pripade, ze je sudy pocet uvozovek
+                numberOfQuotationMarks = sum(r == '"');
+                if mod(numberOfQuotationMarks, 2) ~= 1 % remove whitespace at the end of line, it is only in the case of even number of quotation marks
                     r = r(rind(1): end-1);
                 else
                     r = r(rind(1): end);
                 end
             end
-            pocetUvozovek = sum(r == '"');
+            numberOfQuotationMarks = sum(r == '"');
             label = r(2:end);
-            if mod(pocetUvozovek, 2) == 1
+            if mod(numberOfQuotationMarks, 2) == 1
                 label = [label sprintf('\n')];
                 while 1
                     r = fgetl(fid);
-                    pocetUvozovek = sum(r == '"');
-                    if ~shortFormat && mod(pocetUvozovek, 2) == 1 % odstranit mezeru na konci, ktera pouze v pripade, ze je lichy pocet uvozovek
+                    numberOfQuotationMarks = sum(r == '"');
+                    if ~shortFormat && mod(numberOfQuotationMarks, 2) == 1 % remove whitespace at the end of line, it is only in the case of odd number of quotation marks
                         r = r(1: end-1);
                     end
 
-                    if mod(pocetUvozovek, 2) == 1 && r(end) == '"'
-                        %label = [label r(1:end-1) sprintf('\n') '"'];
+                    if mod(numberOfQuotationMarks, 2) == 1 && r(end) == '"'
                         label = [label r(1:end-1) '"'];
                         break
                     else
@@ -225,12 +222,12 @@ for tier = 1: pocetTiers
             label = label(1: end-1);
 
             textgrid.tier{tier}.T = [textgrid.tier{tier}.T t];
-            textgrid.tier{tier}.Label{I, 1} = label; % oriznuti uvozovek
+            textgrid.tier{tier}.Label{I, 1} = label; % trim quotation marks
             
             xmin = min(t, xmin);
             xmax = max(t, xmax);
         end
-    else  % neznamy typ tier
+    else  % unknown tier
         fclose(fid);
         error('Unknown tier type - IntervalTier and PointTier are supported only.');
     end

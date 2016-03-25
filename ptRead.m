@@ -1,15 +1,24 @@
-function pt = ptRead(soubor)
-% Nacte PitchTier z Praat ve formatu spreadSheet,
+function pt = ptRead(fileName)
+% function pt = ptRead(fileName)
 %
-% v0.1, Tomas Boril, borilt@gmail.com
-%     pt = ptRead('demo/maminka_spreadSheet.PitchTier');
+% Reads PitchTier from Praat. Supported formats: text file, short text file,
+% spread sheet, headerless spread sheet (headerless not recommended,
+% it does not contain tmin and tmax info).
+%
+% fileName ... file name of PitchTier
+%
+% v1.0, Tomas Boril, borilt@gmail.com
+%
+% Example
+%   pt = ptRead('demo/H.PitchTier');
+%   ptPlot(pt);
 
 
 pt = [];
 
-[fid, message] = fopen(soubor, 'r', 'n', 'UTF-8');
+[fid, message] = fopen(fileName, 'r', 'n', 'UTF-8');
 if fid == -1
-    error(['cannot open file [' soubor ']: ' message]);
+    error(['cannot open file [' fileName ']: ' message]);
 end
 
 r = fgetl(fid);  % 1.
@@ -102,7 +111,7 @@ elseif strcmp(r, 'File type = "ooTextFile"')  % TextFile or shortTextFile
     
 else   % headerless SpreadSheet
     fclose(fid);
-    tab = load(soubor, '-ascii');
+    tab = load(fileName, '-ascii');
     t = tab(:,1).';
     f = tab(:,2).';
     N = length(t);

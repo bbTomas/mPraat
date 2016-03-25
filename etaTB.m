@@ -1,7 +1,7 @@
 % Estimated Time to Achieve
 %   Tomas Boril v1.1
 %
-% Example of use:
+% Commands:
 %   before cycle
 %     etaTB('start');
 %
@@ -10,6 +10,17 @@
 %
 %   after the cycle
 %     etaTB('stop');
+%
+% Example
+%   N = 1e5;
+%   etaTB('start');
+%   for I = 1: N
+%       v = randn(1e5, 1);
+%       s = sum(v);
+%       etaTB('show', I, N, 'Task 1')
+%   end
+%   etaTB('stop');
+
 
 function etaTB(par1, par2, par3, par4)
 persistent lprubeh cas;
@@ -19,7 +30,7 @@ if strcmp(par1, 'start') == true && nargin == 1
     lprubeh = 0; cas = 0;
     
 elseif strcmp(par1, 'show') == true && (nargin == 3 || nargin == 4)
-    % zobrazeni progress baru
+    % show progress bar
     I = par2;
     N = par3;
     if I == 1

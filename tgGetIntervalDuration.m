@@ -1,20 +1,23 @@
 function t = tgGetIntervalDuration(tg, tierInd, index)
-% function t = tgGetIntervalEndTime(tg, tierInd, index)
-% Vrati cas konce intervalu s danym indexem ve vybrane vrstve (tier) typu IntervalTier.
+% function t = tgGetIntervalDurationTime(tg, tierInd, index)
+%
+% Return duration (i.e., end - start time) of interval in interval tier.
+%
+% tierInd ... tier index or 'name'
+% index ... index of interval
+%
 % v1.0, Tomas Boril, borilt@gmail.com
+%
+% Example
+%   tg = tgRead('demo/H.TextGrid');
+%   tgGetIntervalDuration(tg, 'phone', 5)
+
 
 if nargin ~= 3
     error('Wrong number of arguments.')
 end
 
-% if ~isInt(tierInd)
-%     error(['index tier musi byt cele cislo od 1 vyse [' num2str(tierInd) ']']);
-% end
 tierInd = tgI(tg, tierInd);
-% ntiers = tgGetNumberOfTiers(tg);
-% if tierInd < 1 || tierInd>ntiers
-%     error(['index tier mimo rozsah, tierInd = ' num2str(tierInd) ', ntiers = ' num2str(ntiers)]);
-% end
 if ~tgIsIntervalTier(tg, tierInd)
     error(['tier ' num2str(tierInd) ' is not IntervalTier']);
 end

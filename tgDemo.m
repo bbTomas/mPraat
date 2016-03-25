@@ -2,6 +2,12 @@ close all
 clear all
 clc
 
+pt = ptRead('demo/H.PitchTier');
+tgPlot(tg, 2);
+subplot(tgGetNumberOfTiers(tg)+1, 1, 1);
+ptPlot(pt);
+
+
 tg = tgRead('demo/H.TextGrid');
 
 tg = tgInsertNewIntervalTier(tg, 1, 'moje');
@@ -38,7 +44,7 @@ tg = tgInsertInterval(tg, 1, 4.25, 4.5, 'konec'); % vlozeni mimo vpravo + automa
 
 figure, tgPlot(tg)
 
-tgWrite(tg, 'demo/vystup.TextGrid')
+tgWrite(tg, 'demo/ex_output.TextGrid')
 
 
 tg = tgRead('demo/H.TextGrid');

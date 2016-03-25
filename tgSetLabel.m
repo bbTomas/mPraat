@@ -1,21 +1,25 @@
 function tgNew = tgSetLabel(tg, tierInd, index, label)
 % function tgNew = tgSetLabel(tg, tierInd, index, label)
-% Zmeni label intervalu ci bodu s danym indexem ve vybrane vrstve (tier) typu IntervalTier ci PointTier.
+%
+% Sets (changes) label of interval or point of the given index in the
+% interval or point tier.
+%
+% tierInd ... tier index or 'name'
+% index ... index of interval or point
+% label ... new 'label'
+%
 % v1.0, Tomas Boril, borilt@gmail.com
+%
+% Example
+%   tg = tgRead('demo/H.TextGrid');
+%   tg2 = tgSetLabel(tg, 'word', 3, 'New Label');
+%   tgGetLabel(tg2, 'word', 3)
 
 if nargin ~= 4
     error('Wrong number of arguments.')
 end
 
-% if ~isInt(tierInd)
-%     error(['index tier musi byt cele cislo od 1 vyse [' num2str(tierInd) ']']);
-% end
 tierInd = tgI(tg, tierInd);
-
-% ntiers = tgGetNumberOfTiers(tg);
-% if tierInd < 1 || tierInd > ntiers
-%     error(['index tier mimo rozsah, tierInd = ' num2str(tierInd) ', ntiers = ' num2str(ntiers)]);
-% end
 
 
 if tgIsIntervalTier(tg, tierInd)

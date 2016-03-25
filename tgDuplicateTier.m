@@ -1,29 +1,38 @@
 function tgNew = tgDuplicateTier(tg, originalInd, newInd)
 % function tgNew = tgDuplicateTier(tg, originalInd, newInd)
-% Duplikuje vrstvu (tier) textgridu s danym indexem originalInd (1 = prvni) na pozici noveho indexu.
-% Puvodni vrstvy od pozice newInd vyse posune o jednu dal.
-% Po duplikaci doporucujeme zavolat funkci tgSetTierName a nove vrstve
-% zmenit jmeno, i kdyz to neni nutne, protoze dve vrstvy se mohou jmenovat stejne.
+%
+% Duplicates tier originalInd to new tier with specified index newInd
+% (existing tiers are shifted).
+% After this operation, it is highly recommended to set a name to the new
+% tier with tgSetTierName. Otherwise, both original and new tiers have the
+% same name which is permitted but not recommended. In such a case, we
+% cannot use the comfort of using tier name instead of its index in other
+% functions.
+%
+% originalInd ... tier index or 'name'
+% newInd ... new tier index (1 = the first)
+%
 % v1.0, Tomas Boril, borilt@gmail.com
+%
+%   tg = tgRead('demo/H.TextGrid');
+%   tg2 = tgDuplicateTier(tg, 'word', 1);
+%   tg2 = tgSetTierName(tg2, 1, 'NEW');
+%   tgPlot(tg2);
+
+
 
 if nargin ~= 3
     error('Wrong number of arguments.')
 end
 
-% if ~isInt(originalInd)
-%     error(['index tier musi byt cele cislo od 1 vyse [' num2str(originalInd) ']']);
-% end
 originalInd = tgI(tg, originalInd);
 if ~isInt(newInd)
-    error(['index tier must be integer >= 1 [' num2str(newInd) ']']);
+    error(['newInd must be integer >= 1 [' num2str(newInd) ']']);
 end
 
 ntiers = tgGetNumberOfTiers(tg);
-% if originalInd < 1 || originalInd>ntiers
-%     error(['index tier mimo rozsah, originalInd = ' num2str(originalInd) ', ntiers = ' num2str(ntiers)]);
-% end
 if newInd < 1 || newInd>ntiers+1
-    error(['index of tier out of range <1; ntiers+1>, newInd = ' num2str(newInd) ', ntiers = ' num2str(ntiers)]);
+    error(['newInd out of range [1; ntiers+1], newInd = ' num2str(newInd) ', ntiers = ' num2str(ntiers)]);
 end
 
 tgNew = tg;

@@ -1,9 +1,26 @@
 function tgPlot(tg, subPlotStartIndex)
 % function tgPlot(tg, subPlotStartIndex)
-% Vykresli textgrid, nepovinny parametr subPlotStartIndex udava, od ktereho
-% indexu v subplotu zacit kreslit (vyhodne, pokud napr. do prvni casti
-% chceme vykreslit zvuk, od dalsiho pak textgrid)
+%
+% Plots TextGrid.
+%
+% subPlotStartIndex: optional argument, it indicates the initial index of
+% subplot where the first tier is going to be plotter. It is useful, e.g,
+% in a situation when we want to draw a wave in the first position, a
+% PitchTier in a second position, and begin tiers of the textgrid in the
+% third position. Then, the total number of subplot panels is
+% subplot(ntiers + subPlotStartIndex - 1, 1, ...)
+%
 % v1.0, Tomas Boril, borilt@gmail.com
+%
+% Example
+%   tg = tgRead('demo/H.TextGrid');
+%   tgPlot(tg);
+%
+%   figure
+%   pt = ptRead('demo/H.PitchTier');
+%   tgPlot(tg, 2);
+%   subplot(tgGetNumberOfTiers(tg)+1, 1, 1);
+%   ptPlot(pt);
 
 if nargin  == 1
     subPlotStartIndex = 1;

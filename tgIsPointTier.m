@@ -1,20 +1,19 @@
 function b = tgIsPointTier(tg, tierInd)
 % function b = tgIsPointTier(tg, tierInd)
-% Vrati true/false, zda tier je typus PointTier
+%
+% Returns true if the tier is PointTier, false otherwise.
+%
+% tierInd ... tier index or 'name'
+%
 % v1.0, Tomas Boril, borilt@gmail.com
 %
-% tierInd ... index vrstvy (tier)
+% Example
+%   tg = tgRead('demo/H.TextGrid');
+%   tgIsPointTier(tg, 1)
+%   tgIsPointTier(tg, 'word')
 
-% ntiers = length(tg.tier);
 
-% if ~isInt(tierInd)
-%     error(['index tier musi byt cele cislo od 1 vyse [' num2str(tierInd) ']']);
-% end
 tierInd = tgI(tg, tierInd);
-
-% if tierInd < 1 || tierInd>ntiers
-%     error(['index tier mimo rozsah, tierInd = ' num2str(tierInd) ', ntiers = ' num2str(ntiers)]);
-% end
 
 if strcmp(tg.tier{tierInd}.type, 'point') == 1
     b = true;

@@ -32,6 +32,14 @@ function tgNew = tgInsertBoundary(tg, tierInd, time, label)
 % nemohou vzniknout.
 %
 % v1.0, Tomas Boril, borilt@gmail.com
+%
+% Example
+%   tg = tgRead('demo/H.TextGrid');
+%   tg2 = tgInsertNewIntervalTier(tg, 1, 'INTERVALS');
+%   tg2 = tgInsertBoundary(tg2, 'INTERVALS', 0.8);
+%   tg2 = tgInsertBoundary(tg2, 'INTERVALS', 0.1, 'Interval A');
+%   tg2 = tgInsertInterval(tg2, 'INTERVALS', 1.2, 2.5, 'Interval B');
+%   tgPlot(tg2);
 
 if nargin < 3 || nargin > 4
     error('Wrong number of arguments.')
@@ -40,15 +48,8 @@ if nargin == 3
     label = '';
 end
 
-% if ~isInt(tierInd)
-%     error(['index tier musi byt cele cislo od 1 vyse [' num2str(tierInd) ']']);
-% end
 tierInd = tgI(tg, tierInd);
 
-% ntiers = tgGetNumberOfTiers(tg);
-% if tierInd < 1 || tierInd>ntiers
-%     error(['index tier mimo rozsah, tierInd = ' num2str(tierInd) ', ntiers = ' num2str(ntiers)]);
-% end
 if ~tgIsIntervalTier(tg, tierInd)
     error(['tier ' num2str(tierInd) ' is not IntervalTier']);
 end

@@ -1,9 +1,18 @@
 function t = tgGetEndTime(tg, tierInd)
 % function t = tgGetEndTime(tg, tierInd)
-% Vrati konecny cas. Bud maximum vsech vrstev (default)
-% ci konkretni vrstvy - tier (v takovem pripade vraci NaN, kdyz vrsta nic
-% neobsahuje).
+%
+% Returns end time. If tier index is specified, it returns end time
+% of the tier, if it is not specified, it returns end time of the whole
+% TextGrid.
+%
+% tierInd ... [optional] tier index or 'name'
+%
 % v1.0, Tomas Boril, borilt@gmail.com
+%
+% Example
+%   tg = tgRead('demo/H.TextGrid');
+%   tgGetEndTime(tg)
+%   tgGetEndTime(tg, 'phone')
 
 if nargin  == 1
     t = tg.tmax;
@@ -14,15 +23,7 @@ if nargin ~= 2
     error('Wrong number of arguments.')
 end
 
-% if ~isInt(tierInd)
-%     error(['index tier musi byt cele cislo od 1 vyse [' num2str(tierInd) ']']);
-% end
 tierInd = tgI(tg, tierInd);
-% ntiers = tgGetNumberOfTiers(tg);
-
-% if tierInd < 1 || tierInd>ntiers
-%     error(['index tier mimo rozsah, tierInd = ' num2str(tierInd) ', ntiers = ' num2str(ntiers)]);
-% end
 
 if tgIsPointTier(tg, tierInd)
     if length(tg.tier{tierInd}.T) < 1
