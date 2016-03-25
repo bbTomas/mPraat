@@ -34,7 +34,7 @@ function tgNew = tgInsertBoundary(tg, tierInd, time, label)
 % v1.0, Tomáš Boøil, borilt@gmail.com
 
 if nargin < 3 || nargin > 4
-    error('nesprávný poèet argumentù')
+    error('Wrong number of arguments.')
 end
 if nargin == 3
     label = '';
@@ -50,7 +50,7 @@ tierInd = tgI(tg, tierInd);
 %     error(['index tier mimo rozsah, tierInd = ' num2str(tierInd) ', ntiers = ' num2str(ntiers)]);
 % end
 if ~tgIsIntervalTier(tg, tierInd)
-    error(['tier ' num2str(tierInd) ' není IntervalTier']);
+    error(['tier ' num2str(tierInd) ' is not IntervalTier']);
 end
 
 tgNew = tg;
@@ -59,7 +59,7 @@ index = tgGetIntervalIndexAtTime(tg, tierInd, time);
 nint = tgGetNumberOfIntervals(tg, tierInd);
 
 if nint == 0
-    error('Zvláštní situace, tier nemá ani jeden interval.')
+    error('strange situation, tier does not have any interval.')
 end
 
 if isnan(index)
@@ -79,14 +79,14 @@ if isnan(index)
         tgNew.tier{tierInd}.Label{1} = label;
         tgNew.tmin = min(tg.tmin, time);
     elseif time == tg.tier{tierInd}.T2(end) % pokus o nesmyslné vložení hranice pøesnì na konec tier
-        error(['nemohu vložit hranici, protože na stejné pozici (tierInd ' num2str(tierInd) ', time ' num2str(time) ') již existuje'])
+        error(['cannot insert boundary because it already exists at the same position (tierInd ' num2str(tierInd) ', time ' num2str(time) ')'])
     else
-        error('Zvláštní situace, nenalezen interval, pøitom time je mezi intervaly.')
+        error('strange situation, cannot find any interval and ''time'' is between intervals.')
     end
 else % pøípad a) do již existujícího intervalu
     for I = 1: nint
         if ~isempty(find(tgNew.tier{tierInd}.T1 == time, 1)) || ~isempty(find(tgNew.tier{tierInd}.T2 == time, 1))
-            error(['nemohu vložit hranici, protože na stejné pozici (tierInd ' num2str(tierInd) ', time ' num2str(time) ') již existuje'])
+            error(['cannot insert boundary because it already exists at the same position (tierInd ' num2str(tierInd) ', time ' num2str(time) ')'])
         end
     end
     

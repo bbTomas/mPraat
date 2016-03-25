@@ -4,7 +4,7 @@ function tgNew = tgSetTierName(tg, tierInd, name)
 % v1.0, Tomáš Boøil, borilt@gmail.com
 
 if nargin ~= 3
-    error('nesprávný poèet argumentù')
+    error('Wrong number of arguments.')
 end
 
 % if ~isInt(tierInd)

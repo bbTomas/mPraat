@@ -4,7 +4,7 @@ function ptPlot(pt)
 % v1.0, Tomáš Boøil, borilt@gmail.com
 
 if nargin  ~= 1
-    error('nesprávný poèet argumentù')
+    error('Wrong number of arguments.')
 end
 
 plot(pt.t, pt.f, 'ok', 'MarkerSize', 2)

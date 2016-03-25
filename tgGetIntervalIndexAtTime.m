@@ -5,7 +5,7 @@ function ind = tgGetIntervalIndexAtTime(tg, tierInd, time)
 % v1.0, Tomáš Boøil, borilt@gmail.com
 
 if nargin ~= 3
-    error('nesprávný poèet argumentù')
+    error('Wrong number of arguments.')
 end
 
 % if ~isInt(tierInd)
@@ -17,7 +17,7 @@ tierInd = tgI(tg, tierInd);
 %     error(['index tier mimo rozsah, tierInd = ' num2str(tierInd) ', ntiers = ' num2str(ntiers)]);
 % end
 if ~tgIsIntervalTier(tg, tierInd)
-    error(['tier ' num2str(tierInd) ' není IntervalTier']);
+    error(['tier ' num2str(tierInd) ' is not IntervalTier']);
 end
 
 ind = NaN;

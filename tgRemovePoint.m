@@ -4,7 +4,7 @@ function tgNew = tgRemovePoint(tg, tierInd, index)
 % v1.0, Tomáš Boøil, borilt@gmail.com
 
 if nargin ~= 3
-    error('nesprávný poèet argumentù')
+    error('Wrong number of arguments.')
 end
 
 % if ~isInt(tierInd)
@@ -17,16 +17,16 @@ tierInd = tgI(tg, tierInd);
 %     error(['index tier mimo rozsah, tierInd = ' num2str(tierInd) ', ntiers = ' num2str(ntiers)]);
 % end
 if ~tgIsPointTier(tg, tierInd)
-    error(['tier ' num2str(tierInd) ' není PointTier']);
+    error(['tier ' num2str(tierInd) ' is not PointTier']);
 end
 
 npoints = tgGetNumberOfPoints(tg, tierInd);
 if index < 1 || index>npoints
-    error(['index bodu mimo rozsah, index = ' num2str(index) ', npoints = ' num2str(npoints)]);
+    error(['index of point out of range, index = ' num2str(index) ', npoints = ' num2str(npoints)]);
 end
 
 if ~isInt(index)
-    error(['index musí být celé èíslo od 1 výše [' num2str(index) ']']);
+    error(['index must be integer >= 1 [' num2str(index) ']']);
 end
 
 tgNew = tg;

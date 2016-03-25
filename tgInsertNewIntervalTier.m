@@ -11,7 +11,7 @@ function tgNew = tgInsertNewIntervalTier(tg, tierInd, tierName, tStart, tEnd)
 % v1.0, Tomáš Boøil, borilt@gmail.com
 
 if nargin ~= 3 && nargin ~= 5
-    error('nesprávný poèet argumentù')
+    error('Wrong number of arguments.')
 end
 
 % if ~isInt(tierInd)
@@ -30,7 +30,7 @@ tNew.name = tierName;
 tNew.type = 'interval';
 if nargin == 5
     if tStart >= tEnd
-        error(['tStart [' num2str(tStart) '] musí být menší než tEnd [' num2str(tEnd) ']']);
+        error(['tStart [' num2str(tStart) '] must be lower than tEnd [' num2str(tEnd) ']']);
     end
     tNew.T1(1) = tStart;
     tNew.T2(1) = tEnd;

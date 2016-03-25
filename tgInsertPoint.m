@@ -4,7 +4,7 @@ function tgNew = tgInsertPoint(tg, tierInd, time, label)
 % v1.0, Tomáš Boøil, borilt@gmail.com
 
 if nargin ~= 4
-    error('nesprávný poèet argumentù')
+    error('Wrong number of arguments.')
 end
 
 % if ~isInt(tierInd)
@@ -17,7 +17,7 @@ tierInd = tgI(tg, tierInd);
 %     error(['index tier mimo rozsah, tierInd = ' num2str(tierInd) ', ntiers = ' num2str(ntiers)]);
 % end
 if ~tgIsPointTier(tg, tierInd)
-    error(['tier ' num2str(tierInd) ' není PointTier']);
+    error(['tier ' num2str(tierInd) ' is not PointTier']);
 end
 
 tgNew = tg;

@@ -6,7 +6,7 @@ function tgNew = tgInsertNewPointTier(tg, tierInd, tierName)
 % v1.0, Tomáš Boøil, borilt@gmail.com
 
 if nargin ~= 3
-    error('nesprávný poèet argumentù')
+    error('Wrong number of arguments.')
 end
 
 % if ~isInt(tierInd)

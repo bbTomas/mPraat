@@ -10,5 +10,5 @@ if nargin  == 1
 elseif nargin == 2
     t = tgGetEndTime(tg, tierInd) - tgGetStartTime(tg, tierInd);
 else
-    error('nesprávný poèet argumentù')
+    error('Wrong number of arguments.')
 end

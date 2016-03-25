@@ -12,7 +12,7 @@ function tgNew = tgRepairContinuity(tg, verbose)
 
 
 if nargin ~= 1 && nargin ~= 2
-    error('nesprávný poèet argumentù')
+    error('Wrong number of arguments.')
 end
 
 if nargin == 1

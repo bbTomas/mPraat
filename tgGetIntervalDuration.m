@@ -4,7 +4,7 @@ function t = tgGetIntervalDuration(tg, tierInd, index)
 % v1.0, Tomáš Boøil, borilt@gmail.com
 
 if nargin ~= 3
-    error('nesprávnı poèet argumentù')
+    error('Wrong number of arguments.')
 end
 
 % if ~isInt(tierInd)
@@ -16,16 +16,16 @@ tierInd = tgI(tg, tierInd);
 %     error(['index tier mimo rozsah, tierInd = ' num2str(tierInd) ', ntiers = ' num2str(ntiers)]);
 % end
 if ~tgIsIntervalTier(tg, tierInd)
-    error(['tier ' num2str(tierInd) ' není IntervalTier']);
+    error(['tier ' num2str(tierInd) ' is not IntervalTier']);
 end
 
 if ~isInt(index)
-    error(['index musí bıt celé èíslo od 1 vıše [' num2str(index) ']']);
+    error(['index must be integer >= 1 [' num2str(index) ']']);
 end
 
 nint = tgGetNumberOfIntervals(tg, tierInd);
 if index < 1 || index>nint
-    error(['index intervalu mimo rozsah, index = ' num2str(index) ', nint = ' num2str(nint)]);
+    error(['index out of range, index = ' num2str(index) ', nint = ' num2str(nint)]);
 end
 
 

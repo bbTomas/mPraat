@@ -7,7 +7,7 @@ function tgNew = tgDuplicateTier(tg, originalInd, newInd)
 % v1.0, Tomáš Boøil, borilt@gmail.com
 
 if nargin ~= 3
-    error('nesprávný poèet argumentù')
+    error('Wrong number of arguments.')
 end
 
 % if ~isInt(originalInd)
@@ -15,7 +15,7 @@ end
 % end
 originalInd = tgI(tg, originalInd);
 if ~isInt(newInd)
-    error(['index tier musí být celé èíslo od 1 výše [' num2str(newInd) ']']);
+    error(['index tier must be integer >= 1 [' num2str(newInd) ']']);
 end
 
 ntiers = tgGetNumberOfTiers(tg);
@@ -23,7 +23,7 @@ ntiers = tgGetNumberOfTiers(tg);
 %     error(['index tier mimo rozsah, originalInd = ' num2str(originalInd) ', ntiers = ' num2str(ntiers)]);
 % end
 if newInd < 1 || newInd>ntiers+1
-    error(['index tier mimo rozsah <1; ntiers+1>, newInd = ' num2str(newInd) ', ntiers = ' num2str(ntiers)]);
+    error(['index of tier out of range <1; ntiers+1>, newInd = ' num2str(newInd) ', ntiers = ' num2str(ntiers)]);
 end
 
 tgNew = tg;

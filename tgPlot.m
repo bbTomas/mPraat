@@ -9,10 +9,10 @@ if nargin  == 1
     subPlotStartIndex = 1;
 elseif nargin  == 2
     if ~isInt(subPlotStartIndex) || subPlotStartIndex < 1
-        error(['subPlotStartIndex musí být celé èíslo od 1 výše [' num2str(subPlotStartIndex) ']']);
+        error(['subPlotStartIndex must be integer >= 1 [' num2str(subPlotStartIndex) ']']);
     end
 else
-    error('nesprávný poèet argumentù')
+    error('Wrong number of arguments.')
 end
 
 ntiers = tgGetNumberOfTiers(tg);

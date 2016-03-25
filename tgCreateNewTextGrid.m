@@ -9,13 +9,13 @@ function tgNew = tgCreateNewTextGrid(tStart, tEnd)
 % v1.0, Tomáš Boøil, borilt@gmail.com
 
 if nargin ~= 2
-    error('nesprávný poèet argumentù')
+    error('Wrong number of arguments.')
 end
 
 tgNew.tier = {};
 
 if tStart > tEnd
-    error(['tStart [' num2str(tStart) '] musí být menší než tEnd [' num2str(tEnd) ']']);
+    error(['tStart [' num2str(tStart) '] must be lower than tEnd [' num2str(tEnd) ']']);
 end
 
 tgNew.tmin = tStart;

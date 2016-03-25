@@ -13,7 +13,7 @@ function tgNew = tgRemoveIntervalBothBoundaries(tg, tierInd, index)
 % v1.0, Tomáš Boøil, borilt@gmail.com
 
 if nargin ~= 3
-    error('nesprávný poèet argumentù')
+    error('Wrong number of arguments.')
 end
 
 % if ~isInt(tierInd)
@@ -26,24 +26,24 @@ tierInd = tgI(tg, tierInd);
 %     error(['index tier mimo rozsah, tierInd = ' num2str(tierInd) ', ntiers = ' num2str(ntiers)]);
 % end
 if ~tgIsIntervalTier(tg, tierInd)
-    error(['tier ' num2str(tierInd) ' není IntervalTier']);
+    error(['tier ' num2str(tierInd) ' is not IntervalTier']);
 end
 
 nint = tgGetNumberOfIntervals(tg, tierInd);
 if index < 1 || index>nint
-    error(['index bodu mimo rozsah, index = ' num2str(index) ', nint = ' num2str(nint)]);
+    error(['index of interval out of range, index = ' num2str(index) ', nint = ' num2str(nint)]);
 end
 
 if ~isInt(index)
-    error(['index musí být celé èíslo od 1 výše [' num2str(index) ']']);
+    error(['index must be integer >= 1 [' num2str(index) ']']);
 end
 
 if index == 1
-    error(['index nesmí být 1, protože levá hranice je poèáteèní hranice vrstvy. index = ' num2str(index)]);
+    error(['index cannot be 1 because left boundary is the first boundary of the tier. index = ' num2str(index)]);
 end
 
 if index == nint
-    error(['index nesmí být posledního intervalu, protože pravá hranice je koneèná hranice vrstvy. index = ' num2str(index)]);
+    error(['index cannot be the last interval because right boundary is the last boundary of the tier. index = ' num2str(index)]);
 end
 
 t1 = tg.tier{tierInd}.T1(index-1);

@@ -56,7 +56,7 @@ function tgNew = tgInsertInterval(tg, tierInd, tStart, tEnd, label)
 % v1.0, Tomáš Boøil, borilt@gmail.com
 
 if nargin < 4 || nargin > 5
-    error('nesprávný poèet argumentù')
+    error('Wrong number of arguments.')
 end
 if nargin == 4
     label = '';
@@ -72,11 +72,11 @@ tierInd = tgI(tg, tierInd);
 %     error(['index tier mimo rozsah, tierInd = ' num2str(tierInd) ', ntiers = ' num2str(ntiers)]);
 % end
 if ~tgIsIntervalTier(tg, tierInd)
-    error(['tier ' num2str(tierInd) ' není IntervalTier']);
+    error(['tier ' num2str(tierInd) ' is not IntervalTier']);
 end
 
 if tStart >= tEnd
-    error(['tStart [' num2str(tStart) '] musí být menší než tEnd [' num2str(tEnd) ']']);
+    error(['tStart [' num2str(tStart) '] must be lower than tEnd [' num2str(tEnd) ']']);
 end
 % pozn. díky této podmínce nemohou nastat nìkteré situace podchycené níže
 % (tStart == tEnd), leccos se tím zjednodušuje a Praat stejnì nedovoluje
@@ -108,7 +108,7 @@ elseif tStart <= tgNalevo && tEnd == tgNalevo
     tgNew = tgInsertBoundary(tg, tierInd, tStart, label);
     return
 elseif tStart < tgNalevo && tEnd > tgNalevo
-    error(['prùnik nového intervalu (' num2str(tStart) ' až ' num2str(tEnd) ' sec, ''' label ''') a více již existujících (oblast mimo nalevo a 1. interval) je zakázán'])
+    error(['intersection of new interval (' num2str(tStart) ' to ' num2str(tEnd) ' sec, ''' label ''') and several others already existing (region outside ''left'' and the first interval) is forbidden'])
 elseif tStart > tgNapravo && tEnd > tgNapravo %%
 %     disp('vkládám úplnì napravo + prázdný interval jako výplò')
     tgNew = tgInsertBoundary(tg, tierInd, tEnd);
@@ -119,7 +119,7 @@ elseif tStart == tgNapravo && tEnd >= tgNapravo
     tgNew = tgInsertBoundary(tg, tierInd, tEnd, label);
     return
 elseif tStart < tgNapravo && tEnd > tgNapravo
-    error(['prùnik nového intervalu (' num2str(tStart) ' až ' num2str(tEnd) ' sec, ''' label ''') a více již existujících (poslední interval a oblast mimo napravo) je zakázán'])
+    error(['intersection of new interval (' num2str(tStart) ' to ' num2str(tEnd) ' sec, ''' label ''') and several others already existing (the last interval and region outside ''right'') is forbidden'])
 elseif tStart >= tgNalevo && tEnd <= tgNapravo
     % disp('vkládání nìkam do již existující oblasti, nutná kontrola stejného a prázdného intervalu')
     % nalezení všech intervalù, kam èasy spadají - pokud se trefíme na
@@ -183,16 +183,16 @@ elseif tStart >= tgNalevo && tEnd <= tgNapravo
                 tgNew = tgInsertBoundary(tg, tierInd, tEnd);
                 tgNew = tgInsertBoundary(tgNew, tierInd, tStart, label);
             else
-                error('Logická chyba ve funkci, tato varianta nesmí nikdy nastat. Kontaktujte autora, ale buïte na nìj hodní, protože je z toho už opravdu nešastný.')
+                error('Logical error in this function, this situation must not happened. Contact author, but please, be kind, he is really sorry this happened.')
             end
         else
-            error(['vložení nového intervalu (' num2str(tStart) ' až ' num2str(tEnd) ' sec, ''' label ''') do intervalu s neprázdným labelem (' num2str(tg.tier{tierInd}.T1(iStart)) ' až ' num2str(tg.tier{tierInd}.T2(iStart)) ' sec, ''' tg.tier{tierInd}.Label{iStart} ''') není povoleno'])
+            error(['Cannot insert new interval (' num2str(tStart) ' to ' num2str(tEnd) ' sec, ''' label ''') into the interval with a non-empty label (' num2str(tg.tier{tierInd}.T1(iStart)) ' to ' num2str(tg.tier{tierInd}.T2(iStart)) ' sec, ''' tg.tier{tierInd}.Label{iStart} '''), it is forbidden.'])
         end
     else
-        error(['prùnik nového intervalu (' num2str(tStart) ' až ' num2str(tEnd) ' sec, ''' label ''') a více již existujících (indexy ' num2str(iStart) ' a ' num2str(iEnd) ') je zakázán'])
+        error(['intersection of new interval (' num2str(tStart) ' to ' num2str(tEnd) ' sec, ''' label ''') and several others already existing (indices ' num2str(iStart) ' to ' num2str(iEnd) ') is forbidden'])
     end
 else
-    error('Logická chyba ve funkci, tato varianta nesmí nikdy nastat. Kontaktujte autora, ale buïte na nìj hodní, protože je z toho už opravdu nešastný.')
+    error('Logical error in this function, this situation must not happened. Contact author, but please, be kind, he is really sorry this happened.')
 end
 
 return

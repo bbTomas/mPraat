@@ -4,7 +4,7 @@ function tgNew = tgRemoveTier(tg, tierInd)
 % v1.0, Tomáš Boøil, borilt@gmail.com
 
 if nargin ~= 2
-    error('nesprávný poèet argumentù')
+    error('Wrong number of arguments.')
 end
 
 % if ~isInt(tierInd)

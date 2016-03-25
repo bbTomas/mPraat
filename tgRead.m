@@ -232,7 +232,7 @@ for tier = 1: pocetTiers
         end
     else  % neznámý typ tier
         fclose(fid);
-        error('Jiný formát než IntervalTier èi PointTier není podporován.');
+        error('Unknown tier type - IntervalTier and PointTier are supported only.');
     end
     
 end

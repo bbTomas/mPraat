@@ -11,7 +11,7 @@ if nargin  == 1
 end
 
 if nargin ~= 2
-    error('nesprávný poèet argumentù')
+    error('Wrong number of arguments.')
 end
 
 % if ~isInt(tierInd)

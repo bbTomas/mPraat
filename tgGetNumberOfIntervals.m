@@ -4,7 +4,7 @@ function c = tgGetNumberOfIntervals(tg, tierInd)
 % v1.0, Tomáš Boøil, borilt@gmail.com
 
 if nargin ~= 2
-    error('nesprávný poèet argumentù')
+    error('Wrong number of arguments.')
 end
 
 % if ~isInt(tierInd)
@@ -18,7 +18,7 @@ tierInd = tgI(tg, tierInd);
 % end
 
 if ~tgIsIntervalTier(tg, tierInd)
-    error(['tier ' num2str(tierInd) ' není IntervalTier']);
+    error(['tier ' num2str(tierInd) ' is not IntervalTier']);
 end
 
 c = length(tg.tier{tierInd}.T1);
