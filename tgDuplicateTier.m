@@ -1,17 +1,17 @@
 function tgNew = tgDuplicateTier(tg, originalInd, newInd)
 % function tgNew = tgDuplicateTier(tg, originalInd, newInd)
-% Duplikuje vrstvu (tier) textgridu s daným indexem originalInd (1 = první) na pozici nového indexu.
-% Pùvodní vrstvy od pozice newInd výše posune o jednu dál.
-% Po duplikaci doporuèujeme zavolat funkci tgSetTierName a nové vrstvì
-% zmìnit jméno, i když to není nutné, protože dvì vrstvy se mohou jmenovat stejnì.
-% v1.0, Tomáš Boøil, borilt@gmail.com
+% Duplikuje vrstvu (tier) textgridu s danym indexem originalInd (1 = prvni) na pozici noveho indexu.
+% Puvodni vrstvy od pozice newInd vyse posune o jednu dal.
+% Po duplikaci doporucujeme zavolat funkci tgSetTierName a nove vrstve
+% zmenit jmeno, i kdyz to neni nutne, protoze dve vrstvy se mohou jmenovat stejne.
+% v1.0, Tomas Boril, borilt@gmail.com
 
 if nargin ~= 3
     error('Wrong number of arguments.')
 end
 
 % if ~isInt(originalInd)
-%     error(['index tier musí být celé èíslo od 1 výše [' num2str(originalInd) ']']);
+%     error(['index tier musi byt cele cislo od 1 vyse [' num2str(originalInd) ']']);
 % end
 originalInd = tgI(tg, originalInd);
 if ~isInt(newInd)

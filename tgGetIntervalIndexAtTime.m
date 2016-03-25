@@ -1,15 +1,15 @@
 function ind = tgGetIntervalIndexAtTime(tg, tierInd, time)
 % function ind = tgGetIntervalIndexAtTime(tg, tierInd, time)
-% Vrátí index intervalu obsahující daný èas, vybraná vrstva (tier) musí být typu IntervalTier.
-% Interval musí splòovat tStart <= time < tEnd. Pokud nenalezne, vrátí NaN.
-% v1.0, Tomáš Boøil, borilt@gmail.com
+% Vrati index intervalu obsahujici dany cas, vybrana vrstva (tier) musi byt typu IntervalTier.
+% Interval musi splnovat tStart <= time < tEnd. Pokud nenalezne, vrati NaN.
+% v1.0, Tomas Boril, borilt@gmail.com
 
 if nargin ~= 3
     error('Wrong number of arguments.')
 end
 
 % if ~isInt(tierInd)
-%     error(['index tier musí být celé èíslo od 1 výše [' num2str(tierInd) ']']);
+%     error(['index tier musi byt cele cislo od 1 vyse [' num2str(tierInd) ']']);
 % end
 tierInd = tgI(tg, tierInd);
 % ntiers = tgGetNumberOfTiers(tg);

@@ -1,9 +1,9 @@
 function t = tgGetEndTime(tg, tierInd)
 % function t = tgGetEndTime(tg, tierInd)
-% Vrátí koneèný èas. Buï maximum všech vrstev (default)
-% èi konkrétní vrstvy - tier (v takovém pøípadì vrací NaN, když vrsta nic
+% Vrati konecny cas. Bud maximum vsech vrstev (default)
+% ci konkretni vrstvy - tier (v takovem pripade vraci NaN, kdyz vrsta nic
 % neobsahuje).
-% v1.0, Tomáš Boøil, borilt@gmail.com
+% v1.0, Tomas Boril, borilt@gmail.com
 
 if nargin  == 1
     t = tg.tmax;
@@ -15,7 +15,7 @@ if nargin ~= 2
 end
 
 % if ~isInt(tierInd)
-%     error(['index tier musí být celé èíslo od 1 výše [' num2str(tierInd) ']']);
+%     error(['index tier musi byt cele cislo od 1 vyse [' num2str(tierInd) ']']);
 % end
 tierInd = tgI(tg, tierInd);
 % ntiers = tgGetNumberOfTiers(tg);

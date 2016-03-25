@@ -1,15 +1,15 @@
 function ind = tgGetPointIndexHigherThanTime(tg, tierInd, time)
 % function ind = tgGetPointIndexHigherThanTime(tg, tierInd, time)
-% Vrátí index bodu, který je nejblíže zprava danému èasu (vèetnì), vybraná vrstva (tier) musí být typu PointTier.
-% Pokud nenalezne, vrátí NaN.
-% v1.0, Tomáš Boøil, borilt@gmail.com
+% Vrati index bodu, ktery je nejblize zprava danemu casu (vcetne), vybrana vrstva (tier) musi byt typu PointTier.
+% Pokud nenalezne, vrati NaN.
+% v1.0, Tomas Boril, borilt@gmail.com
 
 if nargin ~= 3
     error('Wrong number of arguments.')
 end
 
 % if ~isInt(tierInd)
-%     error(['index tier musí být celé èíslo od 1 výše [' num2str(tierInd) ']']);
+%     error(['index tier musi byt cele cislo od 1 vyse [' num2str(tierInd) ']']);
 % end
 tierInd = tgI(tg, tierInd);
 % ntiers = tgGetNumberOfTiers(tg);

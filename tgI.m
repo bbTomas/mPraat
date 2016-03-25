@@ -1,7 +1,7 @@
 function I = tgI(tg, tierIndexOrName)
 % function n = tgGetTierName(tg, tierInd)
-% Vrátí jméno vrstvy (tier).
-% v1.0, Tomáš Boøil, borilt@gmail.com
+% Vrati jmeno vrstvy (tier).
+% v1.0, Tomas Boril, borilt@gmail.com
 
 if nargin ~= 2
     error('Wrong number of arguments.')
@@ -10,7 +10,7 @@ end
 
 ntiers = length(tg.tier);
 
-if isnumeric(tierIndexOrName) && isequal(size(tierIndexOrName), [1,1])   % je to èíselný index
+if isnumeric(tierIndexOrName) && isequal(size(tierIndexOrName), [1,1])   % je to ciselny index
     if tierIndexOrName >= 1 && tierIndexOrName <= ntiers
         if ~isInt(tierIndexOrName)
             error('tier index have to be an integer value')

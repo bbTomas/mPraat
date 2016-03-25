@@ -1,14 +1,14 @@
 function tgNew = tgRemovePoint(tg, tierInd, index)
 % function tgNew = tgRemovePoint(tg, tierInd, index)
-% Odstraní bod s daným indexem z PointTier.
-% v1.0, Tomáš Boøil, borilt@gmail.com
+% Odstrani bod s danym indexem z PointTier.
+% v1.0, Tomas Boril, borilt@gmail.com
 
 if nargin ~= 3
     error('Wrong number of arguments.')
 end
 
 % if ~isInt(tierInd)
-%     error(['index tier musí být celé èíslo od 1 výše [' num2str(tierInd) ']']);
+%     error(['index tier musi byt cele cislo od 1 vyse [' num2str(tierInd) ']']);
 % end
 tierInd = tgI(tg, tierInd);
 

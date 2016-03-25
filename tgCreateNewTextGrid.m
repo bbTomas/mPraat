@@ -1,12 +1,12 @@
 function tgNew = tgCreateNewTextGrid(tStart, tEnd)
 % function tgNew = tgCreateNewTextGrid(tStart, tEnd)
-% Vytvoøí nový zcela prázdný textgrid. Parametry tStart a tEnd
-% nastaví tmin a tmax, které jsou napø. používány, když se pøidá nová
-% vrstva IntervaTier bez udaného rozsahu.
-% Tento prázdný textgrid je samostatnì nepoužitelný, je potøeba do nìj
-% pøidat alespoò jednu vrstvu pomocí tgInsertNewIntervalTier nebo
+% Vytvori novy zcela prazdny textgrid. Parametry tStart a tEnd
+% nastavi tmin a tmax, ktere jsou napr. pouzivany, kdyz se prida nova
+% vrstva IntervaTier bez udaneho rozsahu.
+% Tento prazdny textgrid je samostatne nepouzitelny, je potreba do nej
+% pridat alespon jednu vrstvu pomoci tgInsertNewIntervalTier nebo
 % tgInsertNewPointTier.
-% v1.0, Tomáš Boøil, borilt@gmail.com
+% v1.0, Tomas Boril, borilt@gmail.com
 
 if nargin ~= 2
     error('Wrong number of arguments.')

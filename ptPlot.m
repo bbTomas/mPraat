@@ -1,7 +1,7 @@
 function ptPlot(pt)
 % function ptPlot(pt)
-% Vykreslí PitchTier.
-% v1.0, Tomáš Boøil, borilt@gmail.com
+% Vykresli PitchTier.
+% v1.0, Tomas Boril, borilt@gmail.com
 
 if nargin  ~= 1
     error('Wrong number of arguments.')

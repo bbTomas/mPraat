@@ -1,14 +1,14 @@
 function c = tgCountLabels(tg, tierInd, label)
 % function c = tgCountLabels(tg, tierInd, label)
-% Vrátí poèet labelù v dané vrstvì (tier), které se rovnají požadovanému øetìzci.
-% v1.0, Tomáš Boøil, borilt@gmail.com
+% Vrati pocet labelu v dane vrstve (tier), ktere se rovnaji pozadovanemu retezci.
+% v1.0, Tomas Boril, borilt@gmail.com
 
 if nargin ~= 3
     error('Wrong number of arguments.')
 end
 
 % if ~isInt(tierInd)
-%     error(['index tier musí být celé èíslo od 1 výše [' num2str(tierInd) ']']);
+%     error(['index tier musi byt cele cislo od 1 vyse [' num2str(tierInd) ']']);
 % end
 tierInd = tgI(tg, tierInd);
 % ntiers = tgGetNumberOfTiers(tg);
@@ -17,7 +17,7 @@ tierInd = tgI(tg, tierInd);
 %     error(['index tier mimo rozsah, tierInd = ' num2str(tierInd) ', ntiers = ' num2str(ntiers)]);
 % end
 
-c = 0; % poèet
+c = 0; % pocet
 
 for I = 1: length(tg.tier{tierInd}.Label)
     if strcmp(tg.tier{tierInd}.Label{I}, label) == 1

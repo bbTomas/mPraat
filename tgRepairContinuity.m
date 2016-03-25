@@ -1,10 +1,10 @@
 function tgNew = tgRepairContinuity(tg, verbose)
 % function tgNew = tgInsertNewIntervalTier(tg, verbose)
-% Opraví problém s návazností T2 a T1 v intervalových vrstvách, který vznikl díky chybnému zaokrouhlování
-% napø. v automatickém segmentátoru Prague Labeller, díky èemu nebylo možné tyto hranice v Praatu manuálnì pøesunovat.
+% Opravi problem s navaznosti T2 a T1 v intervalovych vrstvach, ktery vznikl diky chybnemu zaokrouhlovani
+% napr. v automatickem segmentatoru Prague Labeller, diky cemu nebylo mozne tyto hranice v Praatu manualne presunovat.
 % 
-% Parametrem verbose = true lze vypnout výpis problémových míst.
-% v1.0, Tomáš Boøil, borilt@gmail.com
+% Parametrem verbose = true lze vypnout vypis problemovych mist.
+% v1.0, Tomas Boril, borilt@gmail.com
 %     tgProblem = tgRead('demo/H_problem.TextGrid')
 %     tgNew = tgRepairContinuity(tgProblem)
 %     tgWrite(tgNew, 'demo/H_problem_OK.TextGrid')

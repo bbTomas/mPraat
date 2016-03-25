@@ -1,23 +1,23 @@
 function tgNew = tgRemoveIntervalBothBoundaries(tg, tierInd, index)
 % function tgNew = tgRemoveIntervalBothBoundaries(tg, tierInd, index)
-% Odstraní levou i pravou hranici intervalu s daným indexem z vrstvy (tier) tierInd typu IntervalTier.
-% Slouèí se tím tøi intervaly do jednoho (spojí se i labely). Nelze použít
-% pro první a poslední interval, protože to je koneèná hranice vrstvy.
-% Napø. mám intervaly 1-2-3, dám odstranit obì hranice 2. intervalu.
-% Výsledkem bude jeden interval 123. Pokud mi vadí slouèení labelù (chtìl
-% jsem "odstranit interval vèetnì labelu"), mohu
-% label ještì pøed odstraòováním hranice nastavit na prázdný øetìzec.
-% Pokud chci jen "odstranit interval bez sluèování", tedy obdržet 1-nic-3,
-% nejedná se o odstraòování hranic. Staèí pouze nastavit label 2. intervalu
-% na prázdný øetìzec ''.
-% v1.0, Tomáš Boøil, borilt@gmail.com
+% Odstrani levou i pravou hranici intervalu s danym indexem z vrstvy (tier) tierInd typu IntervalTier.
+% Slouci se tim tri intervaly do jednoho (spoji se i labely). Nelze pouzit
+% pro prvni a posledni interval, protoze to je konecna hranice vrstvy.
+% Napr. mam intervaly 1-2-3, dam odstranit obe hranice 2. intervalu.
+% Vysledkem bude jeden interval 123. Pokud mi vadi slouceni labelu (chtel
+% jsem "odstranit interval vcetne labelu"), mohu
+% label jeste pred odstranovanim hranice nastavit na prazdny retezec.
+% Pokud chci jen "odstranit interval bez slucovani", tedy obdrzet 1-nic-3,
+% nejedna se o odstranovani hranic. Staci pouze nastavit label 2. intervalu
+% na prazdny retezec ''.
+% v1.0, Tomas Boril, borilt@gmail.com
 
 if nargin ~= 3
     error('Wrong number of arguments.')
 end
 
 % if ~isInt(tierInd)
-%     error(['index tier musí být celé èíslo od 1 výše [' num2str(tierInd) ']']);
+%     error(['index tier musi byt cele cislo od 1 vyse [' num2str(tierInd) ']']);
 % end
 tierInd = tgI(tg, tierInd);
 

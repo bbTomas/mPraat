@@ -1,14 +1,14 @@
 function b = tgIsIntervalTier(tg, tierInd)
 % function b = tgIsIntervalTier(tg, tierInd)
-% Vrátí true/false, zda tier je typu IntervalTier
-% v1.0, Tomáš Boøil, borilt@gmail.com
+% Vrati true/false, zda tier je typu IntervalTier
+% v1.0, Tomas Boril, borilt@gmail.com
 %
 % tierInd ... index vrstvy (tier)
 
 % ntiers = length(tg.tier);
 
 % if ~isInt(tierInd)
-%     error(['index tier musí být celé èíslo od 1 výše [' num2str(tierInd) ']']);
+%     error(['index tier musi byt cele cislo od 1 vyse [' num2str(tierInd) ']']);
 % end
 tierInd = tgI(tg, tierInd);
 

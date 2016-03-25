@@ -1,14 +1,14 @@
 function tgNew = tgSetLabel(tg, tierInd, index, label)
 % function tgNew = tgSetLabel(tg, tierInd, index, label)
-% Zmìní label intervalu èi bodu s daným indexem ve vybrané vrstvì (tier) typu IntervalTier èi PointTier.
-% v1.0, Tomáš Boøil, borilt@gmail.com
+% Zmeni label intervalu ci bodu s danym indexem ve vybrane vrstve (tier) typu IntervalTier ci PointTier.
+% v1.0, Tomas Boril, borilt@gmail.com
 
 if nargin ~= 4
     error('Wrong number of arguments.')
 end
 
 % if ~isInt(tierInd)
-%     error(['index tier musí být celé èíslo od 1 výše [' num2str(tierInd) ']']);
+%     error(['index tier musi byt cele cislo od 1 vyse [' num2str(tierInd) ']']);
 % end
 tierInd = tgI(tg, tierInd);
 

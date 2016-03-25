@@ -1,16 +1,16 @@
 function tgNew = tgInsertNewPointTier(tg, tierInd, tierName)
 % function tgNew = tgInsertNewPointTier(tg, tierInd, tierName)
-% Vytvoøí novou vrstvu (tier) textgridu typu PointTier a vloží ji na daný index (1 = první).
-% Následujicí vrstvy posune o jednu dál.
-% Je tøeba zadat jméno nové vrstvy - øetìzec tierName.
-% v1.0, Tomáš Boøil, borilt@gmail.com
+% Vytvori novou vrstvu (tier) textgridu typu PointTier a vlozi ji na dany index (1 = prvni).
+% Nasledujici vrstvy posune o jednu dal.
+% Je treba zadat jmeno nove vrstvy - retezec tierName.
+% v1.0, Tomas Boril, borilt@gmail.com
 
 if nargin ~= 3
     error('Wrong number of arguments.')
 end
 
 % if ~isInt(tierInd)
-%     error(['index tier musí být celé èíslo od 1 výše [' num2str(tierInd) ']']);
+%     error(['index tier musi byt cele cislo od 1 vyse [' num2str(tierInd) ']']);
 % end
 tierInd = tgI(tg, tierInd);
 

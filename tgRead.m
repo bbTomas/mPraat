@@ -1,15 +1,15 @@
 function textgrid = tgRead(soubor)
 % function textgrid = tgRead(soubor)
-% Naète TextGrid z Praat ve formátu Short text file èi plném Text file, UTF-8,
-% jednotlivé vrstvy mohou být jak typu IntervalTier, tak PointTier.
+% Nacte TextGrid z Praat ve formatu Short text file ci plnem Text file, UTF-8,
+% jednotlive vrstvy mohou byt jak typu IntervalTier, tak PointTier.
 %
-% Zvládá i labely obsahující více øádek èi uvozovky.
-% v1.4, Tomáš Boøil, borilt@gmail.com
+% Zvlada i labely obsahujici vice radek ci uvozovky.
+% v1.4, Tomas Boril, borilt@gmail.com
 
 % close all
 % clear all
 % clc
-% soubor = ('Milánek.TextGrid')
+% soubor = ('Milanek.TextGrid')
 
 textgrid = [];
 
@@ -25,7 +25,7 @@ end
 xminStr = fgetl(fid); % xmin
 xmaxStr = fgetl(fid); % xmax
 
-r = fgetl(fid); % buï '<exists>' -> shorttext nebo 'tiers? <exists> ' -> plný formát
+r = fgetl(fid); % bud '<exists>' -> shorttext nebo 'tiers? <exists> ' -> plny format
 if strcmp(r, '<exists>')
     shortFormat = true;
 elseif strcmp(r(1:6), 'tiers?')
@@ -64,7 +64,7 @@ for tier = 1: pocetTiers
         typ = r(9:end);
     end
     if strcmp(typ, '"IntervalTier"') == 1  % IntervalTier
-        r = fgetl(fid); % jméno
+        r = fgetl(fid); % jmeno
         if shortFormat
             textgrid.tier{tier}.name = r(2: end-1);
         else
@@ -89,7 +89,7 @@ for tier = 1: pocetTiers
 
         for I = 1: pocetIntervalu
             if ~shortFormat
-                r = fgetl(fid); % ignorujeme øádek intervals [..]:
+                r = fgetl(fid); % ignorujeme radek intervals [..]:
             end
             
             if shortFormat
@@ -112,7 +112,7 @@ for tier = 1: pocetTiers
                 end
                 rind = strfind(r, '"');
                 pocetUvozovek = sum(r == '"');
-                if mod(pocetUvozovek, 2) ~= 1 % odstranit mezeru na konci, která pouze v pøípadì, že je sudý poèet uvozovek
+                if mod(pocetUvozovek, 2) ~= 1 % odstranit mezeru na konci, ktera pouze v pripade, ze je sudy pocet uvozovek
                     r = r(rind(1): end-1);
                 else
                     r = r(rind(1): end);
@@ -125,7 +125,7 @@ for tier = 1: pocetTiers
                 while 1
                     r = fgetl(fid);
                     pocetUvozovek = sum(r == '"');
-                    if ~shortFormat && mod(pocetUvozovek, 2) == 1 % odstranit mezeru na konci, která pouze v pøípadì, že je lichý poèet uvozovek
+                    if ~shortFormat && mod(pocetUvozovek, 2) == 1 % odstranit mezeru na konci, ktera pouze v pripade, ze je lichy pocet uvozovek
                         r = r(1: end-1);
                     end
 
@@ -143,7 +143,7 @@ for tier = 1: pocetTiers
 
             textgrid.tier{tier}.T1 = [textgrid.tier{tier}.T1 t];
             textgrid.tier{tier}.T2 = [textgrid.tier{tier}.T2 t2];
-            textgrid.tier{tier}.Label{I, 1} = label; % oøíznutí uvozovek
+            textgrid.tier{tier}.Label{I, 1} = label; % oriznuti uvozovek
             
             xmin = min(t, xmin); xmin = min(t2, xmin);
             xmax = max(t, xmax); xmax = max(t2, xmax);
@@ -151,7 +151,7 @@ for tier = 1: pocetTiers
         
         
     elseif strcmp(typ, '"TextTier"') == 1  % PointTier
-        r = fgetl(fid); % jméno
+        r = fgetl(fid); % jmeno
         if shortFormat
             textgrid.tier{tier}.name = r(2: end-1);
         else
@@ -175,7 +175,7 @@ for tier = 1: pocetTiers
 
         for I = 1: pocetIntervalu
             if ~shortFormat
-                r = fgetl(fid); % ignorujeme øádek points [..]:
+                r = fgetl(fid); % ignorujeme radek points [..]:
             end
             
             if shortFormat
@@ -195,7 +195,7 @@ for tier = 1: pocetTiers
                 end
                 rind = strfind(r, '"');
                 pocetUvozovek = sum(r == '"');
-                if mod(pocetUvozovek, 2) ~= 1 % odstranit mezeru na konci, která pouze v pøípadì, že je sudý poèet uvozovek
+                if mod(pocetUvozovek, 2) ~= 1 % odstranit mezeru na konci, ktera pouze v pripade, ze je sudy pocet uvozovek
                     r = r(rind(1): end-1);
                 else
                     r = r(rind(1): end);
@@ -208,7 +208,7 @@ for tier = 1: pocetTiers
                 while 1
                     r = fgetl(fid);
                     pocetUvozovek = sum(r == '"');
-                    if ~shortFormat && mod(pocetUvozovek, 2) == 1 % odstranit mezeru na konci, která pouze v pøípadì, že je lichý poèet uvozovek
+                    if ~shortFormat && mod(pocetUvozovek, 2) == 1 % odstranit mezeru na konci, ktera pouze v pripade, ze je lichy pocet uvozovek
                         r = r(1: end-1);
                     end
 
@@ -225,12 +225,12 @@ for tier = 1: pocetTiers
             label = label(1: end-1);
 
             textgrid.tier{tier}.T = [textgrid.tier{tier}.T t];
-            textgrid.tier{tier}.Label{I, 1} = label; % oøíznutí uvozovek
+            textgrid.tier{tier}.Label{I, 1} = label; % oriznuti uvozovek
             
             xmin = min(t, xmin);
             xmax = max(t, xmax);
         end
-    else  % neznámý typ tier
+    else  % neznamy typ tier
         fclose(fid);
         error('Unknown tier type - IntervalTier and PointTier are supported only.');
     end

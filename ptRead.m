@@ -1,7 +1,7 @@
 function pt = ptRead(soubor)
-% Naète PitchTier z Praat ve formátu spreadSheet,
+% Nacte PitchTier z Praat ve formatu spreadSheet,
 %
-% v0.1, Tomáš Boøil, borilt@gmail.com
+% v0.1, Tomas Boril, borilt@gmail.com
 %     pt = ptRead('demo/maminka_spreadSheet.PitchTier');
 
 

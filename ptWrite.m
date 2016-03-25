@@ -1,10 +1,10 @@
 function ptWrite(pt, fileNamePitchtier)
 % function ptWrite(pt, fileNamePitchtier)
 
-% Uloží PitchTier jako spreadSheet. PitchTier je struct a musí obsahovat
-% alespoò vektory t a f stejné délky. Pokud nejsou v PitchTier specifikovány
-% tmin a tmax, jsou brány jako min a max z t.
-% v0.1 Tomáš Boøil, borilt@gmail.com
+% Ulozi PitchTier jako spreadSheet. PitchTier je struct a musi obsahovat
+% alespon vektory t a f stejne delky. Pokud nejsou v PitchTier specifikovany
+% tmin a tmax, jsou brany jako min a max z t.
+% v0.1 Tomas Boril, borilt@gmail.com
 
 % pt = ptRead("maminka_TextFile.PitchTier");
 % ptWrite(pt, "demo/vystup.PitchTier")

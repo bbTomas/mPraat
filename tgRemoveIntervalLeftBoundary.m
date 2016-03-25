@@ -1,19 +1,19 @@
 function tgNew = tgRemoveIntervalLeftBoundary(tg, tierInd, index)
 % function tgNew = tgRemoveIntervalLeftBoundary(tg, tierInd, index)
-% Odstraní levou hranici intervalu s daným indexem z vrstvy (tier) tierInd typu IntervalTier.
-% Slouèí se tím dva intervaly do jednoho (spojí se i labely). Nelze použít
-% pro první interval, protože to je poèáteèní hranice vrstvy.
-% Napø. mám intervaly 1-2-3, dám odstranit levou hranici 2. intervalu.
-% Výsledkem budou dva intervaly 12-3. Pokud mi vadí slouèení labelù, mohu
-% label ještì pøed odstraòováním hranice nastavit na prázdný øetìzec.
-% v1.0, Tomáš Boøil, borilt@gmail.com
+% Odstrani levou hranici intervalu s danym indexem z vrstvy (tier) tierInd typu IntervalTier.
+% Slouci se tim dva intervaly do jednoho (spoji se i labely). Nelze pouzit
+% pro prvni interval, protoze to je pocatecni hranice vrstvy.
+% Napr. mam intervaly 1-2-3, dam odstranit levou hranici 2. intervalu.
+% Vysledkem budou dva intervaly 12-3. Pokud mi vadi slouceni labelu, mohu
+% label jeste pred odstranovanim hranice nastavit na prazdny retezec.
+% v1.0, Tomas Boril, borilt@gmail.com
 
 if nargin ~= 3
     error('Wrong number of arguments.')
 end
 
 % if ~isInt(tierInd)
-%     error(['index tier musí být celé èíslo od 1 výše [' num2str(tierInd) ']']);
+%     error(['index tier musi byt cele cislo od 1 vyse [' num2str(tierInd) ']']);
 % end
 tierInd = tgI(tg, tierInd);
 

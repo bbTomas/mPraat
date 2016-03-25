@@ -1,59 +1,59 @@
 function tgNew = tgInsertInterval(tg, tierInd, tStart, tEnd, label)
 % function tgNew = tgInsertInterval(tg, tierInd, tStart, tEnd, label)
-% Vloží nový interval do prázdného místa v IntervalTier, tedy
-% a) Do již existujícího intervalu (musí mít prázdný label):
-%    Nejèastìjší pøípad, protože samotná nová vrstva IntervalTier je celá
-%    jeden prázdný interval od zaèátku do konce.
-% b) Mimo existující intervaly nalevo èi napravo, vzniklá mezera bude
-%    zaplnìna prázdným intervalem.
-% Intervalu tStart až tEnd je pøiøazen label (nepovinný parametr) èi zùstane
-% s prázdným labelem.
+% Vlozi novy interval do prazdneho mista v IntervalTier, tedy
+% a) Do jiz existujiciho intervalu (musi mit prazdny label):
+%    Nejcastejsi pripad, protoze samotna nova vrstva IntervalTier je cela
+%    jeden prazdny interval od zacatku do konce.
+% b) Mimo existujici intervaly nalevo ci napravo, vznikla mezera bude
+%    zaplnena prazdnym intervalem.
+% Intervalu tStart az tEnd je prirazen label (nepovinny parametr) ci zustane
+% s prazdnym labelem.
 %
-% Tato funkce je ve vìtšinì pøípadù totéž, jako 1. tgInsertBoundary(tEnd)
-% a 2. tgInsertBoundary(tStart, nový label). Ale navíc je provádìna kontrola,
-% a) zda tStart a tEnd náležejí do stejného pùvodního prázdného intervalu,
-% b) nebo jsou oba mimo existující intervaly nalevo èi napravo.
+% Tato funkce je ve vetsine pripadu totez, jako 1. tgInsertBoundary(tEnd)
+% a 2. tgInsertBoundary(tStart, novy label). Ale navic je provadena kontrola,
+% a) zda tStart a tEnd nalezeji do stejneho puvodniho prazdneho intervalu,
+% b) nebo jsou oba mimo existujici intervaly nalevo ci napravo.
 %
-% Prùniky nového intervalu s více již existujícími i prázdnými intervaly
-% nedávají smysl a jsou zakázány.
+% Pruniky noveho intervalu s vice jiz existujicimi i prazdnymi intervaly
+% nedavaji smysl a jsou zakazany.
 %
-% Je tøeba si uvìdomit, že ve skuteènosti tato funkce èasto
-% vytváøí více intervalù. Napø. máme zcela novou IntervalTier s jedním prázdným
-% intervalem 0 až 5 sec. Vložíme interval 1 až 2 sec s labelem 'øekl'.
-% Výsledkem jsou tøi intervaly: 0-1 '', 1-2 'øekl', 2-5 ''.
-% Pak znovu vložíme touto funkcí interval 7 až 8 sec s labelem 'jí',
-% výsledkem bude pìt intervalù: 0-1 '', 1-2 'øekl', 2-5 '', 5-7 '' (vkládá se
-% jako výplò, protože jsme mimo rozsah pùvodní vrstvy), 7-8 'jí'.
-% Pokud však nyní vložíme interval pøesnì 2 až 3 'to', pøidá se ve
-% skuteènosti jen jeden interval, kde se vytvoøí pravá hranice intervalu a
-% levá se jen napojí na již existující, výsledkem bude šest intervalù:
-% 0-1 '', 1-2 'øekl', 2-3 'to', 3-5 '', 5-7 '', 7-8 'jí'.
-% Mùže také nastat situace, kdy nevytvoøí žádný nový interval, napø. když
-% do pøedchozího vložíme interval 3 až 5 'asi'. Tím se pouze pùvodnì prázdnému
-% intervalu 3-5 nastaví label na 'asi', výsledkem bude opìt jen šest intervalù:
-% 0-1 '', 1-2 'øekl', 2-3 'to', 3-5 'asi', 5-7 '', 7-8 'jí'.
+% Je treba si uvedomit, ze ve skutecnosti tato funkce casto
+% vytvari vice intervalu. Napr. mame zcela novou IntervalTier s jednim prazdnym
+% intervalem 0 az 5 sec. Vlozime interval 1 az 2 sec s labelem 'rekl'.
+% Vysledkem jsou tri intervaly: 0-1 '', 1-2 'rekl', 2-5 ''.
+% Pak znovu vlozime touto funkci interval 7 az 8 sec s labelem 'ji',
+% vysledkem bude pet intervalu: 0-1 '', 1-2 'rekl', 2-5 '', 5-7 '' (vklada se
+% jako vypln, protoze jsme mimo rozsah puvodni vrstvy), 7-8 'ji'.
+% Pokud vsak nyni vlozime interval presne 2 az 3 'to', prida se ve
+% skutecnosti jen jeden interval, kde se vytvori prava hranice intervalu a
+% leva se jen napoji na jiz existujici, vysledkem bude sest intervalu:
+% 0-1 '', 1-2 'rekl', 2-3 'to', 3-5 '', 5-7 '', 7-8 'ji'.
+% Muze take nastat situace, kdy nevytvori zadny novy interval, napr. kdyz
+% do predchoziho vlozime interval 3 az 5 'asi'. Tim se pouze puvodne prazdnemu
+% intervalu 3-5 nastavi label na 'asi', vysledkem bude opet jen sest intervalu:
+% 0-1 '', 1-2 'rekl', 2-3 'to', 3-5 'asi', 5-7 '', 7-8 'ji'.
 %
-% Tato funkce v Praatu není, zde je navíc a je vhodná pro situace,
-% kdy chceme napø. do prázdné IntervalTier pøidat nìkolik oddìlených intervalù
-% (napø. intervaly detekované øeèové aktivity).
-% Naopak není zcela vhodná pro pøidávání na sebe pøímo napojených
-% intervalù (napø. postupnì segmentujeme slovo na jednotlivé navazující
-% hlásky), protože když napø. vložíme intervaly 1 až 2.1 a 2.1 až 3,
-% kde obì hodnoty 2.1 byly vypoèteny samostatnì a díky zaokrouhlovacím chybám
-% se zcela pøesnì nerovnají, ve skuteènosti tím vznikne buï ještì prázdný
-% interval 'pøibližnì' 2.1 až 2.1, což nechceme, a nebo naopak funkce skonèí
-% s chybou, že tStart je vìtší než tEnd, pokud zaokrouhlení dopadlo opaènì.
-% Pokud však hranice byla spoètena jen jednou a uložena do promìnné, která
-% byla použita jako koneèná hranice pøedcházejícího intervalu, a zároveò jako
-% poèáteèní hranice nového intervalu, nemìl by být problém a nový interval
-% se vytvoøí jako napojení bez vloženého 'mikrointervalu'.
-% Každopádnì, bezpeènìjší pro takové úèely je zpùsob, jak se postupuje
-% v Praatu, tedy vložit hranici se  zaèátkem první hlásky pomocí
-% tgInsertBoundary(èas, labelHlásky), pak stejnì èasy zaèátkù a labely všech
-% následujících hlásek, a nakonec vložit ještì koneènou hranici poslední hlásky
-% (tedy již bez labelu) pomocí tgInsertBoundary(èas).
+% Tato funkce v Praatu neni, zde je navic a je vhodna pro situace,
+% kdy chceme napr. do prazdne IntervalTier pridat nekolik oddelenych intervalu
+% (napr. intervaly detekovane recove aktivity).
+% Naopak neni zcela vhodna pro pridavani na sebe primo napojenych
+% intervalu (napr. postupne segmentujeme slovo na jednotlive navazujici
+% hlasky), protoze kdyz napr. vlozime intervaly 1 az 2.1 a 2.1 az 3,
+% kde obe hodnoty 2.1 byly vypocteny samostatne a diky zaokrouhlovacim chybam
+% se zcela presne nerovnaji, ve skutecnosti tim vznikne bud jeste prazdny
+% interval 'priblizne' 2.1 az 2.1, coz nechceme, a nebo naopak funkce skonci
+% s chybou, ze tStart je vetsi nez tEnd, pokud zaokrouhleni dopadlo opacne.
+% Pokud vsak hranice byla spoctena jen jednou a ulozena do promenne, ktera
+% byla pouzita jako konecna hranice predchazejiciho intervalu, a zaroven jako
+% pocatecni hranice noveho intervalu, nemel by byt problem a novy interval
+% se vytvori jako napojeni bez vlozeneho 'mikrointervalu'.
+% Kazdopadne, bezpecnejsi pro takove ucely je zpusob, jak se postupuje
+% v Praatu, tedy vlozit hranici se  zacatkem prvni hlasky pomoci
+% tgInsertBoundary(cas, labelHlasky), pak stejne casy zacatku a labely vsech
+% nasledujicich hlasek, a nakonec vlozit jeste konecnou hranici posledni hlasky
+% (tedy jiz bez labelu) pomoci tgInsertBoundary(cas).
 %
-% v1.0, Tomáš Boøil, borilt@gmail.com
+% v1.0, Tomas Boril, borilt@gmail.com
 
 if nargin < 4 || nargin > 5
     error('Wrong number of arguments.')
@@ -63,7 +63,7 @@ if nargin == 4
 end
 
 % if ~isInt(tierInd)
-%     error(['index tier musí být celé èíslo od 1 výše [' num2str(tierInd) ']']);
+%     error(['index tier musi byt cele cislo od 1 vyse [' num2str(tierInd) ']']);
 % end
 tierInd = tgI(tg, tierInd);
 
@@ -78,15 +78,15 @@ end
 if tStart >= tEnd
     error(['tStart [' num2str(tStart) '] must be lower than tEnd [' num2str(tEnd) ']']);
 end
-% pozn. díky této podmínce nemohou nastat nìkteré situace podchycené níže
-% (tStart == tEnd), leccos se tím zjednodušuje a Praat stejnì nedovoluje
-% mít dvì hranice ve stejném èase, takže je to alespoò kompatibilní.
+% pozn. diky teto podmince nemohou nastat nektere situace podchycene nize
+% (tStart == tEnd), leccos se tim zjednodusuje a Praat stejne nedovoluje
+% mit dve hranice ve stejnem case, takze je to alespon kompatibilni.
 
 % tgNew = tg;
 
 nint = length(tg.tier{tierInd}.T1);
 if nint == 0
-    % Zvláštní situace, tier nemá ani jeden interval.
+    % Zvlastni situace, tier nema ani jeden interval.
     tgNew = tg;
     tgNew.tier{tierInd}.T1 = tStart;
     tgNew.tier{tierInd}.T2 = tEnd;
@@ -99,31 +99,31 @@ end
 tgNalevo = tg.tier{tierInd}.T1(1);
 tgNapravo = tg.tier{tierInd}.T2(end);
 if tStart < tgNalevo && tEnd < tgNalevo
-%     disp('vkládám úplnì nalevo + prázdný interval jako výplò')
+%     disp('vkladam uplne nalevo + prazdny interval jako vypln')
     tgNew = tgInsertBoundary(tg, tierInd, tEnd);
     tgNew = tgInsertBoundary(tgNew, tierInd, tStart, label);
     return
 elseif tStart <= tgNalevo && tEnd == tgNalevo
-%     disp('vkládám úplnì nalevo, plynule navazuji')
+%     disp('vkladam uplne nalevo, plynule navazuji')
     tgNew = tgInsertBoundary(tg, tierInd, tStart, label);
     return
 elseif tStart < tgNalevo && tEnd > tgNalevo
     error(['intersection of new interval (' num2str(tStart) ' to ' num2str(tEnd) ' sec, ''' label ''') and several others already existing (region outside ''left'' and the first interval) is forbidden'])
 elseif tStart > tgNapravo && tEnd > tgNapravo %%
-%     disp('vkládám úplnì napravo + prázdný interval jako výplò')
+%     disp('vkladam uplne napravo + prazdny interval jako vypln')
     tgNew = tgInsertBoundary(tg, tierInd, tEnd);
     tgNew = tgInsertBoundary(tgNew, tierInd, tStart, label);
     return
 elseif tStart == tgNapravo && tEnd >= tgNapravo
-%     disp('vkládám úplnì napravo, plynule navazuji')
+%     disp('vkladam uplne napravo, plynule navazuji')
     tgNew = tgInsertBoundary(tg, tierInd, tEnd, label);
     return
 elseif tStart < tgNapravo && tEnd > tgNapravo
     error(['intersection of new interval (' num2str(tStart) ' to ' num2str(tEnd) ' sec, ''' label ''') and several others already existing (the last interval and region outside ''right'') is forbidden'])
 elseif tStart >= tgNalevo && tEnd <= tgNapravo
-    % disp('vkládání nìkam do již existující oblasti, nutná kontrola stejného a prázdného intervalu')
-    % nalezení všech intervalù, kam èasy spadají - pokud se trefíme na
-    % hranici, mùže totiž èas náležet dvìma intervalùm
+    % disp('vkladani nekam do jiz existujici oblasti, nutna kontrola stejneho a prazdneho intervalu')
+    % nalezeni vsech intervalu, kam casy spadaji - pokud se trefime na
+    % hranici, muze totiz cas nalezet dvema intervalum
     iStart = [];
     iEnd = [];
     for I = 1: nint
@@ -135,15 +135,15 @@ elseif tStart >= tgNalevo && tEnd <= tgNapravo
         end
     end
     if ~(length(iStart) == 1 && length(iEnd) == 1)
-        prunik = intersect(iStart, iEnd); % nalezení spoleèného intervalu z více možných variant
+        prunik = intersect(iStart, iEnd); % nalezeni spolecneho intervalu z vice moznych variant
         if isempty(prunik)
-            % je to chyba, ale ta bude zachycena dále podmínkou 'if iStart == iEnd'
+            % je to chyba, ale ta bude zachycena dale podminkou 'if iStart == iEnd'
             iStart = iStart(end);
             iEnd = iEnd(1);
         else
             iStart = prunik(1);
             iEnd = prunik(1);
-            if length(prunik) > 1 % pokus o nalezení prvního vhodného kandidáta
+            if length(prunik) > 1 % pokus o nalezeni prvniho vhodneho kandidata
                 for I = 1: length(prunik)
                     if isempty(tg.tier{tierInd}.Label{prunik(I)})
                         iStart = prunik(I);
@@ -156,30 +156,30 @@ elseif tStart >= tgNalevo && tEnd <= tgNapravo
     end
     if iStart == iEnd
         if isempty(tg.tier{tierInd}.Label{iStart})
-%             disp('vkládám dovnitø intervalu, otázka, zda napojit èi ne')
+%             disp('vkladam dovnitr intervalu, otazka, zda napojit ci ne')
             t1 = tg.tier{tierInd}.T1(iStart);
             t2 = tg.tier{tierInd}.T2(iStart);
             if tStart == t1 && tEnd == t2
-%                 disp('jenom nastavím již existujícímu prázdnému intervalu label');
+%                 disp('jenom nastavim jiz existujicimu prazdnemu intervalu label');
                 tgNew = tg;
                 tgNew.tier{tierInd}.Label{iStart} = label;
                 return
 %             elseif tStart == t1 && tEnd == t1
-%                 disp('pùvodnímu intervalu nastavím label a vložím jednu hranici do t1, tím vznikne nový nulový interval na zaèátku s novým labelem a celý pùvodní interval bude stále prázdný')
+%                 disp('puvodnimu intervalu nastavim label a vlozim jednu hranici do t1, tim vznikne novy nulovy interval na zacatku s novym labelem a cely puvodni interval bude stale prazdny')
 %             elseif tStart == t2 && tEnd == t2
-%                 disp('vložím jednu hranici do t2 s novým labelem, tím zùstane pùvodní celý prázdný interval a vznikne nový nulový interval na konci s novým labelem')
+%                 disp('vlozim jednu hranici do t2 s novym labelem, tim zustane puvodni cely prazdny interval a vznikne novy nulovy interval na konci s novym labelem')
             elseif tStart == t1 && tEnd < t2
-%                 disp('pùvodnímu intervalu nastavím label a vložím jednu hranici do tEnd, tím se pùvodní interval rozdìlí na dvì èásti, první bude mít nový label, druhá zùstane prázdná')
+%                 disp('puvodnimu intervalu nastavim label a vlozim jednu hranici do tEnd, tim se puvodni interval rozdeli na dve casti, prvni bude mit novy label, druha zustane prazdna')
                 tgNew = tg;
                 tgNew.tier{tierInd}.Label{iStart} = label;
                 tgNew = tgInsertBoundary(tgNew, tierInd, tEnd);
                 return
             elseif tStart > t1 && tEnd == t2
-%                 disp('vložím jednu hranici do tStart s novým labelem, tím se pùvodní interval rozdìlí na dvì èásti, první zùstane prázdná a druhá bude mít nový label')
+%                 disp('vlozim jednu hranici do tStart s novym labelem, tim se puvodni interval rozdeli na dve casti, prvni zustane prazdna a druha bude mit novy label')
                 tgNew = tgInsertBoundary(tg, tierInd, tStart, label);
                 return
             elseif tStart > t1 && tEnd < t2
-%                 disp('vložím hranici do tEnd s prázdným labelem, a pak vložím hranici do tStart s novým labelem, tím se pùvodní interval rozdìlí na tøi èásti, první a poslední budou prázdné, prostøední bude mít nový label')
+%                 disp('vlozim hranici do tEnd s prazdnym labelem, a pak vlozim hranici do tStart s novym labelem, tim se puvodni interval rozdeli na tri casti, prvni a posledni budou prazdne, prostredni bude mit novy label')
                 tgNew = tgInsertBoundary(tg, tierInd, tEnd);
                 tgNew = tgInsertBoundary(tgNew, tierInd, tStart, label);
             else

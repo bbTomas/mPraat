@@ -1,9 +1,9 @@
 function t = tgGetTotalDuration(tg, tierInd)
 % function t = tgGetTotalDuration(tg, tierInd)
-% Vrátí celkové trvání. Buï maximum všech vrstev (default)
-% èi konkrétní vrstvy - tier (v takovém pøípadì vrací NaN, když vrsta nic
+% Vrati celkove trvani. Bud maximum vsech vrstev (default)
+% ci konkretni vrstvy - tier (v takovem pripade vraci NaN, kdyz vrsta nic
 % neobsahuje).
-% v1.0, Tomáš Boøil, borilt@gmail.com
+% v1.0, Tomas Boril, borilt@gmail.com
 
 if nargin  == 1
     t = tgGetEndTime(tg) - tgGetStartTime(tg);

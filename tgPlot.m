@@ -1,9 +1,9 @@
 function tgPlot(tg, subPlotStartIndex)
 % function tgPlot(tg, subPlotStartIndex)
-% Vykreslí textgrid, nepovinný parametr subPlotStartIndex udává, od kterého
-% indexu v subplotu zaèít kreslit (výhodné, pokud napø. do první èásti
-% chceme vykreslit zvuk, od dalšího pak textgrid)
-% v1.0, Tomáš Boøil, borilt@gmail.com
+% Vykresli textgrid, nepovinny parametr subPlotStartIndex udava, od ktereho
+% indexu v subplotu zacit kreslit (vyhodne, pokud napr. do prvni casti
+% chceme vykreslit zvuk, od dalsiho pak textgrid)
+% v1.0, Tomas Boril, borilt@gmail.com
 
 if nargin  == 1
     subPlotStartIndex = 1;
