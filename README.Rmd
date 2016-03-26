@@ -2,13 +2,13 @@
 
 mPraat toolbox for Matlab which constitutes an interface between the most popular software for phonetic analyses, Praat, and Matlab.
 
-See also: [rPraat package][https://github.com/bbTomas/rPraat] for R package.
-
 Version 1.0.0.
+
+See also: [rPraat package](https://github.com/bbTomas/rPraat) for R package.
 
 ## Installation and demonstration
 
-[Download mPraat_v1.0.0.zip](mPraat_v1.0.0.zip)
+[Download mPraat v1.0.0: master.zip](https://github.com/bbTomas/mPraat/archive/master.zip)
 
 To install mPraat, just unzip all files to any directory of your choice and Set Path (in Matlab) to this directory.
 
