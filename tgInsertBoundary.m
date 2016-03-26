@@ -1,35 +1,12 @@
 function tgNew = tgInsertBoundary(tg, tierInd, time, label)
 % function tgNew = tgInsertBoundary(tg, tierInd, time, label)
-% Vlozi novou hranici do IntervalTier, cimz vzdy vznikne novy interval,
-% kteremu je prirazen label (nepovinny parametr) ci zustane s prazdnym
-% labelem.
-% Mozne jsou ruzne situace umisteni nove hranice:
-% a) Do jiz existujiciho intervalu:
-%    Interval se novou hranici rozdeli na dve casti. Leva si zachova
-%    label puvodniho intervalu, prave je nastaven nepovinny novy label.
 %
-% b) Vlevo od existujicich intervalu:
-%    Novy interval zacina zadanou hranici a konci v miste zacatku prvniho
-%    jiz drive existujiciho intervalu. Noveme intervalu je nastaven
-%    nepovinny novy label.
+% Inserts new boundary into interval tier. This creates a new interval, to
+% which we can set the label (optional argument).
 %
-% c) Vpravo od existujicich intervalu:
-%    Novy interval zacina v miste konce posledniho jiz existujiciho
-%    intervalu a konci zadanou novou hranici. Tomuto novem intervalu je
-%    nastaven nepovinny novy label. Situace je tak tedy ponekud odlisna od
-%    situaci a) a b), kde novy label byl nastavovan vzdy intervalu, ktery
-%    lezel napravo od nove hranice. V situaci c) lezi label naopak nalevo
-%    od hranice. Ale je to jedina logicka moznost ve smyslu pridavani
-%    novych intervalu za konec jiz existujicich.
-%
-% Situace, kdy by se vkladala hranice mezi existujici intervaly na pozici,
-% kde jeste zadny interval neni, neni z hlediska logiky Praatu mozna.
-% Neni totiz pripustne, aby existoval jeden interval, pak nic, a pak dalsi interval.
-% Nic mezi intervaly Praat dusledne znaci jako interval s prazdnym labelem.
-% Nova vrstva IntervalTier vzdy obsahuje prazdny interval
-% pres celou dobu trvani. Tento interval je mozne hranicemi delit na
-% podintervaly ci rozsirovat na obe strany. Mezery bez intervalu tak
-% nemohou vzniknout.
+% tierInd ... tier index or 'name'
+% time ... time of the new boundary
+% label ... [optional] label of the new interval
 %
 % v1.0, Tomas Boril, borilt@gmail.com
 %
@@ -40,6 +17,38 @@ function tgNew = tgInsertBoundary(tg, tierInd, time, label)
 %   tg2 = tgInsertBoundary(tg2, 'INTERVALS', 0.1, 'Interval A');
 %   tg2 = tgInsertInterval(tg2, 'INTERVALS', 1.2, 2.5, 'Interval B');
 %   tgPlot(tg2);
+%
+% Notes
+% =====
+% There are more possible situations which influence where the new label
+% will be set.
+%
+% a) New boundary into the existing interval (the most common situation):
+%    The interval is splitted into two parts. The left preserves the label
+%    of the original interval, the right is set to the new (optional) label.
+%
+% b) On the left of existing interval (i.e., enlarging the tier size):
+%    The new interval starts with the new boundary and ends at the start
+%    of originally first existing interval. The label is set to the new
+%    interval.
+%
+% c) On the right of existing interval (i.e., enlarging the tier size):
+%    The new interval starts at the end of originally last existing
+%    interval and ends with the new boundary. The label is set to the new
+%    interval.
+%    This is somewhat different behaviour than in a) and b) where the new
+%    label is set to the interval which is on the right of the new
+%    boundary. In c), the new label is set on the left of the new boundary.
+%    But this is the only logical possibility.
+%
+% It is a nonsense to insert a boundary between existing intervals to a
+% position where there is no interval. This is against the basic logic of
+% Praat interval tiers where, at the beginning, there is one large empty
+% interval from beginning to the end. And then, it is divided to smaller
+% intervals by adding new boundaries. Nevertheless, if the TextGrid is
+% created by external programmes, you may rarely find such discontinuities.
+% In such a case, at first, use the tgRepairContinuity() function.
+
 
 if nargin < 3 || nargin > 4
     error('Wrong number of arguments.')
@@ -64,12 +73,12 @@ if nint == 0
 end
 
 if isnan(index)
-    if time > tg.tier{tierInd}.T2(end)   % pripad c) vpravo od existujicich intervalu
+    if time > tg.tier{tierInd}.T2(end)   % situation c) On the right of existing interval
         tgNew.tier{tierInd}.T1(nint+1) = tg.tier{tierInd}.T2(nint);
         tgNew.tier{tierInd}.T2(nint+1) = time;
         tgNew.tier{tierInd}.Label{nint+1} = label;
         tgNew.tmax = max(tg.tmax, time);
-    elseif time < tg.tier{tierInd}.T1(1) % pripad b) vlevo od existujicich intervalu
+    elseif time < tg.tier{tierInd}.T1(1) % situation b) On the left of existing interval
         for I = nint: -1: 1
             tgNew.tier{tierInd}.T1(I+1) = tgNew.tier{tierInd}.T1(I);
             tgNew.tier{tierInd}.T2(I+1) = tgNew.tier{tierInd}.T2(I);
@@ -79,12 +88,12 @@ if isnan(index)
         tgNew.tier{tierInd}.T2(1) = tgNew.tier{tierInd}.T1(2);
         tgNew.tier{tierInd}.Label{1} = label;
         tgNew.tmin = min(tg.tmin, time);
-    elseif time == tg.tier{tierInd}.T2(end) % pokus o nesmyslne vlozeni hranice presne na konec tier
+    elseif time == tg.tier{tierInd}.T2(end) % attempt to insert boundary exactly to the end of tier (nonsense)
         error(['cannot insert boundary because it already exists at the same position (tierInd ' num2str(tierInd) ', time ' num2str(time) ')'])
     else
         error('strange situation, cannot find any interval and ''time'' is between intervals.')
     end
-else % pripad a) do jiz existujiciho intervalu
+else % situation a) New boundary into the existing interval
     for I = 1: nint
         if ~isempty(find(tgNew.tier{tierInd}.T1 == time, 1)) || ~isempty(find(tgNew.tier{tierInd}.T2 == time, 1))
             error(['cannot insert boundary because it already exists at the same position (tierInd ' num2str(tierInd) ', time ' num2str(time) ')'])
