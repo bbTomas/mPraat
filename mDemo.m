@@ -1,5 +1,13 @@
 %% mPraat demonstration
 
+%% mPraat and rPraat homepage
+% rPraat and mPraat homepage:
+% <http://fu.ff.cuni.cz/praat/>
+%
+% Toolbox mPraat at github:
+% <https://github.com/bbTomas/mPraat>
+
+
 %% Installation and help
 % To install mPraat, just unzip all files to any directory of your choice
 % and Set Path (in Matlab) to this directory.

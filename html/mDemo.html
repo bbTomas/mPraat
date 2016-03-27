@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>mPraat demonstration</title><meta name="generator" content="MATLAB 8.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2016-03-26"><meta name="DC.source" content="mDemo.m"><style type="text/css">
+      --><title>mPraat demonstration</title><meta name="generator" content="MATLAB 8.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2016-03-27"><meta name="DC.source" content="mDemo.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -65,9 +65,9 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>mPraat demonstration</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Installation and help</a></li><li><a href="#2">Read and plot TextGrid, PitchTier and Sound</a></li><li><a href="#3">TextGrid</a></li><li><a href="#4">Tier accessed both by index and name (TextGrid)</a></li><li><a href="#5">Point tier (TextGrid)</a></li><li><a href="#6">Point tier 'low-level access' (TextGrid)</a></li><li><a href="#7">Interval tier  (TextGrid)</a></li><li><a href="#8">Interval tier 'low-level access' (TextGrid)</a></li><li><a href="#9">Vectorized operations</a></li><li><a href="#10">Overview of some TextGrid operations</a></li><li><a href="#11">Repair continuity problem of TextGrid</a></li><li><a href="#12">PitchTier</a></li></ul></div><h2>Installation and help<a name="1"></a></h2><p>To install mPraat, just unzip all files to any directory of your choice and Set Path (in Matlab) to this directory.</p><p>For help and examples, use command</p><pre class="language-matlab">help <span class="string">functionName</span>
+  </style></head><body><div class="content"><h1>mPraat demonstration</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">mPraat and rPraat homepage</a></li><li><a href="#2">Installation and help</a></li><li><a href="#3">Read and plot TextGrid, PitchTier and Sound</a></li><li><a href="#4">TextGrid</a></li><li><a href="#5">Tier accessed both by index and name (TextGrid)</a></li><li><a href="#6">Point tier (TextGrid)</a></li><li><a href="#7">Point tier 'low-level access' (TextGrid)</a></li><li><a href="#8">Interval tier  (TextGrid)</a></li><li><a href="#9">Interval tier 'low-level access' (TextGrid)</a></li><li><a href="#10">Vectorized operations</a></li><li><a href="#11">Overview of some TextGrid operations</a></li><li><a href="#12">Repair continuity problem of TextGrid</a></li><li><a href="#13">PitchTier</a></li></ul></div><h2>mPraat and rPraat homepage<a name="1"></a></h2><p>rPraat and mPraat homepage: <a href="http://fu.ff.cuni.cz/praat/">http://fu.ff.cuni.cz/praat/</a></p><p>Toolbox mPraat at github: <a href="https://github.com/bbTomas/mPraat">https://github.com/bbTomas/mPraat</a></p><h2>Installation and help<a name="2"></a></h2><p>To install mPraat, just unzip all files to any directory of your choice and Set Path (in Matlab) to this directory.</p><p>For help and examples, use command</p><pre class="language-matlab">help <span class="string">functionName</span>
 </pre><p>- or -</p><pre class="language-matlab">doc <span class="string">functionName</span>
-</pre><h2>Read and plot TextGrid, PitchTier and Sound<a name="2"></a></h2><pre class="codeinput">tg = tgRead(<span class="string">'demo/H.TextGrid'</span>);
+</pre><h2>Read and plot TextGrid, PitchTier and Sound<a name="3"></a></h2><pre class="codeinput">tg = tgRead(<span class="string">'demo/H.TextGrid'</span>);
 figure, tgPlot(tg)
 
 pt = ptRead(<span class="string">'demo/H.PitchTier'</span>);
@@ -84,7 +84,7 @@ plot(t, snd); axis <span class="string">tight</span>
 
 subplot(nTiers+2, 1, 2); <span class="comment">% plot PitchTier</span>
 ptPlot(pt);
-</pre><img vspace="5" hspace="5" src="mDemo_01.png" alt=""> <img vspace="5" hspace="5" src="mDemo_02.png" alt=""> <img vspace="5" hspace="5" src="mDemo_03.png" alt=""> <h2>TextGrid<a name="3"></a></h2><pre class="codeinput">tg = tgRead(<span class="string">'demo/H.TextGrid'</span>);
+</pre><img vspace="5" hspace="5" src="mDemo_01.png" alt=""> <img vspace="5" hspace="5" src="mDemo_02.png" alt=""> <img vspace="5" hspace="5" src="mDemo_03.png" alt=""> <h2>TextGrid<a name="4"></a></h2><pre class="codeinput">tg = tgRead(<span class="string">'demo/H.TextGrid'</span>);
 
 tiers = tgGetNumberOfTiers(tg)
 tiers = length(tg.tier)
@@ -111,7 +111,7 @@ tier1name =
 
 phoneme
 
-</pre><h2>Tier accessed both by index and name (TextGrid)<a name="4"></a></h2><pre class="codeinput">tgIsPointTier(tg, 1)
+</pre><h2>Tier accessed both by index and name (TextGrid)<a name="5"></a></h2><pre class="codeinput">tgIsPointTier(tg, 1)
 tgIsPointTier(tg, <span class="string">'phoneme'</span>)
 
 tgIsIntervalTier(tg, 1)
@@ -149,7 +149,7 @@ type =
 
 point
 
-</pre><h2>Point tier (TextGrid)<a name="5"></a></h2><pre class="codeinput">numPoints = tgGetNumberOfPoints(tg, 1)
+</pre><h2>Point tier (TextGrid)<a name="6"></a></h2><pre class="codeinput">numPoints = tgGetNumberOfPoints(tg, 1)
 numPoints = tgGetNumberOfPoints(tg, <span class="string">'phoneme'</span>)
 time4 = tgGetPointTime(tg, <span class="string">'phoneme'</span>, 4)
 label4 = tgGetLabel(tg, <span class="string">'phoneme'</span>, 4)
@@ -173,7 +173,7 @@ label4 =
 
 i
 
-</pre><h2>Point tier 'low-level access' (TextGrid)<a name="6"></a></h2><pre class="codeinput">numPoints = length(tg.tier{1}.T)   <span class="comment">% or: numPoints = length(tg.tier{tgI(tg, 'phoneme')}.T)</span>
+</pre><h2>Point tier 'low-level access' (TextGrid)<a name="7"></a></h2><pre class="codeinput">numPoints = length(tg.tier{1}.T)   <span class="comment">% or: numPoints = length(tg.tier{tgI(tg, 'phoneme')}.T)</span>
 time4 = tg.tier{1}.T(4)
 label4 = tg.tier{1}.Label{4}
 
@@ -198,7 +198,7 @@ t =
 
     0.3750    0.4354    0.5043    0.5627
 
-</pre><h2>Interval tier  (TextGrid)<a name="7"></a></h2><pre class="codeinput">tierIndex = tgI(tg, <span class="string">'word'</span>)
+</pre><h2>Interval tier  (TextGrid)<a name="8"></a></h2><pre class="codeinput">tierIndex = tgI(tg, <span class="string">'word'</span>)
 tgIsPointTier(tg, <span class="string">'word'</span>)
 tgIsIntervalTier(tg, <span class="string">'word'</span>)
 type = tg.tier{4}.type   <span class="comment">% or: type = tg.tier{tgI(tg, 'word')}.type</span>
@@ -272,7 +272,7 @@ label =
 
 &#345;eknu
 
-</pre><h2>Interval tier 'low-level access' (TextGrid)<a name="8"></a></h2><pre class="codeinput">numPoints = length(tg.tier{4}.T1)
+</pre><h2>Interval tier 'low-level access' (TextGrid)<a name="9"></a></h2><pre class="codeinput">numPoints = length(tg.tier{4}.T1)
 t1 = tg.tier{4}.T1(4)
 t2 = tg.tier{4}.T2(4)
 label = tg.tier{4}.Label{4}
@@ -306,7 +306,7 @@ lab =
     '{pause}'
     'nejd&#345;&iacute;v'
 
-</pre><h2>Vectorized operations<a name="9"></a></h2><pre class="codeinput">labelsOfInterest = {<span class="string">'i'</span>, <span class="string">'i:'</span>, <span class="string">'e'</span>, <span class="string">'e:'</span>, <span class="string">'a'</span>, <span class="string">'a:'</span>, <span class="string">'o'</span>, <span class="string">'o:'</span>, <span class="string">'u'</span>, <span class="string">'u:'</span>};
+</pre><h2>Vectorized operations<a name="10"></a></h2><pre class="codeinput">labelsOfInterest = {<span class="string">'i'</span>, <span class="string">'i:'</span>, <span class="string">'e'</span>, <span class="string">'e:'</span>, <span class="string">'a'</span>, <span class="string">'a:'</span>, <span class="string">'o'</span>, <span class="string">'o:'</span>, <span class="string">'u'</span>, <span class="string">'u:'</span>};
 tierInd = tgI(tg, <span class="string">'phone'</span>);
 condition = ismember( tg.tier{tierInd}.Label, labelsOfInterest );
 
@@ -325,7 +325,7 @@ meanDur =
 
     0.0632
 
-</pre><img vspace="5" hspace="5" src="mDemo_04.png" alt=""> <h2>Overview of some TextGrid operations<a name="10"></a></h2><p>For all functions, see help for description and example of use.</p><pre class="codeinput">tg = tgRead(<span class="string">'demo/H.TextGrid'</span>);
+</pre><img vspace="5" hspace="5" src="mDemo_04.png" alt=""> <h2>Overview of some TextGrid operations<a name="11"></a></h2><p>For all functions, see help for description and example of use.</p><pre class="codeinput">tg = tgRead(<span class="string">'demo/H.TextGrid'</span>);
 figure, tgPlot(tg)
 
 tg = tgRemoveTier(tg, <span class="string">'syllable'</span>);
@@ -356,7 +356,7 @@ tgNew = tgInsertPoint(tgNew, 2, 2, <span class="string">'click'</span>);
 tgNew = tgInsertPoint(tgNew, 2, 4, <span class="string">'click'</span>);
 figure, tgPlot(tgNew)
 tgWrite(tgNew, <span class="string">'demo/ex_output.TextGrid'</span>);
-</pre><img vspace="5" hspace="5" src="mDemo_05.png" alt=""> <img vspace="5" hspace="5" src="mDemo_06.png" alt=""> <img vspace="5" hspace="5" src="mDemo_07.png" alt=""> <h2>Repair continuity problem of TextGrid<a name="11"></a></h2><p>Repairs problem of continuity of T2 and T1 in interval tiers. This problem is very rare and it should not appear. However, e.g., automatic segmentation tool Prague Labeller produces random numeric round-up errors featuring, e.g., T2 of preceding interval is slightly higher than the T1 of the current interval. Because of that, the boundary cannot be manually moved in Praat edit window.</p><pre class="codeinput">tgProblem = tgRead(<span class="string">'demo/H_problem.TextGrid'</span>);
+</pre><img vspace="5" hspace="5" src="mDemo_05.png" alt=""> <img vspace="5" hspace="5" src="mDemo_06.png" alt=""> <img vspace="5" hspace="5" src="mDemo_07.png" alt=""> <h2>Repair continuity problem of TextGrid<a name="12"></a></h2><p>Repairs problem of continuity of T2 and T1 in interval tiers. This problem is very rare and it should not appear. However, e.g., automatic segmentation tool Prague Labeller produces random numeric round-up errors featuring, e.g., T2 of preceding interval is slightly higher than the T1 of the current interval. Because of that, the boundary cannot be manually moved in Praat edit window.</p><pre class="codeinput">tgProblem = tgRead(<span class="string">'demo/H_problem.TextGrid'</span>);
 tgNew = tgRepairContinuity(tgProblem);
 tgWrite(tgNew, <span class="string">'demo/H_problem_OK.TextGrid'</span>);
 
@@ -365,7 +365,7 @@ tgNew2 = tgRepairContinuity(tgNew); <span class="comment">% no problem in repair
 Problem found [tier: 2, int: 24, 25] t2 = 2.048900000010, t1 = 2.048900000000. New value: 2.048900000005.
 Problem found [tier: 4, int: 2, 3] t2 = 0.215900000000, t1 = 0.215899900000. New value: 0.215899950000.
 Problem found [tier: 4, int: 5, 6] t2 = 0.760000000000, t1 = 0.760100000000. New value: 0.760050000000.
-</pre><h2>PitchTier<a name="12"></a></h2><p>Transform Hz to semitones (ST) and cut the pitchtier along the TextGrid.</p><pre class="codeinput">pt = ptRead(<span class="string">'demo/H.PitchTier'</span>);
+</pre><h2>PitchTier<a name="13"></a></h2><p>Transform Hz to semitones (ST) and cut the pitchtier along the TextGrid.</p><pre class="codeinput">pt = ptRead(<span class="string">'demo/H.PitchTier'</span>);
 pt.f = 12*log(pt.f/100) / log(2);  <span class="comment">% conversion of Hz to Semitones, reference 0 ST = 100 Hz.</span>
 
 subplot(2,1,1)
@@ -391,6 +391,14 @@ labelsOfInterest =
 </pre><img vspace="5" hspace="5" src="mDemo_08.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2013b</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 %% mPraat demonstration
+
+%% mPraat and rPraat homepage
+% rPraat and mPraat homepage:
+% <http://fu.ff.cuni.cz/praat/>
+%
+% Toolbox mPraat at github:
+% <https://github.com/bbTomas/mPraat>
+
 
 %% Installation and help
 % To install mPraat, just unzip all files to any directory of your choice
