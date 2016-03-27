@@ -4,7 +4,7 @@ mPraat toolbox for Matlab which constitutes an interface between the most popula
 
 Version 1.0.0.
 
-See also: [rPraat package](https://github.com/bbTomas/rPraat) for R package.
+See also: [rPraat package](https://github.com/bbTomas/rPraat) for R.
 
 ## Installation and demonstration
 
