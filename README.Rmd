@@ -6,6 +6,8 @@ Version 1.0.0.
 
 See also: [rPraat package](https://github.com/bbTomas/rPraat) for R.
 
+rPraat and mPraat homepage: [http://fu.ff.cuni.cz/praat/](http://fu.ff.cuni.cz/praat/)
+
 ## Installation and demonstration
 
 [Download mPraat v1.0.0: mPraat-master.zip](https://github.com/bbTomas/mPraat/archive/master.zip)

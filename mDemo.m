@@ -96,7 +96,7 @@ label = tgGetLabel(tg, 'word', 4)
 
 
 %% Interval tier 'low-level access' (TextGrid)
-numPoints = length(tg.tier{4}.T1)
+numIntervals = length(tg.tier{4}.T1)
 t1 = tg.tier{4}.T1(4)
 t2 = tg.tier{4}.T2(4)
 label = tg.tier{4}.Label{4}
