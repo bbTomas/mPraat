@@ -9,6 +9,9 @@
 
 
 %% Installation and help
+% Download mPraat v1.0.0: mPraat-master.zip
+% <https://github.com/bbTomas/mPraat/archive/master.zip>
+%
 % To install mPraat, just unzip all files to any directory of your choice
 % and Set Path (in Matlab) to this directory.
 %

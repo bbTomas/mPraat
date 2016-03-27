@@ -65,7 +65,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>mPraat demonstration</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">mPraat and rPraat homepage</a></li><li><a href="#2">Installation and help</a></li><li><a href="#3">Read and plot TextGrid, PitchTier and Sound</a></li><li><a href="#4">TextGrid</a></li><li><a href="#5">Tier accessed both by index and name (TextGrid)</a></li><li><a href="#6">Point tier (TextGrid)</a></li><li><a href="#7">Point tier 'low-level access' (TextGrid)</a></li><li><a href="#8">Interval tier  (TextGrid)</a></li><li><a href="#9">Interval tier 'low-level access' (TextGrid)</a></li><li><a href="#10">Vectorized operations</a></li><li><a href="#11">Overview of some TextGrid operations</a></li><li><a href="#12">Repair continuity problem of TextGrid</a></li><li><a href="#13">PitchTier</a></li></ul></div><h2>mPraat and rPraat homepage<a name="1"></a></h2><p>rPraat and mPraat homepage: <a href="http://fu.ff.cuni.cz/praat/">http://fu.ff.cuni.cz/praat/</a></p><p>Toolbox mPraat at github: <a href="https://github.com/bbTomas/mPraat">https://github.com/bbTomas/mPraat</a></p><h2>Installation and help<a name="2"></a></h2><p>To install mPraat, just unzip all files to any directory of your choice and Set Path (in Matlab) to this directory.</p><p>For help and examples, use command</p><pre class="language-matlab">help <span class="string">functionName</span>
+  </style></head><body><div class="content"><h1>mPraat demonstration</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">mPraat and rPraat homepage</a></li><li><a href="#2">Installation and help</a></li><li><a href="#3">Read and plot TextGrid, PitchTier and Sound</a></li><li><a href="#4">TextGrid</a></li><li><a href="#5">Tier accessed both by index and name (TextGrid)</a></li><li><a href="#6">Point tier (TextGrid)</a></li><li><a href="#7">Point tier 'low-level access' (TextGrid)</a></li><li><a href="#8">Interval tier  (TextGrid)</a></li><li><a href="#9">Interval tier 'low-level access' (TextGrid)</a></li><li><a href="#10">Vectorized operations</a></li><li><a href="#11">Overview of some TextGrid operations</a></li><li><a href="#12">Repair continuity problem of TextGrid</a></li><li><a href="#13">PitchTier</a></li></ul></div><h2>mPraat and rPraat homepage<a name="1"></a></h2><p>rPraat and mPraat homepage: <a href="http://fu.ff.cuni.cz/praat/">http://fu.ff.cuni.cz/praat/</a></p><p>Toolbox mPraat at github: <a href="https://github.com/bbTomas/mPraat">https://github.com/bbTomas/mPraat</a></p><h2>Installation and help<a name="2"></a></h2><p>Download mPraat v1.0.0: mPraat-master.zip <a href="https://github.com/bbTomas/mPraat/archive/master.zip">https://github.com/bbTomas/mPraat/archive/master.zip</a></p><p>To install mPraat, just unzip all files to any directory of your choice and Set Path (in Matlab) to this directory.</p><p>For help and examples, use command</p><pre class="language-matlab">help <span class="string">functionName</span>
 </pre><p>- or -</p><pre class="language-matlab">doc <span class="string">functionName</span>
 </pre><h2>Read and plot TextGrid, PitchTier and Sound<a name="3"></a></h2><pre class="codeinput">tg = tgRead(<span class="string">'demo/H.TextGrid'</span>);
 figure, tgPlot(tg)
@@ -401,6 +401,9 @@ labelsOfInterest =
 
 
 %% Installation and help
+% Download mPraat v1.0.0: mPraat-master.zip
+% <https://github.com/bbTomas/mPraat/archive/master.zip>
+%
 % To install mPraat, just unzip all files to any directory of your choice
 % and Set Path (in Matlab) to this directory.
 %
