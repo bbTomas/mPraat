@@ -6,7 +6,7 @@ function tgNew = tgInsertNewPointTier(tg, tierInd, tierName)
 %
 % tierInd ... new tier index (1 = the first)
 % tierName ... new tier name
-%
+% 
 % v1.0, Tomas Boril, borilt@gmail.com
 %
 %   tg = tgRead('demo/H.TextGrid');

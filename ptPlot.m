@@ -2,7 +2,7 @@ function ptPlot(pt)
 % function ptPlot(pt)
 %
 % Plots PitchTier.
-%
+% 
 % v1.0, Tomas Boril, borilt@gmail.com
 %
 % Example

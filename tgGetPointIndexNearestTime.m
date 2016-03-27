@@ -3,7 +3,7 @@ function ind = tgGetPointIndexNearestTime(tg, tierInd, time)
 %
 % Returns index of point which is nearest the given time (from both sides).
 % Tier index must belong to point tier. 
-%
+% 
 % tierInd ... tier index or 'name'
 % time ... time which is going to be found in points
 %

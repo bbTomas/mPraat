@@ -5,7 +5,7 @@ function I = tgI(tg, tierIndexOrName)
 % the TextGrid and returns the same number. It the input is character name,
 % it search the TextGrid and return the index of the first tier with that
 % name.
-%
+% 
 % tierIndexOrName ... tier index or 'name'
 %
 % v1.0, Tomas Boril, borilt@gmail.com

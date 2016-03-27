@@ -5,7 +5,7 @@ function tgNew = tgSetTierName(tg, tierInd, name)
 %
 % tierInd ... tier index or 'name'
 % name ... new 'name'
-%
+% 
 % v1.0, Tomas Boril, borilt@gmail.com
 %
 % Example

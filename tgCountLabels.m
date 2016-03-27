@@ -5,7 +5,7 @@ function c = tgCountLabels(tg, tierInd, label)
 %
 % tierInd ... tier index or 'name'
 % label ... label to be counted
-%
+% 
 % v1.0, Tomas Boril, borilt@gmail.com
 %
 % Example

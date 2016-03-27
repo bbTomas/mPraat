@@ -4,7 +4,7 @@ function t = tgGetStartTime(tg, tierInd)
 % Returns start time. If tier index is specified, it returns start time
 % of the tier, if it is not specified, it returns start time of the whole
 % TextGrid.
-%
+% 
 % tierInd ... [optional] tier index or 'name'
 %
 % v1.0, Tomas Boril, borilt@gmail.com

@@ -4,7 +4,7 @@ function b = tgIsIntervalTier(tg, tierInd)
 % Returns true if the tier is IntervalTier, false otherwise.
 %
 % tierInd ... tier index or 'name'
-%
+% 
 % v1.0, Tomas Boril, borilt@gmail.com
 %
 % Example

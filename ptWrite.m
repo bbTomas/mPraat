@@ -5,7 +5,7 @@ function ptWrite(pt, fileNamePitchtier)
 % pt is struct with at least 't' and 'f' fields (one dimensional matrices
 % of the same length). If there are no 'tmin' and 'tmax' fields, there are
 % set as min and max of 't' field.
-%
+% 
 % fileNamePitchtier ... file name to be created
 %
 % v1.0, Tomas Boril, borilt@gmail.com

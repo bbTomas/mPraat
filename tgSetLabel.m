@@ -3,7 +3,7 @@ function tgNew = tgSetLabel(tg, tierInd, index, label)
 %
 % Sets (changes) label of interval or point of the given index in the
 % interval or point tier.
-%
+% 
 % tierInd ... tier index or 'name'
 % index ... index of interval or point
 % label ... new 'label'

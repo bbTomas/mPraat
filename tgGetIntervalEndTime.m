@@ -7,7 +7,7 @@ function t = tgGetIntervalEndTime(tg, tierInd, index)
 % index ... index of interval
 %
 % v1.0, Tomas Boril, borilt@gmail.com
-%
+% 
 % Example
 %   tg = tgRead('demo/H.TextGrid');
 %   tgGetIntervalEndTime(tg, 'phone', 5)

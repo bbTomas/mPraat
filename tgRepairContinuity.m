@@ -7,7 +7,7 @@ function tgNew = tgRepairContinuity(tg, verbose)
 % round-up errors featuring, e.g., T2 of preceding interval is slightly
 % higher than the T1 of the current interval. Because of that, the boundary
 % cannot be manually moved in Praat edit window.
-%
+% 
 % verbose ... [optional] if true, the function performs everything quietly.
 %
 % v1.0, Tomas Boril, borilt@gmail.com

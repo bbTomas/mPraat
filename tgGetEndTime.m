@@ -8,7 +8,7 @@ function t = tgGetEndTime(tg, tierInd)
 % tierInd ... [optional] tier index or 'name'
 %
 % v1.0, Tomas Boril, borilt@gmail.com
-%
+% 
 % Example
 %   tg = tgRead('demo/H.TextGrid');
 %   tgGetEndTime(tg)

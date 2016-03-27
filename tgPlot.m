@@ -2,7 +2,7 @@ function tgPlot(tg, subPlotStartIndex)
 % function tgPlot(tg, subPlotStartIndex)
 %
 % Plots TextGrid.
-%
+% 
 % subPlotStartIndex: optional argument, it indicates the initial index of
 % subplot where the first tier is going to be plotter. It is useful, e.g,
 % in a situation when we want to draw a wave in the first position, a

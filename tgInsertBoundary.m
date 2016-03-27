@@ -3,7 +3,7 @@ function tgNew = tgInsertBoundary(tg, tierInd, time, label)
 %
 % Inserts new boundary into interval tier. This creates a new interval, to
 % which we can set the label (optional argument).
-%
+% 
 % tierInd ... tier index or 'name'
 % time ... time of the new boundary
 % label ... [optional] label of the new interval

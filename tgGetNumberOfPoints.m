@@ -4,7 +4,7 @@ function c = tgGetNumberOfPoints(tg, tierInd)
 % Returns number of points in the given point tier.
 %
 % v1.0, Tomas Boril, borilt@gmail.com
-%
+% 
 % Example
 %   tg = tgRead('demo/H.TextGrid');
 %   tgGetNumberOfPoints(tg, 'phoneme')

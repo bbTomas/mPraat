@@ -5,7 +5,7 @@ function t = tgGetIntervalStartTime(tg, tierInd, index)
 %
 % tierInd ... tier index or 'name'
 % index ... index of interval
-%
+% 
 % v1.0, Tomas Boril, borilt@gmail.com
 %
 % Example

@@ -2,7 +2,7 @@ function t = tgGetPointTime(tg, tierInd, index)
 % function t = tgGetPointTime(tg, tierInd, index)
 %
 % Return time of point at the specified index in point tier.
-%
+% 
 % tierInd ... tier index or 'name'
 % index ... index of point
 %

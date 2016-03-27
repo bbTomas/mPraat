@@ -2,7 +2,7 @@ function b = tgIsPointTier(tg, tierInd)
 % function b = tgIsPointTier(tg, tierInd)
 %
 % Returns true if the tier is PointTier, false otherwise.
-%
+% 
 % tierInd ... tier index or 'name'
 %
 % v1.0, Tomas Boril, borilt@gmail.com

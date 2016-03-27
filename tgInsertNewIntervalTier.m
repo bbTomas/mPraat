@@ -5,7 +5,7 @@ function tgNew = tgInsertNewIntervalTier(tg, tierInd, tierName, tStart, tEnd)
 % shifted). The new tier contains one empty interval from beginning to end.
 % Then, if we add new boundaries, this interval is divided to smaller
 % pieces.
-%
+% 
 % tierInd ... new tier index (1 = the first)
 % tierName ... new tier name
 % tStart [optional] ... start time of the new tier

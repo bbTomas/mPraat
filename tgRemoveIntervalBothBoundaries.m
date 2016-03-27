@@ -14,7 +14,7 @@ function tgNew = tgRemoveIntervalBothBoundaries(tg, tierInd, index)
 % i.e., the desired result is 1-empty-3, it is not this operation of
 % removing boundaries. Just set the label of the second interval to the
 % empty string ''.
-%
+% 
 % tierInd ... tier index or 'name'
 %
 % v1.0, Tomas Boril, borilt@gmail.com

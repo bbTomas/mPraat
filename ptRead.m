@@ -4,7 +4,7 @@ function pt = ptRead(fileName)
 % Reads PitchTier from Praat. Supported formats: text file, short text file,
 % spread sheet, headerless spread sheet (headerless not recommended,
 % it does not contain tmin and tmax info).
-%
+% 
 % fileName ... file name of PitchTier
 %
 % v1.0, Tomas Boril, borilt@gmail.com

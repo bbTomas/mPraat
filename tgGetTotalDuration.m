@@ -4,7 +4,7 @@ function t = tgGetTotalDuration(tg, tierInd)
 % Returns total duration. If tier index is specified, it returns duration
 % of the tier, if it is not specified, it returns total duration of the
 % TextGrid.
-%
+% 
 % tierInd ... [optional] tier index or 'name'
 %
 % v1.0, Tomas Boril, borilt@gmail.com

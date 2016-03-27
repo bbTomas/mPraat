@@ -11,7 +11,7 @@ function tgNew = tgRemoveIntervalLeftBoundary(tg, tierInd, index)
 % to the empty string '' before this operation.
 %
 % tierInd ... tier index or 'name'
-%
+% 
 % v1.0, Tomas Boril, borilt@gmail.com
 %
 % Example

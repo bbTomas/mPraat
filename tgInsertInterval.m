@@ -7,7 +7,7 @@ function tgNew = tgInsertInterval(tg, tierInd, tStart, tEnd, label)
 % beginning to the end.
 % b) Outside og existing intervals (left or right), this may create another
 % empty interval between.
-%
+% 
 % tierInd ... tier index or 'name'
 % tStart ... start time of the new interval
 % tEnd ... end time of the new interval

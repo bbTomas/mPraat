@@ -1,6 +1,6 @@
 % Estimated Time to Achieve
 %   Tomas Boril v1.1
-%
+% 
 % Commands:
 %   before cycle
 %     etaTB('start');

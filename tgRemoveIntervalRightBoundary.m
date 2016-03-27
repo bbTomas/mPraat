@@ -9,7 +9,7 @@ function tgNew = tgRemoveIntervalRightBoundary(tg, tierInd, index)
 % interval, the result is two intervals 1-23.
 % If we do not want to concatenate labels, we have to set the label
 % to the empty string '' before this operation.
-%
+% 
 % tierInd ... tier index or 'name'
 %
 % v1.0, Tomas Boril, borilt@gmail.com

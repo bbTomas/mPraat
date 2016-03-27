@@ -5,7 +5,7 @@ function res = round2(x, order)
 %
 % x ... number to be rounded
 % order ... 1 = units, 10 = tens, -1 = tenths, etc.
-%
+% 
 % v1.0, Tomas Boril, borilt@gmail.com
 %
 % Example

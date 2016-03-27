@@ -8,7 +8,7 @@ function tgNew = tgDuplicateTier(tg, originalInd, newInd)
 % same name which is permitted but not recommended. In such a case, we
 % cannot use the comfort of using tier name instead of its index in other
 % functions.
-%
+% 
 % originalInd ... tier index or 'name'
 % newInd ... new tier index (1 = the first)
 %

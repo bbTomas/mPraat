@@ -7,7 +7,7 @@ function t = tgGetIntervalDuration(tg, tierInd, index)
 % index ... index of interval
 %
 % v1.0, Tomas Boril, borilt@gmail.com
-%
+% 
 % Example
 %   tg = tgRead('demo/H.TextGrid');
 %   tgGetIntervalDuration(tg, 'phone', 5)

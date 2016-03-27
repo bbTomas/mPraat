@@ -7,7 +7,7 @@ function tgWrite(tgrid, fileNameTextGrid)
 % If there is no .tmin and .tmax, they are calculated as min and max of
 % all tiers. The file is saved in Short text file, UTF-8 format.
 % v1.5 Tomas Boril, borilt@gmail.com
-%
+% 
 % Example
 %   tg = tgRead('demo/H.TextGrid');
 %   tgPlot(tg);

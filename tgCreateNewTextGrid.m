@@ -7,7 +7,7 @@ function tgNew = tgCreateNewTextGrid(tStart, tEnd)
 %
 % This empty TextGrid cannot be used for almost anything. At least one tier
 % should be inserted using tgInsertNewIntervalTier or tgInsertNewPointTier.
-%
+% 
 % v1.0, Tomas Boril, borilt@gmail.com
 %
 % Example

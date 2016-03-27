@@ -5,7 +5,7 @@ function textgrid = tgRead(fileName)
 % it handles both Interval and Point tiers.
 % Labels can may contain quotation marks and new lines.
 % v1.4, Tomas Boril, borilt@gmail.com
-%
+% 
 % Example
 %   tg = tgRead('demo/H.TextGrid');
 %   tgPlot(tg);

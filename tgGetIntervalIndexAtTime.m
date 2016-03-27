@@ -6,7 +6,7 @@ function ind = tgGetIntervalIndexAtTime(tg, tierInd, time)
 %
 % tierInd ... tier index or 'name'
 % time ... time which is going to be found in intervals
-%
+% 
 % v1.0, Tomas Boril, borilt@gmail.com
 %
 % Example

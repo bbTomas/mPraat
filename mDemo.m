@@ -3,7 +3,7 @@
 %% mPraat and rPraat homepage
 % rPraat and mPraat homepage:
 % <http://fu.ff.cuni.cz/praat/>
-%
+% 
 % Toolbox mPraat at github:
 % <https://github.com/bbTomas/mPraat>
 

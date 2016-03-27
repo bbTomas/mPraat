@@ -6,7 +6,7 @@ function tgNew = tgInsertPoint(tg, tierInd, time, label)
 % tierInd ... tier index or 'name'
 % time ... time of the new point
 % label ... time of the new point
-%
+% 
 % v1.0, Tomas Boril, borilt@gmail.com
 %
 % Example
