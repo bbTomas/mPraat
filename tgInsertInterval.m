@@ -192,7 +192,7 @@ elseif tStart >= tgLeft && tEnd <= tgRight
                 tgNew = tgInsertBoundary(tg, tierInd, tEnd);
                 tgNew = tgInsertBoundary(tgNew, tierInd, tStart, label);
             else
-                error('Logical error in this function, this situation must not happened. Contact author, but please, be kind, he is really sorry this happened.')
+                error('Error in author''s logic. This cannot happen. Please, contact the author but be kind. He is really unhappy about this confusion.')
             end
         else
             error(['Cannot insert new interval (' num2str(tStart) ' to ' num2str(tEnd) ' sec, ''' label ''') into the interval with a non-empty label (' num2str(tg.tier{tierInd}.T1(iStart)) ' to ' num2str(tg.tier{tierInd}.T2(iStart)) ' sec, ''' tg.tier{tierInd}.Label{iStart} '''), it is forbidden.'])
@@ -201,7 +201,7 @@ elseif tStart >= tgLeft && tEnd <= tgRight
         error(['intersection of new interval (' num2str(tStart) ' to ' num2str(tEnd) ' sec, ''' label ''') and several others already existing (indices ' num2str(iStart) ' to ' num2str(iEnd) ') is forbidden'])
     end
 else
-    error('Logical error in this function, this situation must not happened. Contact author, but please, be kind, he is really sorry this happened.')
+    error('Error in author''s logic. This cannot happen. Please, contact the author but be kind. He is really unhappy about this confusion.')
 end
 
 return

@@ -43,7 +43,7 @@ for I = 1: nTiers
             maxTimeTotal = max(tgrid.tier{I}.T2(end), maxTimeTotal);
         end
     else
-        nInt = length(tgrid.tier{I}.T); % number of intervals
+        nInt = length(tgrid.tier{I}.T); % number of points
         if nInt > 0
             minTimeTotal = min(tgrid.tier{I}.T(1), minTimeTotal);
             maxTimeTotal = max(tgrid.tier{I}.T(end), maxTimeTotal);
