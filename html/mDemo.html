@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>mPraat demonstration</title><meta name="generator" content="MATLAB 8.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2016-03-27"><meta name="DC.source" content="mDemo.m"><style type="text/css">
+      --><title>mPraat demonstration</title><meta name="generator" content="MATLAB 8.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2016-04-12"><meta name="DC.source" content="mDemo.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -65,7 +65,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>mPraat demonstration</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">mPraat and rPraat homepage</a></li><li><a href="#2">Installation and help</a></li><li><a href="#3">Read and plot TextGrid, PitchTier and Sound</a></li><li><a href="#4">TextGrid</a></li><li><a href="#5">Tier accessed both by index and name (TextGrid)</a></li><li><a href="#6">Point tier (TextGrid)</a></li><li><a href="#7">Point tier 'low-level access' (TextGrid)</a></li><li><a href="#8">Interval tier  (TextGrid)</a></li><li><a href="#9">Interval tier 'low-level access' (TextGrid)</a></li><li><a href="#10">Vectorized operations</a></li><li><a href="#11">Overview of some TextGrid operations</a></li><li><a href="#12">Repair continuity problem of TextGrid</a></li><li><a href="#13">PitchTier</a></li></ul></div><h2>mPraat and rPraat homepage<a name="1"></a></h2><p>rPraat and mPraat homepage: <a href="http://fu.ff.cuni.cz/praat/">http://fu.ff.cuni.cz/praat/</a></p><p>Toolbox mPraat at github: <a href="https://github.com/bbTomas/mPraat">https://github.com/bbTomas/mPraat</a></p><h2>Installation and help<a name="2"></a></h2><p>Download mPraat v1.0.0: mPraat-master.zip <a href="https://github.com/bbTomas/mPraat/archive/master.zip">https://github.com/bbTomas/mPraat/archive/master.zip</a></p><p>To install mPraat, just unzip all files to any directory of your choice and Set Path (in Matlab) to this directory.</p><p>For help and examples, use command</p><pre class="language-matlab">help <span class="string">functionName</span>
+  </style></head><body><div class="content"><h1>mPraat demonstration</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">mPraat and rPraat homepage</a></li><li><a href="#2">Installation and help</a></li><li><a href="#3">Read and plot TextGrid, PitchTier and Sound</a></li><li><a href="#4">TextGrid</a></li><li><a href="#5">Tier accessed both by index and name (TextGrid)</a></li><li><a href="#6">Point tier (TextGrid)</a></li><li><a href="#7">Point tier 'low-level access' (TextGrid)</a></li><li><a href="#8">Interval tier  (TextGrid)</a></li><li><a href="#9">Interval tier 'low-level access' (TextGrid)</a></li><li><a href="#10">Vectorized operations</a></li><li><a href="#11">Overview of some TextGrid operations</a></li><li><a href="#12">Repair continuity problem of TextGrid</a></li><li><a href="#13">PitchTier</a></li><li><a href="#14">Process all files in folder</a></li></ul></div><h2>mPraat and rPraat homepage<a name="1"></a></h2><p>rPraat and mPraat homepage: <a href="http://fu.ff.cuni.cz/praat/">http://fu.ff.cuni.cz/praat/</a></p><p>Toolbox mPraat at github: <a href="https://github.com/bbTomas/mPraat">https://github.com/bbTomas/mPraat</a></p><h2>Installation and help<a name="2"></a></h2><p>Download mPraat v1.0.0: mPraat-master.zip <a href="https://github.com/bbTomas/mPraat/archive/master.zip">https://github.com/bbTomas/mPraat/archive/master.zip</a></p><p>To install mPraat, just unzip all files to any directory of your choice and Set Path (in Matlab) to this directory.</p><p>For help and examples, use command</p><pre class="language-matlab">help <span class="string">functionName</span>
 </pre><p>- or -</p><pre class="language-matlab">doc <span class="string">functionName</span>
 </pre><h2>Read and plot TextGrid, PitchTier and Sound<a name="3"></a></h2><pre class="codeinput">tg = tgRead(<span class="string">'demo/H.TextGrid'</span>);
 figure, tgPlot(tg)
@@ -388,14 +388,30 @@ labelsOfInterest =
 
     [1x0 char]    'j&aacute;'    'ti'    '&#345;eknu'    'co'    'ud&#283;l&aacute;&#353;'
 
-</pre><img vspace="5" hspace="5" src="mDemo_08.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2013b</a><br></p></div><!--
+</pre><img vspace="5" hspace="5" src="mDemo_08.png" alt=""> <h2>Process all files in folder<a name="14"></a></h2><pre class="language-matlab">inputFolder = <span class="string">'experiment1/data'</span>;
+listFiles = dir([inputFolder <span class="string">'/*.TextGrid'</span>]);  <span class="comment">% Beware of case-sensitive file system!</span>
+</pre><pre class="language-matlab"><span class="keyword">for</span> (I = 1: length(listFiles))
+    file = listFiles(I).name;
+    <span class="keyword">if</span> listFiles(I).isdir
+        <span class="keyword">continue</span>
+    <span class="keyword">end</span>
+    fileName = file(1:end-9);
+    fileTextGrid = [inputFolder, <span class="string">'/'</span>, fileName, <span class="string">'.TextGrid'</span>];
+    filePitchTier = [inputFolder, <span class="string">'/'</span>, fileName, <span class="string">'.PitchTier'</span>];
+    fileSound = [inputFolder, <span class="string">'/'</span>, fileName, <span class="string">'.wav'</span>];
+    <span class="comment">%</span>
+    tg = tgRead(fileTextGrid);
+    pt = ptRead(filePitchTier);
+    <span class="comment">% your code %</span>
+<span class="keyword">end</span>
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2013b</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 %% mPraat demonstration
 
 %% mPraat and rPraat homepage
 % rPraat and mPraat homepage:
 % <http://fu.ff.cuni.cz/praat/>
-%
+% 
 % Toolbox mPraat at github:
 % <https://github.com/bbTomas/mPraat>
 
@@ -583,6 +599,27 @@ ptCut.tmax = ptCut.t(end);
 ptPlot(ptCut); xlabel('Time (sec)'); ylabel('Frequency (ST)');
 
 ptWrite(ptCut, 'demo/H_cut.PitchTier')
+
+
+%% Process all files in folder
+%   inputFolder = 'experiment1/data';
+%   listFiles = dir([inputFolder '/*.TextGrid']);  % Beware of case-sensitive file system!
+%   
+%   for (I = 1: length(listFiles))
+%       file = listFiles(I).name;
+%       if listFiles(I).isdir
+%           continue
+%       end
+%       fileName = file(1:end-9);
+%       fileTextGrid = [inputFolder, '/', fileName, '.TextGrid'];
+%       filePitchTier = [inputFolder, '/', fileName, '.PitchTier'];
+%       fileSound = [inputFolder, '/', fileName, '.wav'];
+%       %
+%       tg = tgRead(fileTextGrid);
+%       pt = ptRead(filePitchTier);
+%       % your code %
+%   end
+
 
 
 ##### SOURCE END #####

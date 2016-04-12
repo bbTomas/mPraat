@@ -192,3 +192,24 @@ ptPlot(ptCut); xlabel('Time (sec)'); ylabel('Frequency (ST)');
 
 ptWrite(ptCut, 'demo/H_cut.PitchTier')
 
+
+%% Process all files in folder
+%   inputFolder = 'experiment1/data';
+%   listFiles = dir([inputFolder '/*.TextGrid']);  % Beware of case-sensitive file system!
+%   
+%   for (I = 1: length(listFiles))
+%       file = listFiles(I).name;
+%       if listFiles(I).isdir
+%           continue
+%       end
+%       fileName = file(1:end-9);
+%       fileTextGrid = [inputFolder, '/', fileName, '.TextGrid'];
+%       filePitchTier = [inputFolder, '/', fileName, '.PitchTier'];
+%       fileSound = [inputFolder, '/', fileName, '.wav'];
+%       %
+%       tg = tgRead(fileTextGrid);
+%       pt = ptRead(filePitchTier);
+%       % your code %
+%   end
+
+
