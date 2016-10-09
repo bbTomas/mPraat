@@ -7,6 +7,22 @@
 % Toolbox mPraat at github:
 % <https://github.com/bbTomas/mPraat>
 
+%% How to cite this toolbox?
+% We have invested a lot of time and effort in creating mPraat toolbox / rPraat package, please cite it when using it for data analysis.
+%
+% *Boøil, T., & Skarnitzl, R. (2016). Tools rPraat and mPraat. In P. Sojka, A. Horák, I. Kopeèek, & K. Pala (Eds.), Text, Speech, and Dialogue (pp. 367–374). Springer International Publishing.*
+%
+% Download Tools rPraat and mPraat manuscript .pdf:
+% <http://fu.ff.cuni.cz/praat/boril_skarnitzl_2016_Tools_rPraat_and_mPraat_[manuscript].pdf>
+%
+% The final publication is available at Springer via
+% <http://dx.doi.org/10.1007/978-3-319-45510-5_42>
+%
+% Download BibTeX reference mpraatrpraat2016.bib:
+% <http://fu.ff.cuni.cz/praat/mpraatrpraat2016.bib>
+
+
+
 
 %% Installation and help
 % Download mPraat v1.0.0: mPraat-master.zip
