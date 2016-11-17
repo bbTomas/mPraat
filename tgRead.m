@@ -4,7 +4,7 @@ function textgrid = tgRead(fileName)
 % Loads TextGrid from Praat in Text or Short text format (UTF-8),
 % it handles both Interval and Point tiers.
 % Labels can may contain quotation marks and new lines.
-% v1.4, Tomas Boril, borilt@gmail.com
+% v1.5, Tomas Boril, borilt@gmail.com
 % 
 % Example
 %   tg = tgRead('demo/H.TextGrid');
@@ -45,7 +45,13 @@ end
 if shortFormat
     numberOfTiers = str2double(fgetl(fid));
 else
-    r = textscan(fgetl(fid), 'size = %d');
+    r = fgetl(fid);
+    if r(end) ~= ' '
+        sppasFormat = true;
+    else
+        sppasFormat = false;
+    end
+    r = textscan(r, 'size = %d');
     numberOfTiers = r{1};
 end
 
@@ -112,7 +118,11 @@ for tier = 1: numberOfTiers
                 rind = strfind(r, '"');
                 numberOfQuotationMarks = sum(r == '"');
                 if mod(numberOfQuotationMarks, 2) ~= 1 % remove whitespace at the end of line, it is only in the case of even number of quotation marks
-                    r = r(rind(1): end-1);
+                    if sppasFormat ~= true
+                        r = r(rind(1): end-1);
+                    else
+                        r = r(rind(1): end);
+                    end
                 else
                     r = r(rind(1): end);
                 end
@@ -124,7 +134,7 @@ for tier = 1: numberOfTiers
                 while 1
                     r = fgetl(fid);
                     numberOfQuotationMarks = sum(r == '"');
-                    if ~shortFormat && mod(numberOfQuotationMarks, 2) == 1 % remove whitespace at the end of line, it is only in the case of odd number of quotation marks
+                    if ~shortFormat && mod(numberOfQuotationMarks, 2) == 1 && ~sppasFormat % remove whitespace at the end of line, it is only in the case of odd number of quotation marks
                         r = r(1: end-1);
                     end
 
@@ -194,7 +204,11 @@ for tier = 1: numberOfTiers
                 rind = strfind(r, '"');
                 numberOfQuotationMarks = sum(r == '"');
                 if mod(numberOfQuotationMarks, 2) ~= 1 % remove whitespace at the end of line, it is only in the case of even number of quotation marks
-                    r = r(rind(1): end-1);
+                    if sppasFormat ~= true
+                        r = r(rind(1): end-1);
+                    else
+                        r = r(rind(1): end);
+                    end
                 else
                     r = r(rind(1): end);
                 end
@@ -206,7 +220,7 @@ for tier = 1: numberOfTiers
                 while 1
                     r = fgetl(fid);
                     numberOfQuotationMarks = sum(r == '"');
-                    if ~shortFormat && mod(numberOfQuotationMarks, 2) == 1 % remove whitespace at the end of line, it is only in the case of odd number of quotation marks
+                    if ~shortFormat && mod(numberOfQuotationMarks, 2) == 1 && ~sppasFormat % remove whitespace at the end of line, it is only in the case of odd number of quotation marks
                         r = r(1: end-1);
                     end
 
