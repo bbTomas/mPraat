@@ -8,8 +8,8 @@ function tgNew = tgInsertNewIntervalTier(tg, tierInd, tierName, tStart, tEnd)
 % 
 % tierInd ... new tier index (1 = the first)
 % tierName ... new tier name
-% tStart [optional] ... start time of the new tier
-% tEnd [optional] ... end time of the new tier
+% tStart ... [optional] start time of the new tier
+% tEnd ... [optional] end time of the new tier
 %
 % v1.0, Tomas Boril, borilt@gmail.com
 %

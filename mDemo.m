@@ -25,7 +25,7 @@
 
 
 %% Installation and help
-% Download mPraat v1.0.1: mPraat-master.zip
+% Download mPraat: mPraat-master.zip
 % <https://github.com/bbTomas/mPraat/archive/master.zip>
 %
 % To install mPraat, just unzip all files to any directory of your choice
@@ -187,27 +187,52 @@ tgNew2 = tgRepairContinuity(tgNew); % no problem in repaired TextGrid
 
 
 %% PitchTier
-% Transform Hz to semitones (ST) and cut the pitchtier along the TextGrid.
+% Transform Hz to semitones (ST), cut the original pitchtier along the TextGrid, make interpolated contour.
 
 pt = ptRead('demo/H.PitchTier');
-pt.f = 12*log(pt.f/100) / log(2);  % conversion of Hz to Semitones, reference 0 ST = 100 Hz.
+pt = ptHz2ST(pt, 100);  % conversion of Hz to Semitones, reference 0 ST = 100 Hz.
 
-subplot(2,1,1)
+subplot(3,1,1)
 ptPlot(pt); xlabel('Time (sec)'); ylabel('Frequency (ST)');
 
-subplot(2,1,2)
+subplot(3,1,2)
 tg = tgRead('demo/H.TextGrid');
-labelsOfInterest = tg.tier{tgI(tg, 'word')}.Label(1:6) .'
+labelsOfInterest = tg.tier{tgI(tg, 'word')}.Label(2:6) .'
 
-conditionCut = (pt.t >= 0  &  pt.t <= tgGetIntervalEndTime(tg, 'word', 6));
-ptCut = pt;
-ptCut.t = pt.t(conditionCut);
-ptCut.f = pt.f(conditionCut);
-ptCut.tmax = ptCut.t(end);
-ptPlot(ptCut); xlabel('Time (sec)'); ylabel('Frequency (ST)');
+pt2 = ptCut0(pt, tgGetIntervalStartTime(tg, 'word', 2), tgGetIntervalEndTime(tg, 'word', 6));
+ptPlot(pt2); xlabel('Time (sec)'); ylabel('Frequency (ST)');
 
-ptWrite(ptCut, 'demo/H_cut.PitchTier')
+subplot(3,1,3)
+pt2interp = ptInterpolate(pt2, pt2.t(1): 0.001: pt2.t(end));
+ptPlot(pt2interp); xlabel('Time (sec)'); ylabel('Frequency (ST)');
 
+ptWrite(pt2interp, 'demo/H_cut_interp.PitchTier')
+
+%% Legendre polynomials modelling
+
+% Orthogonal basis
+ptLegendreDemo()
+
+% Cut the PitchTier
+pt = ptRead('demo/H.PitchTier');
+pt = ptHz2ST(pt, 100);
+pt = ptCut(pt, 3);  % cut PitchTier from t = 3 sec and preserve time
+
+% Model it using Legendre polynomials
+c = ptLegendre(pt)
+
+% Reconstruct the contour from these 4 coefficients
+leg = ptLegendreSynth(c);
+ptLeg = pt;
+ptLeg.t = linspace(ptLeg.tmin, ptLeg.tmax, length(leg));
+ptLeg.f = leg;
+
+figure
+plot(pt.t, pt.f, 'ko'); xlabel('Time (sec)'); ylabel('F0 (ST re 100 Hz)');
+hold on
+plot(ptLeg.t, ptLeg.f, 'b')
+hold off
+axis tight
 
 %% Process all files in folder
 %   inputFolder = 'experiment1/data';
