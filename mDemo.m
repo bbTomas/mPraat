@@ -134,6 +134,70 @@ meanDur = mean( dur )
 
 figure, hist(dur)
 
+%% Find labels in TextGrid: find label 'n' in phoneme tier (Point tier)
+tg = tgRead('demo/H_plain.TextGrid');
+i = tgFindLabels(tg, 'phoneme', 'n')   % get result indices
+length(i)  % 4 results
+i{1}       % index of the first result
+tg.tier{tgI(tg, 'phoneme')}.Label{i{1}}   % label of the 1st result
+tg.tier{tgI(tg, 'phoneme')}.Label(cell2mat(i))  % all found label: cell-array of char strings
+
+%% Find labels in TextGrid: find fragments with successive labels '?' 'a' in phone tear (Interval tier)
+i = tgFindLabels(tg, 'phone', {'?', 'a'})
+length(i)   % 2 results found
+i{1}        % indices of the first result
+length(i{1}) % length of the first result
+i{1}(2)     % index of the 2nd label of the first result
+tg.tier{tgI(tg, 'phone')}.Label{i{1}(2)}  % 2nd label of the first result
+i{2}        % indices of the second result
+tg.tier{tgI(tg, 'phone')}.Label(i{1})  % label of the 1st result: cell-array of char strings
+tg.tier{tgI(tg, 'phone')}.Label(i{2})  % 2nd result
+tg.tier{tgI(tg, 'phone')}.Label(cell2mat(i))  % all results together: cell-array of char strings
+
+%% Find labels in TextGrid: find fragments with successive labels '?' 'a' in phone tier and return initial and final time of these fragments
+t = tgFindLabels(tg, 'phone', {'?', 'a'}, true)  % 2 results and their initial (T1) and final (T2) time
+t.T2(1) - t.T1(1)    % duration of the first fragment
+t.T2(2) - t.T1(2)    % duration of the second fragment
+t.T2 - t.T1          % durations of all fragments
+
+%% Find labels in TextGrid: find fragments with successive labels 'ti' 'reknu' 'co' in word tier (Interval tier)
+i = tgFindLabels(tg, 'word', {'ti', 'reknu', 'co'})
+length(i)   % 1 result found
+i{1}          % indices of segments in the first (and only) result
+length(i{1})  % length of the first (and only) result (number of segments)
+i{1}(2)       % index of the second segment in the first result
+tg.tier{tgI(tg, 'word')}.Label{i{1}(2)} % second label in the fragment
+tg.tier{tgI(tg, 'word')}.Label(i{1})    % all labels in the fragment: cell-array of char strings
+
+%% Find labels in TextGrid: get initial and final time of the fragment and extract this interval from the PitchTier
+t = tgFindLabels(tg, 'word', {'ti', 'reknu', 'co'}, true)
+pt = ptRead('demo/H.PitchTier');
+tStart = t.T1(1)
+tEnd = t.T2(1)
+ptPlot(ptCut(pt, tStart, tEnd))
+
+
+
+%% Create syllable tier from phone tier
+
+tg = tgRead('demo/H.TextGrid');
+tg = tgRemoveTier(tg, 5); tg = tgRemoveTier(tg, 4); tg = tgRemoveTier(tg, 3); tg = tgRemoveTier(tg, 1); % get phone tier only
+
+% Get actual labels - concatenated (collapsed into one string)
+% Use horzcat instead of strcat because strcat removes leading white-space chars which is undesirable.
+collapsed = horzcat(tg.tier{tgI(tg, 'phone')}.Label{:})
+
+% Edit the collapsed string with labels - insert separators to mark boundaries of syllables.
+
+% * There can be segments with empty labels in the original tier (pauses), do not specify them in the pattern.
+% * Beware of labels that appear empty but they are not (space, new line character etc.) - these segments are handled as classical non-empty labels. See example - one label is ' ', therefore it must be specified in the pattern.
+
+pattern = 'ja:-ci-P\ek-nu-t_so-?u-J\e-la:S- -nej-dP\i:f-naj-deZ-h\ut_S-ku-?a-?a-ta-ma-na:'
+tg2 = tgDuplicateTierMergeSegments(tg, 'phone', 1, 'syll', pattern, '-');
+tgPlot(tg2);
+
+
+
 
 %% Overview of some TextGrid operations
 % For all functions, see help for description and example of use.
@@ -161,12 +225,16 @@ tg = tgRemoveIntervalBothBoundaries(tg, 'WORD2', ind);
 figure, tgPlot(tg)
 
 tgNew = tgCreateNewTextGrid(0, 5);
-tgNew = tgInsertNewIntervalTier(tgNew, 1, 'word');
+tgNew = tgInsertNewIntervalTier(tgNew, 1, 'word');   % the first tier
 tgNew = tgInsertInterval(tgNew, 1, 2, 3.5, 'hello');
 tgNew = tgInsertInterval(tgNew, 1, 4, 4.8, 'world');
+tgNew = tgInsertNewIntervalTier(tgNew, Inf, 'wordLast');  % the last tier (at this moment)
+tgNew = tgInsertInterval(tgNew, 'wordLast', 2, 3, 'ABC');
 tgNew = tgInsertNewPointTier(tgNew, 2, 'click');
 tgNew = tgInsertPoint(tgNew, 2, 2, 'click');
 tgNew = tgInsertPoint(tgNew, 2, 4, 'click');
+tgNew = tgInsertNewPointTier(tgNew, Inf, 'pointTierLast');
+tgNew = tgInsertPoint(tgNew, 'pointTierLast', 3, 'point');
 figure, tgPlot(tgNew)
 tgWrite(tgNew, 'demo/ex_output.TextGrid');
 

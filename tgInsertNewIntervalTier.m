@@ -6,7 +6,7 @@ function tgNew = tgInsertNewIntervalTier(tg, tierInd, tierName, tStart, tEnd)
 % Then, if we add new boundaries, this interval is divided to smaller
 % pieces.
 % 
-% tierInd ... new tier index (1 = the first)
+% tierInd ... new tier index (1 = the first, Inf = the last)
 % tierName ... new tier name
 % tStart ... [optional] start time of the new tier
 % tEnd ... [optional] end time of the new tier
@@ -18,6 +18,8 @@ function tgNew = tgInsertNewIntervalTier(tg, tierInd, tierName, tStart, tEnd)
 %   tg2 = tgInsertBoundary(tg2, 'INTERVALS', 0.8);
 %   tg2 = tgInsertBoundary(tg2, 'INTERVALS', 0.1, 'Interval A');
 %   tg2 = tgInsertInterval(tg2, 'INTERVALS', 1.2, 2.5, 'Interval B');
+%   tg2 = tgInsertNewIntervalTier(tg2, Inf, 'LastTier');
+%   tg2 = tgInsertInterval(tg2, 'LastTier', 1, 3, 'This is the last tier');
 %   tgPlot(tg2);
 
 
@@ -26,10 +28,19 @@ if nargin ~= 3 && nargin ~= 5
 end
 
 if ~isInt(tierInd)
-    error(['tierInd must be integer >= 1 [' num2str(tierInd) ']']);
+    error(['tierInd must be integer >= 1 or +Inf [' num2str(tierInd) ']']);
 end
 
 ntiers = tgGetNumberOfTiers(tg);
+
+if isinf(tierInd)
+    if tierInd > 0
+        tierInd = ntiers+1;
+    else
+        error('tierInd must be integer >= 1 or +Inf')
+    end
+end
+
 if tierInd < 1 || tierInd>ntiers+1
     error(['tierInd out of range [1; ntiers+1], tierInd = ' num2str(tierInd) ', ntiers = ' num2str(ntiers)]);
 end

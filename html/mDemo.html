@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>mPraat demonstration</title><meta name="generator" content="MATLAB 8.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-04-11"><meta name="DC.source" content="mDemo.m"><style type="text/css">
+      --><title>mPraat demonstration</title><meta name="generator" content="MATLAB 8.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-04-19"><meta name="DC.source" content="mDemo.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -65,7 +65,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>mPraat demonstration</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">mPraat and rPraat homepage</a></li><li><a href="#2">How to cite this toolbox?</a></li><li><a href="#3">Installation and help</a></li><li><a href="#4">Read and plot TextGrid, PitchTier and Sound</a></li><li><a href="#5">TextGrid</a></li><li><a href="#6">Tier accessed both by index and name (TextGrid)</a></li><li><a href="#7">Point tier (TextGrid)</a></li><li><a href="#8">Point tier 'low-level access' (TextGrid)</a></li><li><a href="#9">Interval tier  (TextGrid)</a></li><li><a href="#10">Interval tier 'low-level access' (TextGrid)</a></li><li><a href="#11">Vectorized operations</a></li><li><a href="#12">Overview of some TextGrid operations</a></li><li><a href="#13">Repair continuity problem of TextGrid</a></li><li><a href="#14">PitchTier</a></li><li><a href="#15">Legendre polynomials modelling</a></li><li><a href="#16">Process all files in folder</a></li></ul></div><h2>mPraat and rPraat homepage<a name="1"></a></h2><p>rPraat and mPraat homepage: <a href="http://fu.ff.cuni.cz/praat/">http://fu.ff.cuni.cz/praat/</a></p><p>Toolbox mPraat at github: <a href="https://github.com/bbTomas/mPraat">https://github.com/bbTomas/mPraat</a></p><h2>How to cite this toolbox?<a name="2"></a></h2><p>We have invested a lot of time and effort in creating mPraat toolbox / rPraat package, please cite it when using it for data analysis.</p><p><b>Bo&#345;il, T., &amp; Skarnitzl, R. (2016). Tools rPraat and mPraat. In P. Sojka, A. Hor&aacute;k, I. Kope&#269;ek, &amp; K. Pala (Eds.), Text, Speech, and Dialogue (pp. 367&#8211;374). Springer International Publishing.</b></p><p>Download Tools rPraat and mPraat manuscript .pdf: <a href="http://fu.ff.cuni.cz/praat/boril_skarnitzl_2016_Tools_rPraat_and_mPraat_[manuscript].pdf">http://fu.ff.cuni.cz/praat/boril_skarnitzl_2016_Tools_rPraat_and_mPraat_[manuscript].pdf</a></p><p>The final publication is available at Springer via <a href="http://dx.doi.org/10.1007/978-3-319-45510-5_42">http://dx.doi.org/10.1007/978-3-319-45510-5_42</a></p><p>Download BibTeX reference mpraatrpraat2016.bib: <a href="http://fu.ff.cuni.cz/praat/mpraatrpraat2016.bib">http://fu.ff.cuni.cz/praat/mpraatrpraat2016.bib</a></p><h2>Installation and help<a name="3"></a></h2><p>Download mPraat: mPraat-master.zip <a href="https://github.com/bbTomas/mPraat/archive/master.zip">https://github.com/bbTomas/mPraat/archive/master.zip</a></p><p>To install mPraat, just unzip all files to any directory of your choice and Set Path (in Matlab) to this directory.</p><p>For help and examples, use command</p><pre class="language-matlab">help <span class="string">functionName</span>
+  </style></head><body><div class="content"><h1>mPraat demonstration</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">mPraat and rPraat homepage</a></li><li><a href="#2">How to cite this toolbox?</a></li><li><a href="#3">Installation and help</a></li><li><a href="#4">Read and plot TextGrid, PitchTier and Sound</a></li><li><a href="#5">TextGrid</a></li><li><a href="#6">Tier accessed both by index and name (TextGrid)</a></li><li><a href="#7">Point tier (TextGrid)</a></li><li><a href="#8">Point tier 'low-level access' (TextGrid)</a></li><li><a href="#9">Interval tier  (TextGrid)</a></li><li><a href="#10">Interval tier 'low-level access' (TextGrid)</a></li><li><a href="#11">Vectorized operations</a></li><li><a href="#12">Find labels in TextGrid: find label 'n' in phoneme tier (Point tier)</a></li><li><a href="#13">Find labels in TextGrid: find fragments with successive labels '?' 'a' in phone tear (Interval tier)</a></li><li><a href="#14">Find labels in TextGrid: find fragments with successive labels '?' 'a' in phone tier and return initial and final time of these fragments</a></li><li><a href="#15">Find labels in TextGrid: find fragments with successive labels 'ti' 'reknu' 'co' in word tier (Interval tier)</a></li><li><a href="#16">Find labels in TextGrid: get initial and final time of the fragment and extract this interval from the PitchTier</a></li><li><a href="#17">Create syllable tier from phone tier</a></li><li><a href="#18">Overview of some TextGrid operations</a></li><li><a href="#19">Repair continuity problem of TextGrid</a></li><li><a href="#20">PitchTier</a></li><li><a href="#21">Legendre polynomials modelling</a></li><li><a href="#22">Process all files in folder</a></li></ul></div><h2>mPraat and rPraat homepage<a name="1"></a></h2><p>rPraat and mPraat homepage: <a href="http://fu.ff.cuni.cz/praat/">http://fu.ff.cuni.cz/praat/</a></p><p>Toolbox mPraat at github: <a href="https://github.com/bbTomas/mPraat">https://github.com/bbTomas/mPraat</a></p><h2>How to cite this toolbox?<a name="2"></a></h2><p>We have invested a lot of time and effort in creating mPraat toolbox / rPraat package, please cite it when using it for data analysis.</p><p><b>Bo&#345;il, T., &amp; Skarnitzl, R. (2016). Tools rPraat and mPraat. In P. Sojka, A. Hor&aacute;k, I. Kope&#269;ek, &amp; K. Pala (Eds.), Text, Speech, and Dialogue (pp. 367&#8211;374). Springer International Publishing.</b></p><p>Download Tools rPraat and mPraat manuscript .pdf: <a href="http://fu.ff.cuni.cz/praat/boril_skarnitzl_2016_Tools_rPraat_and_mPraat_[manuscript].pdf">http://fu.ff.cuni.cz/praat/boril_skarnitzl_2016_Tools_rPraat_and_mPraat_[manuscript].pdf</a></p><p>The final publication is available at Springer via <a href="http://dx.doi.org/10.1007/978-3-319-45510-5_42">http://dx.doi.org/10.1007/978-3-319-45510-5_42</a></p><p>Download BibTeX reference mpraatrpraat2016.bib: <a href="http://fu.ff.cuni.cz/praat/mpraatrpraat2016.bib">http://fu.ff.cuni.cz/praat/mpraatrpraat2016.bib</a></p><h2>Installation and help<a name="3"></a></h2><p>Download mPraat: mPraat-master.zip <a href="https://github.com/bbTomas/mPraat/archive/master.zip">https://github.com/bbTomas/mPraat/archive/master.zip</a></p><p>To install mPraat, just unzip all files to any directory of your choice and Set Path (in Matlab) to this directory.</p><p>For help and examples, use command</p><pre class="language-matlab">help <span class="string">functionName</span>
 </pre><p>- or -</p><pre class="language-matlab">doc <span class="string">functionName</span>
 </pre><h2>Read and plot TextGrid, PitchTier and Sound<a name="4"></a></h2><pre class="codeinput">tg = tgRead(<span class="string">'demo/H.TextGrid'</span>);
 figure, tgPlot(tg)
@@ -325,7 +325,224 @@ meanDur =
 
     0.0632
 
-</pre><img vspace="5" hspace="5" src="mDemo_04.png" alt=""> <h2>Overview of some TextGrid operations<a name="12"></a></h2><p>For all functions, see help for description and example of use.</p><pre class="codeinput">tg = tgRead(<span class="string">'demo/H.TextGrid'</span>);
+</pre><img vspace="5" hspace="5" src="mDemo_04.png" alt=""> <h2>Find labels in TextGrid: find label 'n' in phoneme tier (Point tier)<a name="12"></a></h2><pre class="codeinput">tg = tgRead(<span class="string">'demo/H_plain.TextGrid'</span>);
+i = tgFindLabels(tg, <span class="string">'phoneme'</span>, <span class="string">'n'</span>)   <span class="comment">% get result indices</span>
+length(i)  <span class="comment">% 4 results</span>
+i{1}       <span class="comment">% index of the first result</span>
+tg.tier{tgI(tg, <span class="string">'phoneme'</span>)}.Label{i{1}}   <span class="comment">% label of the 1st result</span>
+tg.tier{tgI(tg, <span class="string">'phoneme'</span>)}.Label(cell2mat(i))  <span class="comment">% all found label: cell-array of char strings</span>
+</pre><pre class="codeoutput">
+i = 
+
+    [ 8]
+    [18]
+    [25]
+    [42]
+
+
+ans =
+
+     4
+
+
+ans =
+
+     8
+
+
+ans =
+
+n
+
+
+ans = 
+
+    'n'
+    'n'
+    'n'
+    'n'
+
+</pre><h2>Find labels in TextGrid: find fragments with successive labels '?' 'a' in phone tear (Interval tier)<a name="13"></a></h2><pre class="codeinput">i = tgFindLabels(tg, <span class="string">'phone'</span>, {<span class="string">'?'</span>, <span class="string">'a'</span>})
+length(i)   <span class="comment">% 2 results found</span>
+i{1}        <span class="comment">% indices of the first result</span>
+length(i{1}) <span class="comment">% length of the first result</span>
+i{1}(2)     <span class="comment">% index of the 2nd label of the first result</span>
+tg.tier{tgI(tg, <span class="string">'phone'</span>)}.Label{i{1}(2)}  <span class="comment">% 2nd label of the first result</span>
+i{2}        <span class="comment">% indices of the second result</span>
+tg.tier{tgI(tg, <span class="string">'phone'</span>)}.Label(i{1})  <span class="comment">% label of the 1st result: cell-array of char strings</span>
+tg.tier{tgI(tg, <span class="string">'phone'</span>)}.Label(i{2})  <span class="comment">% 2nd result</span>
+tg.tier{tgI(tg, <span class="string">'phone'</span>)}.Label(cell2mat(i))  <span class="comment">% all results together: cell-array of char strings</span>
+</pre><pre class="codeoutput">
+i = 
+
+    [1x2 double]    [1x2 double]
+
+
+ans =
+
+     2
+
+
+ans =
+
+    39    40
+
+
+ans =
+
+     2
+
+
+ans =
+
+    40
+
+
+ans =
+
+a
+
+
+ans =
+
+    41    42
+
+
+ans = 
+
+    '?'
+    'a'
+
+
+ans = 
+
+    '?'
+    'a'
+
+
+ans = 
+
+    '?'
+    'a'
+    '?'
+    'a'
+
+</pre><h2>Find labels in TextGrid: find fragments with successive labels '?' 'a' in phone tier and return initial and final time of these fragments<a name="14"></a></h2><pre class="codeinput">t = tgFindLabels(tg, <span class="string">'phone'</span>, {<span class="string">'?'</span>, <span class="string">'a'</span>}, true)  <span class="comment">% 2 results and their initial (T1) and final (T2) time</span>
+t.T2(1) - t.T1(1)    <span class="comment">% duration of the first fragment</span>
+t.T2(2) - t.T1(2)    <span class="comment">% duration of the second fragment</span>
+t.T2 - t.T1          <span class="comment">% durations of all fragments</span>
+</pre><pre class="codeoutput">
+t = 
+
+    T1: [2.9114 3.0236]
+    T2: [3.0236 3.1063]
+
+
+ans =
+
+    0.1122
+
+
+ans =
+
+    0.0827
+
+
+ans =
+
+    0.1122    0.0827
+
+</pre><h2>Find labels in TextGrid: find fragments with successive labels 'ti' 'reknu' 'co' in word tier (Interval tier)<a name="15"></a></h2><pre class="codeinput">i = tgFindLabels(tg, <span class="string">'word'</span>, {<span class="string">'ti'</span>, <span class="string">'reknu'</span>, <span class="string">'co'</span>})
+length(i)   <span class="comment">% 1 result found</span>
+i{1}          <span class="comment">% indices of segments in the first (and only) result</span>
+length(i{1})  <span class="comment">% length of the first (and only) result (number of segments)</span>
+i{1}(2)       <span class="comment">% index of the second segment in the first result</span>
+tg.tier{tgI(tg, <span class="string">'word'</span>)}.Label{i{1}(2)} <span class="comment">% second label in the fragment</span>
+tg.tier{tgI(tg, <span class="string">'word'</span>)}.Label(i{1})    <span class="comment">% all labels in the fragment: cell-array of char strings</span>
+</pre><pre class="codeoutput">
+i = 
+
+    [1x3 double]
+
+
+ans =
+
+     1
+
+
+ans =
+
+     3     4     5
+
+
+ans =
+
+     3
+
+
+ans =
+
+     4
+
+
+ans =
+
+reknu
+
+
+ans = 
+
+    'ti'
+    'reknu'
+    'co'
+
+</pre><h2>Find labels in TextGrid: get initial and final time of the fragment and extract this interval from the PitchTier<a name="16"></a></h2><pre class="codeinput">t = tgFindLabels(tg, <span class="string">'word'</span>, {<span class="string">'ti'</span>, <span class="string">'reknu'</span>, <span class="string">'co'</span>}, true)
+pt = ptRead(<span class="string">'demo/H.PitchTier'</span>);
+tStart = t.T1(1)
+tEnd = t.T2(1)
+ptPlot(ptCut(pt, tStart, tEnd))
+</pre><pre class="codeoutput">
+t = 
+
+    T1: 0.2160
+    T2: 0.7600
+
+
+tStart =
+
+    0.2160
+
+
+tEnd =
+
+    0.7600
+
+</pre><img vspace="5" hspace="5" src="mDemo_05.png" alt=""> <h2>Create syllable tier from phone tier<a name="17"></a></h2><pre class="codeinput">tg = tgRead(<span class="string">'demo/H.TextGrid'</span>);
+tg = tgRemoveTier(tg, 5); tg = tgRemoveTier(tg, 4); tg = tgRemoveTier(tg, 3); tg = tgRemoveTier(tg, 1); <span class="comment">% get phone tier only</span>
+
+<span class="comment">% Get actual labels - concatenated (collapsed into one string)</span>
+<span class="comment">% Use horzcat instead of strcat because strcat removes leading white-space chars which is undesirable.</span>
+collapsed = horzcat(tg.tier{tgI(tg, <span class="string">'phone'</span>)}.Label{:})
+
+<span class="comment">% Edit the collapsed string with labels - insert separators to mark boundaries of syllables.</span>
+
+<span class="comment">% * There can be segments with empty labels in the original tier (pauses), do not specify them in the pattern.</span>
+<span class="comment">% * Beware of labels that appear empty but they are not (space, new line character etc.) - these segments are handled as classical non-empty labels. See example - one label is ' ', therefore it must be specified in the pattern.</span>
+
+pattern = <span class="string">'ja:-ci-P\ek-nu-t_so-?u-J\e-la:S- -nej-dP\i:f-naj-deZ-h\ut_S-ku-?a-?a-ta-ma-na:'</span>
+tg2 = tgDuplicateTierMergeSegments(tg, <span class="string">'phone'</span>, 1, <span class="string">'syll'</span>, pattern, <span class="string">'-'</span>);
+tgPlot(tg2);
+</pre><pre class="codeoutput">
+collapsed =
+
+ja:ciP\eknut_so?uJ\ela:S nejdP\i:fnajdeZh\ut_Sku?a?atamana:
+
+
+pattern =
+
+ja:-ci-P\ek-nu-t_so-?u-J\e-la:S- -nej-dP\i:f-naj-deZ-h\ut_S-ku-?a-?a-ta-ma-na:
+
+</pre><img vspace="5" hspace="5" src="mDemo_06.png" alt=""> <h2>Overview of some TextGrid operations<a name="18"></a></h2><p>For all functions, see help for description and example of use.</p><pre class="codeinput">tg = tgRead(<span class="string">'demo/H.TextGrid'</span>);
 figure, tgPlot(tg)
 
 tg = tgRemoveTier(tg, <span class="string">'syllable'</span>);
@@ -348,15 +565,21 @@ tg = tgRemoveIntervalBothBoundaries(tg, <span class="string">'WORD2'</span>, ind
 figure, tgPlot(tg)
 
 tgNew = tgCreateNewTextGrid(0, 5);
-tgNew = tgInsertNewIntervalTier(tgNew, 1, <span class="string">'word'</span>);
+tgNew = tgInsertNewIntervalTier(tgNew, 1, <span class="string">'word'</span>);   <span class="comment">% the first tier</span>
 tgNew = tgInsertInterval(tgNew, 1, 2, 3.5, <span class="string">'hello'</span>);
 tgNew = tgInsertInterval(tgNew, 1, 4, 4.8, <span class="string">'world'</span>);
+tgNew = tgInsertNewIntervalTier(tgNew, Inf, <span class="string">'wordLast'</span>);  <span class="comment">% the last tier (at this moment)</span>
+tgNew = tgInsertInterval(tgNew, <span class="string">'wordLast'</span>, 2, 3, <span class="string">'ABC'</span>);
 tgNew = tgInsertNewPointTier(tgNew, 2, <span class="string">'click'</span>);
 tgNew = tgInsertPoint(tgNew, 2, 2, <span class="string">'click'</span>);
 tgNew = tgInsertPoint(tgNew, 2, 4, <span class="string">'click'</span>);
+tgNew = tgInsertNewPointTier(tgNew, Inf, <span class="string">'pointTierLast'</span>);
+tgNew = tgInsertPoint(tgNew, <span class="string">'pointTierLast'</span>, 3, <span class="string">'point'</span>);
 figure, tgPlot(tgNew)
 tgWrite(tgNew, <span class="string">'demo/ex_output.TextGrid'</span>);
-</pre><img vspace="5" hspace="5" src="mDemo_05.png" alt=""> <img vspace="5" hspace="5" src="mDemo_06.png" alt=""> <img vspace="5" hspace="5" src="mDemo_07.png" alt=""> <h2>Repair continuity problem of TextGrid<a name="13"></a></h2><p>Repairs problem of continuity of T2 and T1 in interval tiers. This problem is very rare and it should not appear. However, e.g., automatic segmentation tool Prague Labeller produces random numeric round-up errors featuring, e.g., T2 of preceding interval is slightly higher than the T1 of the current interval. Because of that, the boundary cannot be manually moved in Praat edit window.</p><pre class="codeinput">tgProblem = tgRead(<span class="string">'demo/H_problem.TextGrid'</span>);
+</pre><pre class="codeoutput">Warning: TextGrid has a duplicate tier name [word]. You should not use the name
+for indexing to avoid ambiguity. 
+</pre><img vspace="5" hspace="5" src="mDemo_07.png" alt=""> <img vspace="5" hspace="5" src="mDemo_08.png" alt=""> <img vspace="5" hspace="5" src="mDemo_09.png" alt=""> <h2>Repair continuity problem of TextGrid<a name="19"></a></h2><p>Repairs problem of continuity of T2 and T1 in interval tiers. This problem is very rare and it should not appear. However, e.g., automatic segmentation tool Prague Labeller produces random numeric round-up errors featuring, e.g., T2 of preceding interval is slightly higher than the T1 of the current interval. Because of that, the boundary cannot be manually moved in Praat edit window.</p><pre class="codeinput">tgProblem = tgRead(<span class="string">'demo/H_problem.TextGrid'</span>);
 tgNew = tgRepairContinuity(tgProblem);
 tgWrite(tgNew, <span class="string">'demo/H_problem_OK.TextGrid'</span>);
 
@@ -365,7 +588,7 @@ tgNew2 = tgRepairContinuity(tgNew); <span class="comment">% no problem in repair
 Problem found [tier: 2, int: 24, 25] t2 = 2.048900000010, t1 = 2.048900000000. New value: 2.048900000005.
 Problem found [tier: 4, int: 2, 3] t2 = 0.215900000000, t1 = 0.215899900000. New value: 0.215899950000.
 Problem found [tier: 4, int: 5, 6] t2 = 0.760000000000, t1 = 0.760100000000. New value: 0.760050000000.
-</pre><h2>PitchTier<a name="14"></a></h2><p>Transform Hz to semitones (ST), cut the original pitchtier along the TextGrid, make interpolated contour.</p><pre class="codeinput">pt = ptRead(<span class="string">'demo/H.PitchTier'</span>);
+</pre><h2>PitchTier<a name="20"></a></h2><p>Transform Hz to semitones (ST), cut the original pitchtier along the TextGrid, make interpolated contour.</p><pre class="codeinput">pt = ptRead(<span class="string">'demo/H.PitchTier'</span>);
 pt = ptHz2ST(pt, 100);  <span class="comment">% conversion of Hz to Semitones, reference 0 ST = 100 Hz.</span>
 
 subplot(3,1,1)
@@ -388,7 +611,7 @@ labelsOfInterest =
 
     'j&aacute;'    'ti'    '&#345;eknu'    'co'    'ud&#283;l&aacute;&#353;'
 
-</pre><img vspace="5" hspace="5" src="mDemo_08.png" alt=""> <h2>Legendre polynomials modelling<a name="15"></a></h2><pre class="codeinput"><span class="comment">% Orthogonal basis</span>
+</pre><img vspace="5" hspace="5" src="mDemo_10.png" alt=""> <h2>Legendre polynomials modelling<a name="21"></a></h2><pre class="codeinput"><span class="comment">% Orthogonal basis</span>
 ptLegendreDemo()
 
 <span class="comment">% Cut the PitchTier</span>
@@ -416,7 +639,7 @@ c =
 
    10.2782   -2.8105   -0.3033    1.7146
 
-</pre><img vspace="5" hspace="5" src="mDemo_09.png" alt=""> <img vspace="5" hspace="5" src="mDemo_10.png" alt=""> <h2>Process all files in folder<a name="16"></a></h2><pre class="language-matlab">inputFolder = <span class="string">'experiment1/data'</span>;
+</pre><img vspace="5" hspace="5" src="mDemo_11.png" alt=""> <img vspace="5" hspace="5" src="mDemo_12.png" alt=""> <h2>Process all files in folder<a name="22"></a></h2><pre class="language-matlab">inputFolder = <span class="string">'experiment1/data'</span>;
 listFiles = dir([inputFolder <span class="string">'/*.TextGrid'</span>]);  <span class="comment">% Beware of case-sensitive file system!</span>
 </pre><pre class="language-matlab"><span class="keyword">for</span> (I = 1: length(listFiles))
     file = listFiles(I).name;
@@ -570,6 +793,70 @@ meanDur = mean( dur )
 
 figure, hist(dur)
 
+%% Find labels in TextGrid: find label 'n' in phoneme tier (Point tier)
+tg = tgRead('demo/H_plain.TextGrid');
+i = tgFindLabels(tg, 'phoneme', 'n')   % get result indices
+length(i)  % 4 results
+i{1}       % index of the first result
+tg.tier{tgI(tg, 'phoneme')}.Label{i{1}}   % label of the 1st result
+tg.tier{tgI(tg, 'phoneme')}.Label(cell2mat(i))  % all found label: cell-array of char strings
+
+%% Find labels in TextGrid: find fragments with successive labels '?' 'a' in phone tear (Interval tier)
+i = tgFindLabels(tg, 'phone', {'?', 'a'})
+length(i)   % 2 results found
+i{1}        % indices of the first result
+length(i{1}) % length of the first result
+i{1}(2)     % index of the 2nd label of the first result
+tg.tier{tgI(tg, 'phone')}.Label{i{1}(2)}  % 2nd label of the first result
+i{2}        % indices of the second result
+tg.tier{tgI(tg, 'phone')}.Label(i{1})  % label of the 1st result: cell-array of char strings
+tg.tier{tgI(tg, 'phone')}.Label(i{2})  % 2nd result
+tg.tier{tgI(tg, 'phone')}.Label(cell2mat(i))  % all results together: cell-array of char strings
+
+%% Find labels in TextGrid: find fragments with successive labels '?' 'a' in phone tier and return initial and final time of these fragments
+t = tgFindLabels(tg, 'phone', {'?', 'a'}, true)  % 2 results and their initial (T1) and final (T2) time
+t.T2(1) - t.T1(1)    % duration of the first fragment
+t.T2(2) - t.T1(2)    % duration of the second fragment
+t.T2 - t.T1          % durations of all fragments
+
+%% Find labels in TextGrid: find fragments with successive labels 'ti' 'reknu' 'co' in word tier (Interval tier)
+i = tgFindLabels(tg, 'word', {'ti', 'reknu', 'co'})
+length(i)   % 1 result found
+i{1}          % indices of segments in the first (and only) result
+length(i{1})  % length of the first (and only) result (number of segments)
+i{1}(2)       % index of the second segment in the first result
+tg.tier{tgI(tg, 'word')}.Label{i{1}(2)} % second label in the fragment
+tg.tier{tgI(tg, 'word')}.Label(i{1})    % all labels in the fragment: cell-array of char strings
+
+%% Find labels in TextGrid: get initial and final time of the fragment and extract this interval from the PitchTier
+t = tgFindLabels(tg, 'word', {'ti', 'reknu', 'co'}, true)
+pt = ptRead('demo/H.PitchTier');
+tStart = t.T1(1)
+tEnd = t.T2(1)
+ptPlot(ptCut(pt, tStart, tEnd))
+
+
+
+%% Create syllable tier from phone tier
+
+tg = tgRead('demo/H.TextGrid');
+tg = tgRemoveTier(tg, 5); tg = tgRemoveTier(tg, 4); tg = tgRemoveTier(tg, 3); tg = tgRemoveTier(tg, 1); % get phone tier only
+
+% Get actual labels - concatenated (collapsed into one string)
+% Use horzcat instead of strcat because strcat removes leading white-space chars which is undesirable.
+collapsed = horzcat(tg.tier{tgI(tg, 'phone')}.Label{:})
+
+% Edit the collapsed string with labels - insert separators to mark boundaries of syllables.
+
+% * There can be segments with empty labels in the original tier (pauses), do not specify them in the pattern.
+% * Beware of labels that appear empty but they are not (space, new line character etc.) - these segments are handled as classical non-empty labels. See example - one label is ' ', therefore it must be specified in the pattern.
+
+pattern = 'ja:-ci-P\ek-nu-t_so-?u-J\e-la:S- -nej-dP\i:f-naj-deZ-h\ut_S-ku-?a-?a-ta-ma-na:'
+tg2 = tgDuplicateTierMergeSegments(tg, 'phone', 1, 'syll', pattern, '-');
+tgPlot(tg2);
+
+
+
 
 %% Overview of some TextGrid operations
 % For all functions, see help for description and example of use.
@@ -597,12 +884,16 @@ tg = tgRemoveIntervalBothBoundaries(tg, 'WORD2', ind);
 figure, tgPlot(tg)
 
 tgNew = tgCreateNewTextGrid(0, 5);
-tgNew = tgInsertNewIntervalTier(tgNew, 1, 'word');
+tgNew = tgInsertNewIntervalTier(tgNew, 1, 'word');   % the first tier
 tgNew = tgInsertInterval(tgNew, 1, 2, 3.5, 'hello');
 tgNew = tgInsertInterval(tgNew, 1, 4, 4.8, 'world');
+tgNew = tgInsertNewIntervalTier(tgNew, Inf, 'wordLast');  % the last tier (at this moment)
+tgNew = tgInsertInterval(tgNew, 'wordLast', 2, 3, 'ABC');
 tgNew = tgInsertNewPointTier(tgNew, 2, 'click');
 tgNew = tgInsertPoint(tgNew, 2, 2, 'click');
 tgNew = tgInsertPoint(tgNew, 2, 4, 'click');
+tgNew = tgInsertNewPointTier(tgNew, Inf, 'pointTierLast');
+tgNew = tgInsertPoint(tgNew, 'pointTierLast', 3, 'point');
 figure, tgPlot(tgNew)
 tgWrite(tgNew, 'demo/ex_output.TextGrid');
 
