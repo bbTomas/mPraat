@@ -15,7 +15,7 @@ function p = pitchRead(fileName)
 %   p.t    ... vector of time instances associated with all frames
 %   p.ceiling        ... a frequency above which a candidate is considered  voiceless (Hz)
 %   p.maxnCandidates ... maximum number of candidates in frame
-%   p.frame{1} to p.frame{p.nx} frames
+%   p.frame{1} to p.frame{p.nx} ... frames
 %      p.frame{1}.intensity   ... intensity of the frame
 %      p.frame{1}.nCandidates ... actual number of candidates in this frame
 %      p.frame{1}.frequency ... vector of candidates' frequency (in Hz)
