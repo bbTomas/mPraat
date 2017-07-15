@@ -276,6 +276,15 @@ ptPlot(pt2interp); xlabel('Time (sec)'); ylabel('Frequency (ST)');
 
 ptWrite(pt2interp, 'demo/H_cut_interp.PitchTier')
 
+%% Pitch object
+% In addition to PitchTier, a Pitch object represents periodicity candidates as a function of time.
+p = pitchRead('demo/sound.Pitch');
+p
+p.t(4)      % time instance of the 4th frame
+p.frame{4}  % 4th frame: pitch candidates
+p.frame{4}.frequency(2)
+p.frame{4}.strength(2)
+
 %% Legendre polynomials modelling
 
 % Orthogonal basis
