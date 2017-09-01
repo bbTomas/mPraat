@@ -31,11 +31,11 @@ The final publication is available at Springer via [DOI 10.1007/978-3-319-45510-
 
 ## What is new
 
-v1.0.8: pitchRead() to read Pitch-object files with time frames of pitch candidates
+v1.0.8 (2017/07/15): pitchRead() to read Pitch-object files with time frames of pitch candidates
 
-v1.0.7: tgfindLabels(), tgduplicateTierMergeSegments()
+v1.0.7 (2017/04/19): tgfindLabels(), tgduplicateTierMergeSegments()
 
-v1.0.6: ptCut(), ptCut0(), ptInterpolate(), ptHz2ST(), ptLegendre(), ptLegendreSynth(), ptLegendreDemo()
+v1.0.6 (2017/04/11): ptCut(), ptCut0(), ptInterpolate(), ptHz2ST(), ptLegendre(), ptLegendreSynth(), ptLegendreDemo()
 
 
 ## License
