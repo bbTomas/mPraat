@@ -1,14 +1,18 @@
-function textgrid = tgRead(fileName)
+function textgrid = tgRead(fileName, type)
 % function textgrid = tgRead(fileName)
 %
 % Loads TextGrid from Praat in Text or Short text format (UTF-8),
 % it handles both Interval and Point tiers.
 % Labels can may contain quotation marks and new lines.
 % v1.5, Tomas Boril, borilt@gmail.com
-% 
+%
 % Example
 %   tg = tgRead('demo/H.TextGrid');
 %   tgPlot(tg);
+
+if nargin < 2
+    type = [];
+end
 
 textgrid = [];
 
@@ -17,29 +21,76 @@ if fid == -1
     error(['cannot open file [' fileName ']: ' message]);
 end
 
-for I = 1: 3
-    r = fgetl(fid); % ignore
-end
 
-xminStr = fgetl(fid); % xmin
-xmaxStr = fgetl(fid); % xmax
 
-r = fgetl(fid); % either '<exists>' -> shorttext or 'tiers? <exists> ' -> full text format
-if strcmp(r, '<exists>')
-    shortFormat = true;
-elseif strcmp(r(1:6), 'tiers?')
-    shortFormat = false;
+if isempty(type)
+    for I = 1: 3
+        r = fgetl(fid); % ignore
+    end
+    
+    xminStr = fgetl(fid); % xmin
+    xmaxStr = fgetl(fid); % xmax
+    
+    r = fgetl(fid); % either '<exists>' -> shorttext or 'tiers? <exists> ' -> full text format
+    if strcmp(r, '<exists>')
+        shortFormat = true;
+    elseif strcmp(r(1:6), 'tiers?')
+        shortFormat = false;
+    else
+        fclose(fid);
+        error('Unknown textgrid format.');
+    end
+    if shortFormat
+        xmin = str2double(xminStr); % xmin
+        xmax = str2double(xmaxStr); % xmax
+    else
+        xmin = str2double(xminStr(8:end)); % xmin
+        xmax = str2double(xmaxStr(8:end)); % xmax
+    end
 else
-    fclose(fid);
-    error('Unknown textgrid format.');
-end
-
-if shortFormat
-    xmin = str2double(xminStr); % xmin
-    xmax = str2double(xmaxStr); % xmax
-else
-    xmin = str2double(xminStr(8:end)); % xmin
-    xmax = str2double(xmaxStr(8:end)); % xmax
+    if strcmp(type, 'collection')
+        shortFormat = false;
+        [status, result] = system( ['wc -l ', fileName] );
+        strLines = strsplit(result, ' ');
+        numLines = str2num(strLines{2});
+        
+        textgrid.prefix = cell(numLines, 1);
+        % expects audio + textgrid
+        % discards first 3 lines
+        l = 0;
+        for I = 1: 4
+            r = fgetl(fid); % ignore
+            l = l + 1;
+            textgrid.prefix{l} = {r};
+        end
+        sizeTiers = cell2mat(textscan(r, 'size = %d'));
+        if sizeTiers ~= 2
+            error('We only accept collections with 2 tiers: one TextGrid and Sound Tier')
+        end
+        
+        % go through remaining cells untill we find 'class = "TextGrid"'
+        while isempty(strfind(r, '"TextGrid"'))
+            r = fgetl(fid); % ignore
+            l = l + 1;
+            textgrid.prefix{l} = {r};
+        end
+        % do it once more to also capture the name
+        r = fgetl(fid); % ignore
+        l = l + 1;
+        textgrid.prefix{l} = {r};
+        textgrid.prefix(l+1:end, :) = []; % remove remaining empty rows
+        
+        % set xminStr and xmaxStr
+        xminStr = fgetl(fid); % xmin
+        xmaxStr = fgetl(fid); % xmax
+        
+        eval([xminStr, ';']);
+        eval([xmaxStr, ';']);
+        r = fgetl(fid); % ignore line 'tiers? <exists> '
+        
+        % now the order matches a normal textgrid, we can now safely
+        % continue the algorithm
+    end
 end
 
 if shortFormat
@@ -77,10 +128,10 @@ for tier = 1: numberOfTiers
             textgrid.tier{tier}.name = r(9: end-1);
         end
         textgrid.tier{tier}.type = 'interval';
-
+        
         r = fgetl(fid); % ignore xmin and xmax
         r = fgetl(fid);
-
+        
         if shortFormat
             numberOfIntervals = str2double(fgetl(fid));
         else
@@ -91,7 +142,7 @@ for tier = 1: numberOfTiers
         textgrid.tier{tier}.T1 = [];
         textgrid.tier{tier}.T2 = [];
         textgrid.tier{tier}.Label = {};
-
+        
         for I = 1: numberOfIntervals
             if ~shortFormat
                 r = fgetl(fid); % ignore line intervals [..]:
@@ -109,7 +160,7 @@ for tier = 1: numberOfTiers
                 t = str2double(r1(8:end));
                 t2 = str2double(r2(8:end));
             end
-
+            
             r = fgetl(fid);
             if ~shortFormat
                 if isempty(strfind(r, 'text = "'))
@@ -137,18 +188,18 @@ for tier = 1: numberOfTiers
                     if ~shortFormat && mod(numberOfQuotationMarks, 2) == 1 && ~sppasFormat % remove whitespace at the end of line, it is only in the case of odd number of quotation marks
                         r = r(1: end-1);
                     end
-
+                    
                     if mod(numberOfQuotationMarks, 2) == 1 && r(end) == '"'
                         label = [label r(1:end-1) '"'];
                         break
                     else
                         label = [label sprintf([r '\n'])];
                     end
-
+                    
                 end
             end
             label = label(1: end-1);
-
+            
             textgrid.tier{tier}.T1 = [textgrid.tier{tier}.T1 t];
             textgrid.tier{tier}.T2 = [textgrid.tier{tier}.T2 t2];
             textgrid.tier{tier}.Label{I, 1} = label; % trim quotation marks
@@ -167,20 +218,20 @@ for tier = 1: numberOfTiers
             textgrid.tier{tier}.name = r(9: end-1);
         end
         textgrid.tier{tier}.type = 'point';
-
+        
         r = fgetl(fid); % ignore xmin and xmax
         r = fgetl(fid);
-
+        
         if shortFormat
             numberOfIntervals = str2double(fgetl(fid));
         else
             r = strtrim(fgetl(fid));
             numberOfIntervals = str2double(r(16:end));
         end
-
+        
         textgrid.tier{tier}.T = [];
         textgrid.tier{tier}.Label = {};
-
+        
         for I = 1: numberOfIntervals
             if ~shortFormat
                 r = fgetl(fid); % ignore line points [..]:
@@ -195,7 +246,7 @@ for tier = 1: numberOfTiers
                 end
                 t = str2double(r(10:end));
             end
-
+            
             r = fgetl(fid);
             if ~shortFormat
                 if isempty(strfind(r, 'mark = "'))
@@ -223,18 +274,18 @@ for tier = 1: numberOfTiers
                     if ~shortFormat && mod(numberOfQuotationMarks, 2) == 1 && ~sppasFormat % remove whitespace at the end of line, it is only in the case of odd number of quotation marks
                         r = r(1: end-1);
                     end
-
+                    
                     if mod(numberOfQuotationMarks, 2) == 1 && r(end) == '"'
                         label = [label r(1:end-1) '"'];
                         break
                     else
                         label = [label sprintf([r '\n'])];
                     end
-
+                    
                 end
             end
             label = label(1: end-1);
-
+            
             textgrid.tier{tier}.T = [textgrid.tier{tier}.T t];
             textgrid.tier{tier}.Label{I, 1} = label; % trim quotation marks
             
