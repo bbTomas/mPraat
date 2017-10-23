@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>mPraat demonstration</title><meta name="generator" content="MATLAB 8.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-07-15"><meta name="DC.source" content="mDemo.m"><style type="text/css">
+      --><title>mPraat demonstration</title><meta name="generator" content="MATLAB 8.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-10-24"><meta name="DC.source" content="mDemo.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -65,7 +65,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>mPraat demonstration</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">mPraat and rPraat homepage</a></li><li><a href="#2">How to cite this toolbox?</a></li><li><a href="#3">Installation and help</a></li><li><a href="#4">Read and plot TextGrid, PitchTier and Sound</a></li><li><a href="#5">TextGrid</a></li><li><a href="#6">Tier accessed both by index and name (TextGrid)</a></li><li><a href="#7">Point tier (TextGrid)</a></li><li><a href="#8">Point tier 'low-level access' (TextGrid)</a></li><li><a href="#9">Interval tier  (TextGrid)</a></li><li><a href="#10">Interval tier 'low-level access' (TextGrid)</a></li><li><a href="#11">Vectorized operations</a></li><li><a href="#12">Find labels in TextGrid: find label 'n' in phoneme tier (Point tier)</a></li><li><a href="#13">Find labels in TextGrid: find fragments with successive labels '?' 'a' in phone tear (Interval tier)</a></li><li><a href="#14">Find labels in TextGrid: find fragments with successive labels '?' 'a' in phone tier and return initial and final time of these fragments</a></li><li><a href="#15">Find labels in TextGrid: find fragments with successive labels 'ti' 'reknu' 'co' in word tier (Interval tier)</a></li><li><a href="#16">Find labels in TextGrid: get initial and final time of the fragment and extract this interval from the PitchTier</a></li><li><a href="#17">Create syllable tier from phone tier</a></li><li><a href="#18">Overview of some TextGrid operations</a></li><li><a href="#19">Repair continuity problem of TextGrid</a></li><li><a href="#20">PitchTier</a></li><li><a href="#21">Legendre polynomials modelling</a></li><li><a href="#22">Pitch object</a></li><li><a href="#23">Process all files in folder</a></li></ul></div><h2>mPraat and rPraat homepage<a name="1"></a></h2><p>rPraat and mPraat homepage: <a href="http://fu.ff.cuni.cz/praat/">http://fu.ff.cuni.cz/praat/</a></p><p>Toolbox mPraat at github: <a href="https://github.com/bbTomas/mPraat">https://github.com/bbTomas/mPraat</a></p><h2>How to cite this toolbox?<a name="2"></a></h2><p>We have invested a lot of time and effort in creating mPraat toolbox / rPraat package, please cite it when using it for data analysis.</p><p><b>Bo&#345;il, T., &amp; Skarnitzl, R. (2016). Tools rPraat and mPraat. In P. Sojka, A. Hor&aacute;k, I. Kope&#269;ek, &amp; K. Pala (Eds.), Text, Speech, and Dialogue (pp. 367&#8211;374). Springer International Publishing.</b></p><p>Download Tools rPraat and mPraat manuscript .pdf: <a href="http://fu.ff.cuni.cz/praat/boril_skarnitzl_2016_Tools_rPraat_and_mPraat_[manuscript].pdf">http://fu.ff.cuni.cz/praat/boril_skarnitzl_2016_Tools_rPraat_and_mPraat_[manuscript].pdf</a></p><p>The final publication is available at Springer via <a href="http://dx.doi.org/10.1007/978-3-319-45510-5_42">http://dx.doi.org/10.1007/978-3-319-45510-5_42</a></p><p>Download BibTeX reference mpraatrpraat2016.bib: <a href="http://fu.ff.cuni.cz/praat/mpraatrpraat2016.bib">http://fu.ff.cuni.cz/praat/mpraatrpraat2016.bib</a></p><h2>Installation and help<a name="3"></a></h2><p>Download mPraat: mPraat-master.zip <a href="https://github.com/bbTomas/mPraat/archive/master.zip">https://github.com/bbTomas/mPraat/archive/master.zip</a></p><p>To install mPraat, just unzip all files to any directory of your choice and Set Path (in Matlab) to this directory.</p><p>For help and examples, use command</p><pre class="language-matlab">help <span class="string">functionName</span>
+  </style></head><body><div class="content"><h1>mPraat demonstration</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">mPraat and rPraat homepage</a></li><li><a href="#2">How to cite this toolbox?</a></li><li><a href="#3">Installation and help</a></li><li><a href="#4">Read and plot TextGrid, PitchTier and Sound</a></li><li><a href="#5">TextGrid</a></li><li><a href="#6">Tier accessed both by index and name (TextGrid)</a></li><li><a href="#7">Point tier (TextGrid)</a></li><li><a href="#8">Point tier 'low-level access' (TextGrid)</a></li><li><a href="#9">Interval tier  (TextGrid)</a></li><li><a href="#10">Interval tier 'low-level access' (TextGrid)</a></li><li><a href="#11">Vectorized operations</a></li><li><a href="#12">Find labels in TextGrid: find label 'n' in phoneme tier (Point tier)</a></li><li><a href="#13">Find labels in TextGrid: find fragments with successive labels '?' 'a' in phone tear (Interval tier)</a></li><li><a href="#14">Find labels in TextGrid: find fragments with successive labels '?' 'a' in phone tier and return initial and final time of these fragments</a></li><li><a href="#15">Find labels in TextGrid: find fragments with successive labels 'ti' 'reknu' 'co' in word tier (Interval tier)</a></li><li><a href="#16">Find labels in TextGrid: get initial and final time of the fragment and extract this interval from the PitchTier</a></li><li><a href="#17">Create syllable tier from phone tier</a></li><li><a href="#18">Overview of some TextGrid operations</a></li><li><a href="#19">Repair continuity problem of TextGrid</a></li><li><a href="#20">PitchTier</a></li><li><a href="#21">Legendre polynomials modelling</a></li><li><a href="#22">Pitch object</a></li><li><a href="#23">Read Collections of objects</a></li><li><a href="#24">Process all files in folder</a></li></ul></div><h2>mPraat and rPraat homepage<a name="1"></a></h2><p>rPraat and mPraat homepage: <a href="http://fu.ff.cuni.cz/praat/">http://fu.ff.cuni.cz/praat/</a></p><p>Toolbox mPraat at github: <a href="https://github.com/bbTomas/mPraat">https://github.com/bbTomas/mPraat</a></p><h2>How to cite this toolbox?<a name="2"></a></h2><p>We have invested a lot of time and effort in creating mPraat toolbox / rPraat package, please cite it when using it for data analysis.</p><p><b>Bo&#345;il, T., &amp; Skarnitzl, R. (2016). Tools rPraat and mPraat. In P. Sojka, A. Hor&aacute;k, I. Kope&#269;ek, &amp; K. Pala (Eds.), Text, Speech, and Dialogue (pp. 367&#8211;374). Springer International Publishing.</b></p><p>Download Tools rPraat and mPraat manuscript .pdf: <a href="http://fu.ff.cuni.cz/praat/boril_skarnitzl_2016_Tools_rPraat_and_mPraat_[manuscript].pdf">http://fu.ff.cuni.cz/praat/boril_skarnitzl_2016_Tools_rPraat_and_mPraat_[manuscript].pdf</a></p><p>The final publication is available at Springer via <a href="http://dx.doi.org/10.1007/978-3-319-45510-5_42">http://dx.doi.org/10.1007/978-3-319-45510-5_42</a></p><p>Download BibTeX reference mpraatrpraat2016.bib: <a href="http://fu.ff.cuni.cz/praat/mpraatrpraat2016.bib">http://fu.ff.cuni.cz/praat/mpraatrpraat2016.bib</a></p><h2>Installation and help<a name="3"></a></h2><p>Download mPraat: mPraat-master.zip <a href="https://github.com/bbTomas/mPraat/archive/master.zip">https://github.com/bbTomas/mPraat/archive/master.zip</a></p><p>To install mPraat, just unzip all files to any directory of your choice and Set Path (in Matlab) to this directory.</p><p>For help and examples, use command</p><pre class="language-matlab">help <span class="string">functionName</span>
 </pre><p>- or -</p><pre class="language-matlab">doc <span class="string">functionName</span>
 </pre><h2>Read and plot TextGrid, PitchTier and Sound<a name="4"></a></h2><pre class="codeinput">tg = tgRead(<span class="string">'demo/H.TextGrid'</span>);
 figure, tgPlot(tg)
@@ -681,7 +681,54 @@ ans =
 
     0.3169
 
-</pre><h2>Process all files in folder<a name="23"></a></h2><pre class="language-matlab">inputFolder = <span class="string">'experiment1/data'</span>;
+</pre><h2>Read Collections of objects<a name="23"></a></h2><pre class="codeinput">coll = colRead(<span class="string">'demo/textgrid+pitchtier.Collection'</span>);
+length(coll)
+coll{1}
+coll{2}
+coll{2}.tier{2}
+coll{2}.tier{2}.Label{4}
+tgPlot(coll{2}, 2)
+subplot(tgGetNumberOfTiers(coll{2})+1, 1, 1);
+ptPlot(coll{1});
+</pre><pre class="codeoutput">
+ans =
+
+     8
+
+
+ans = 
+
+       t: [1x486 double]
+       f: [1x486 double]
+    tmin: 0
+    tmax: 4.0239
+    type: 'PitchTier'
+    name: 'HC101bA'
+
+
+ans = 
+
+    tier: {[1x1 struct]  [1x1 struct]  [1x1 struct]}
+    tmin: 0
+    tmax: 4.0160
+    type: 'TextGrid'
+    name: 'HC101bA'
+
+
+ans = 
+
+     name: 'word'
+     type: 'interval'
+       T1: [1x19 double]
+       T2: [1x19 double]
+    Label: {19x1 cell}
+
+
+ans =
+
+tom
+
+</pre><img vspace="5" hspace="5" src="mDemo_13.png" alt=""> <h2>Process all files in folder<a name="24"></a></h2><pre class="language-matlab">inputFolder = <span class="string">'experiment1/data'</span>;
 listFiles = dir([inputFolder <span class="string">'/*.TextGrid'</span>]);  <span class="comment">% Beware of case-sensitive file system!</span>
 </pre><pre class="language-matlab"><span class="keyword">for</span> (I = 1: length(listFiles))
     file = listFiles(I).name;
@@ -1011,6 +1058,17 @@ p.t(4)      % time instance of the 4th frame
 p.frame{4}  % 4th frame: pitch candidates
 p.frame{4}.frequency(2)
 p.frame{4}.strength(2)
+
+%% Read Collections of objects
+coll = colRead('demo/textgrid+pitchtier.Collection');
+length(coll)
+coll{1}
+coll{2}
+coll{2}.tier{2}
+coll{2}.tier{2}.Label{4}
+tgPlot(coll{2}, 2)
+subplot(tgGetNumberOfTiers(coll{2})+1, 1, 1);
+ptPlot(coll{1});
 
 
 %% Process all files in folder

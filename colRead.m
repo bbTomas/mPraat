@@ -1,48 +1,66 @@
 function collection = colRead(fileName, encoding)
-% function textgrid = tgRead(fileName)
+% function collection = colRead(fileName, encoding)
 %
-% Loads TextGrid from Praat in Text or Short text format (UTF-8),
-% it handles both Interval and Point tiers.
-% Labels can may contain quotation marks and new lines.
-% v1.5, Tomas Boril, borilt@gmail.com
+% Loads Collection from Praat in Text or Short text format.
+% Collection may contain combination of TextGrids, PitchTiers and Pitch objects.
+%
+% Author: Pol van Rijn + Tomas Boril, borilt@gmail.com
 %
 % Example
-%   tg = tgRead('demo/H.TextGrid');
-%   tgPlot(tg);
+%   coll = colRead('demo/textgrid+pitchtier.Collection');
+%   length(coll)
+%   coll{1}
+%   coll{2}
+%   coll{2}.tier{2}
+%   coll{2}.tier{2}.Label{4}
+%   tgPlot(coll{2}, 2)
+%   subplot(tgGetNumberOfTiers(coll{2})+1, 1, 1);
+%   ptPlot(coll{1});
 
-collection = [];
 if nargin < 2
+    encoding = 'UTF-8';
+end
+if strcmp(encoding, 'auto')
     encoding = tgDetectEncoding(fileName);
 end
-if strcmp(encoding, 'UTF-8') == 0 && strcmp(encoding, 'UTF-16BE') == 0 && strcmp(encoding, 'UTF-16LE') == 0
-    error(['Unknown encoding: ', encoding]);
-end
+    
 [fid, message] = fopen(fileName, 'r', 'n', encoding);
 if fid == -1
     error(['cannot open file [' fileName ']: ' message]);
 end
 
 for I = 1: 3
-    r = fgetl(fid); % ignore
+    r = fgetl(fid);
     if I == 2
-        if contains(r, '"Collection"') == 0
-            error('This is not a Collection file!!')
+        if isempty(strfind(r, '"Collection"'))
+            error('This is not a Collection file!')
         end
     end
 end
 
-size = getNumberInLine(fgetl(fid)); % Read the size, remove eventual spaces
-fgetl(fid); % ignore "item []: "
-for s = 1:size
-    fgetl(fid); % discard item [1]:
+r = fgetl(fid);
+if ~isempty(strfind(r, 'size = '))
+    shortFormat = false;
+else
+    shortFormat = true;
+end
+nobjects = getNumberInLine(r, shortFormat); % Read the size, remove eventual spaces
+collection = cell(1, nobjects);
+if ~shortFormat
+    fgetl(fid); % ignore "item []: "
+end
+for s = 1:nobjects
+    if ~shortFormat
+        fgetl(fid); % discard item [1]:
+    end
     r = fgetl(fid);
-    if contains(r, 'TextGrid')
+    if ~isempty(strfind(r, 'TextGrid'))
         class = 'TextGrid';
-    elseif contains(r, 'PitchTier')
+    elseif ~isempty(strfind(r, 'PitchTier'))
         class = 'PitchTier';
-    elseif contains(r, 'Pitch 1')
-        class = 'Pitch';
-    elseif contains(r, 'Sound')
+    elseif ~isempty(strfind(r, 'Pitch 1'))
+        class = 'Pitch 1';
+    elseif ~isempty(strfind(r, 'Sound'))
         error(['Sound files are currently not supported, because of their inefficient loading and saving duration, rather use WAVE files'])
     else
         error(['Class not recognized! Line: ', r]);
@@ -53,10 +71,11 @@ for s = 1:size
             [object, fid] = tgRead(fid);
         case 'PitchTier'
             [object, fid] = ptRead(fid);
-        case 'Pitch'
+        case 'Pitch 1'
             [object, fid] = pitchRead(fid);
     end % end switch case
     object.type = class;
-    collection = [collection, {object}];
+    object.name = name;
+    collection{s} = object;
 end % end for loop
 fclose(fid);

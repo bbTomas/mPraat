@@ -1,10 +1,15 @@
 function [textgrid, fid] = tgRead(fileName, encoding)
 % function textgrid = tgRead(fileName)
 %
-% Loads TextGrid from Praat in Text or Short text format (UTF-8),
+% Loads TextGrid from Praat in Text or Short text format,
 % it handles both Interval and Point tiers.
-% Labels can may contain quotation marks and new lines.
-% v1.5, Tomas Boril, borilt@gmail.com
+% Labels may contain quotation marks and new lines.
+%
+% fileName ... file name of TextGrid
+% encoding ... [optional, default: 'UTF-8'] file encoding, 'auto' for Unicode
+%              standard autodetection
+%
+% Tomas Boril, borilt@gmail.com + Pol van Rijn
 %
 % Example
 %   tg = tgRead('demo/H.TextGrid');
@@ -14,11 +19,12 @@ textgrid = [];
 if ~isnumeric(fileName)
     % means it is not a collection!
     if nargin < 2
+        encoding = 'UTF-8';
+    end
+    if strcmp(encoding, 'auto')
         encoding = tgDetectEncoding(fileName);
     end
-    if strcmp(encoding, 'UTF-8') == 0 && strcmp(encoding, 'UTF-16BE') == 0 && strcmp(encoding, 'UTF-16LE') == 0
-        error(['Unknown encoding: ', encoding]);
-    end
+    
     [fid, message] = fopen(fileName, 'r', 'n', encoding);
     if fid == -1
         error(['cannot open file [' fileName ']: ' message]);
@@ -38,11 +44,10 @@ xmax = getNumberInLine(fgetl(fid));
 % xminStr = fgetl(fid); % xmin
 % xmaxStr = fgetl(fid); % xmax
 r = fgetl(fid); % either '<exists>' -> shorttext or 'tiers? <exists> ' -> full text format
-if contains(r, 'tiers?')
+if ~isempty(strfind(r, 'tiers?'))
     shortFormat = false;
-elseif contains(r, '<exists>')
+elseif ~isempty(strfind(r, '<exists>'))
     shortFormat = true;
-
 else
     fclose(fid);
     error('Unknown textgrid format.');

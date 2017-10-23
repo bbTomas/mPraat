@@ -4,6 +4,8 @@ function [p, fid] = pitchRead(fileName, encoding)
 % Reads Pitch object from Praat. Supported formats: text file, short text file.
 %
 % fileName ... file name of Pitch object
+% encoding ... [optional, default: 'UTF-8'] file encoding, 'auto' for Unicode
+%              standard autodetection
 %
 % Returns: A Pitch object represents periodicity candidates as a function of time.
 %   [ref: Praat help, http://www.fon.hum.uva.nl/praat/manual/Pitch.html]
@@ -22,7 +24,7 @@ function [p, fid] = pitchRead(fileName, encoding)
 %                               (for a voiced candidate), or 0 (for an unvoiced candidate)
 %      p.frame{1}.strength  ... vector of degrees of periodicity of candidates (between 0 and 1)
 %
-% v1.0, Tomas Boril, borilt@gmail.com
+% Tomas Boril, borilt@gmail.com + Pol van Rijn
 %
 % Example
 %   p = pitchRead('demo/sound.Pitch');
@@ -36,11 +38,12 @@ p = [];
 
 if ~isnumeric(fileName)
     if nargin < 2
+        encoding = 'UTF-8';
+    end
+    if strcmp(encoding, 'auto')
         encoding = tgDetectEncoding(fileName);
     end
-    if strcmp(encoding, 'UTF-8') == 0 && strcmp(encoding, 'UTF-16BE') == 0 && strcmp(encoding, 'UTF-16LE') == 0
-        error(['Unknown encoding: ', encoding]);
-    end
+    
     [fid, message] = fopen(fileName, 'r', 'n', encoding);
     if fid == -1
         error(['cannot open file [' fileName ']: ' message]);
@@ -74,7 +77,7 @@ if strcmp(r, 'File type = "ooTextFile"')  % TextFile or shortTextFile
         % if a collection
         r = fgetl(fid);  % 4    
     end
-    if contains(r, 'xmin') == 1   % TextFile
+    if ~isempty(strfind(r, 'xmin'))   % TextFile
         xmin = getNumberInLine(r);
         r = fgetl(fid);  % 5.
         xmax = getNumberInLine(r);
@@ -92,14 +95,14 @@ if strcmp(r, 'File type = "ooTextFile"')  % TextFile or shortTextFile
         frame = cell(1, nx);
         
         r = fgetl(fid);  % 11.
-        if ~contains(r, 'frame []: ')
+        if isempty(strfind(r, 'frame []: '))
             fclose(fid);
             error('Unknown Pitch format.')
         end
 
         for I = 1: nx
             r = fgetl(fid);
-            if ~contains(r, ['    frame [' num2str(I) ']:'])
+            if isempty(strfind(r, ['    frame [' num2str(I) ']:']))
                 fclose(fid);
                 error(['Unknown Pitch format, wrong frame id (' num2str(I) ').'])
             end
@@ -108,7 +111,7 @@ if strcmp(r, 'File type = "ooTextFile"')  % TextFile or shortTextFile
             r = fgetl(fid);
             frame{I}.nCandidates = getNumberInLine(r);
             r = fgetl(fid);
-            if ~contains(r, '        candidate []: ')
+            if isempty(strfind(r, '        candidate []: '))
                 fclose(fid);
                 error('Unknown Pitch format.')
             end
@@ -116,14 +119,14 @@ if strcmp(r, 'File type = "ooTextFile"')  % TextFile or shortTextFile
             frame{I}.strength = nan(1, frame{I}.nCandidates);
             for Ic = 1: frame{I}.nCandidates
                 r = fgetl(fid);
-                if ~contains(r, ['            candidate [' num2str(Ic) ']:'])
+                if isempty(strfind(r, ['            candidate [' num2str(Ic) ']:']))
                     fclose(fid);
                     error(['Unknown Pitch format, wrong candidate nr. (' num2str(Ic) ') in frame id (' num2str(I) ').'])
                 end
                 r = fgetl(fid);
-                frame{I}.frequency(Ic) = str2double(r(29:end));
+                frame{I}.frequency(Ic) = getNumberInLine(r);
                 r = fgetl(fid);
-                frame{I}.strength(Ic) = str2double(r(28:end));
+                frame{I}.strength(Ic) = getNumberInLine(r);
             end
         end
         if ~isnumeric(fileName)

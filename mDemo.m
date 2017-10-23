@@ -311,6 +311,17 @@ p.frame{4}  % 4th frame: pitch candidates
 p.frame{4}.frequency(2)
 p.frame{4}.strength(2)
 
+%% Read Collections of objects
+coll = colRead('demo/textgrid+pitchtier.Collection');
+length(coll)
+coll{1}
+coll{2}
+coll{2}.tier{2}
+coll{2}.tier{2}.Label{4}
+tgPlot(coll{2}, 2)
+subplot(tgGetNumberOfTiers(coll{2})+1, 1, 1);
+ptPlot(coll{1});
+
 
 %% Process all files in folder
 %   inputFolder = 'experiment1/data';

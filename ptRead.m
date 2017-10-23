@@ -6,8 +6,10 @@ function [pt, fid] = ptRead(fileName, encoding)
 % it does not contain tmin and tmax info).
 %
 % fileName ... file name of PitchTier
+% encoding ... [optional, default: 'UTF-8'] file encoding, 'auto' for Unicode
+%              standard autodetection
 %
-% v1.0, Tomas Boril, borilt@gmail.com
+% Tomas Boril, borilt@gmail.com + Pol van Rijn
 %
 % Example
 %   pt = ptRead('demo/H.PitchTier');
@@ -18,11 +20,12 @@ pt = [];
 
 if ~isnumeric(fileName)
     if nargin < 2
+        encoding = 'UTF-8';
+    end
+    if strcmp(encoding, 'auto')
         encoding = tgDetectEncoding(fileName);
     end
-    if strcmp(encoding, 'UTF-8') == 0 && strcmp(encoding, 'UTF-16BE') == 0 && strcmp(encoding, 'UTF-16LE') == 0
-        error(['Unknown encoding: ', encoding]);
-    end
+    
     [fid, message] = fopen(fileName, 'r', 'n', encoding);
     if fid == -1
         error(['cannot open file [' fileName ']: ' message]);
@@ -94,7 +97,7 @@ elseif strcmp(r, 'File type = "ooTextFile"')  % TextFile or shortTextFile
         % if a collection
         r = fgetl(fid);  % 4
     end
-    if contains(r, 'xmin') == 1   % TextFile
+    if ~isempty(strfind(r, 'xmin'))   % TextFile
         xmin = getNumberInLine(r);
         r = fgetl(fid);  % 5.
         xmax = getNumberInLine(r);
@@ -107,9 +110,11 @@ elseif strcmp(r, 'File type = "ooTextFile"')  % TextFile or shortTextFile
         for I = 1: N
             r = fgetl(fid);  % 7 + (I-1)*3
             r = fgetl(fid);  % 8 + (I-1)*3
-            t(I) = str2double(r(14:end));
+%             t(I) = str2double(r(14:end));
+            t(I) = getNumberInLine(r);
             r = fgetl(fid);  % 9 + (I-1)*3
-            f(I) = str2double(r(13:end));
+            f(I) = getNumberInLine(r);
+%             f(I) = str2double(r(13:end));
         end
         if ~isnumeric(fileName)
             fclose(fid);
