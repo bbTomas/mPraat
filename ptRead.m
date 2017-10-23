@@ -1,10 +1,10 @@
-function pt = ptRead(fileName)
+function [pt, fid] = ptRead(fileName, encoding)
 % function pt = ptRead(fileName)
 %
 % Reads PitchTier from Praat. Supported formats: text file, short text file,
 % spread sheet, headerless spread sheet (headerless not recommended,
 % it does not contain tmin and tmax info).
-% 
+%
 % fileName ... file name of PitchTier
 %
 % v1.0, Tomas Boril, borilt@gmail.com
@@ -16,24 +16,39 @@ function pt = ptRead(fileName)
 
 pt = [];
 
-[fid, message] = fopen(fileName, 'r', 'n', 'UTF-8');
-if fid == -1
-    error(['cannot open file [' fileName ']: ' message]);
-end
-
-r = fgetl(fid);  % 1.
-if strcmp(r, '"ooTextFile"')    % spreadSheet
-    r = fgetl(fid);  % 2.
-    if ~strcmp(r, '"PitchTier"')
-        fclose(fid);
-        error('Unknown PitchTier format.')
+if ~isnumeric(fileName)
+    if nargin < 2
+        encoding = tgDetectEncoding(fileName);
+    end
+    if strcmp(encoding, 'UTF-8') == 0 && strcmp(encoding, 'UTF-16BE') == 0 && strcmp(encoding, 'UTF-16LE') == 0
+        error(['Unknown encoding: ', encoding]);
+    end
+    [fid, message] = fopen(fileName, 'r', 'n', encoding);
+    if fid == -1
+        error(['cannot open file [' fileName ']: ' message]);
     end
     
-    r = fgetl(fid);  % 3.
-    fromToN = strsplit(r);
-    if length(fromToN) ~= 3
-        fclose(fid);
-        error('Unknown PitchTier format.')
+    r = fgetl(fid);  % 1.
+else
+    % encoding is never used
+    fid = fileName;
+    r = 'File type = "ooTextFile"';
+end
+
+if strcmp(r, '"ooTextFile"')    % spreadSheet
+    if ~isnumeric(fileName)
+        r = fgetl(fid);  % 2.
+        if ~strcmp(r, '"PitchTier"')
+            fclose(fid);
+            error('Unknown PitchTier format.')
+        end
+        
+        r = fgetl(fid);  % 3.
+        fromToN = strsplit(r);
+        if length(fromToN) ~= 3
+            fclose(fid);
+            error('Unknown PitchTier format.')
+        end
     end
     xmin = str2double(fromToN{1});
     xmax = str2double(fromToN{2});
@@ -51,33 +66,40 @@ if strcmp(r, '"ooTextFile"')    % spreadSheet
         t(I) = str2double(tf{1});
         f(I) = str2double(tf{2});
     end
-    fclose(fid);
+    
+    if ~isnumeric(fileName)
+        fclose(fid);
+    end
     
 elseif strcmp(r, 'File type = "ooTextFile"')  % TextFile or shortTextFile
-    r = fgetl(fid);  % 2.
-    if ~strcmp(r, 'Object class = "PitchTier"')
-        fclose(fid);
-        error('Unknown PitchTier format.')
+    if ~isnumeric(fileName)
+        r = fgetl(fid);  % 2.
+        if ~strcmp(r, 'Object class = "PitchTier"')
+            fclose(fid);
+            error('Unknown PitchTier format.')
+        end
+        
+        r = fgetl(fid);  % 3.
+        if ~strcmp(r, '')
+            fclose(fid);
+            error('Unknown PitchTier format.')
+        end
+        
+        r = fgetl(fid);  % 4.
+        if length(r) < 1
+            fclose(fid);
+            error('Unknown PitchTier format.')
+        end
+    else
+        % if a collection
+        r = fgetl(fid);  % 4
     end
-    
-    r = fgetl(fid);  % 3.
-    if ~strcmp(r, '')
-        fclose(fid);
-        error('Unknown PitchTier format.')
-    end
-    
-    r = fgetl(fid);  % 4.
-    if length(r) < 1
-        fclose(fid);
-        error('Unknown PitchTier format.')
-    end
-    
-    if strcmp(r(1), 'x')   % TextFile
-        xmin = str2double(r(8:end));
+    if contains(r, 'xmin') == 1   % TextFile
+        xmin = getNumberInLine(r);
         r = fgetl(fid);  % 5.
-        xmax = str2double(r(8:end));
+        xmax = getNumberInLine(r);
         r = fgetl(fid);  % 6.
-        N = str2double(r(16:end));
+        N = getNumberInLine(r);
         
         t = NaN*ones(1, N);
         f = NaN*ones(1, N);
@@ -89,7 +111,9 @@ elseif strcmp(r, 'File type = "ooTextFile"')  % TextFile or shortTextFile
             r = fgetl(fid);  % 9 + (I-1)*3
             f(I) = str2double(r(13:end));
         end
-        fclose(fid);
+        if ~isnumeric(fileName)
+            fclose(fid);
+        end
     else     % shortTextFile
         xmin = str2double(r);
         r = fgetl(fid);  % 5.
@@ -106,11 +130,15 @@ elseif strcmp(r, 'File type = "ooTextFile"')  % TextFile or shortTextFile
             r = fgetl(fid);  % 8 + (I-1)*2
             f(I) = str2double(r);
         end
-        fclose(fid);
+        if ~isnumeric(fileName)
+            fclose(fid);
+        end
     end
     
 else   % headerless SpreadSheet
-    fclose(fid);
+    if ~isnumeric(fileName)
+        fclose(fid);
+    end
     tab = load(fileName, '-ascii');
     t = tab(:,1).';
     f = tab(:,2).';
