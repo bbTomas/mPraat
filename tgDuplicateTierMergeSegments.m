@@ -96,11 +96,11 @@ collapsed = horzcat(tOrig.Label{:});
 patternCollapsed =  strrep(pattern, sep, '');
 if strcmp(collapsed, patternCollapsed) ~= true
     newline = sprintf('\n');
-    error(['pattern does not match actual labels in the tier', newline, 'pattern:       [', patternCollapsed, ']', newline,
+    error(['pattern does not match actual labels in the tier', newline, 'pattern:       [', patternCollapsed, ']', newline, ...
                 'actual labels: [', collapsed, ']'])
 end
 
-parts = strsplit(pattern, sep);  % cell-array of string characters
+parts = strsplit(pattern, sep, 'CollapseDelimiters', false);  % cell-array of string characters
 
 t1 = [];
 t2 = [];
@@ -124,7 +124,7 @@ for I = 1: length(tOrig.Label)
 
         t1 = [t1, tOrig.T1(I)];
         t2 = [t2, tOrig.T2(I)];
-        label{indLabel} = tOrig.Label{I}; indLabel = indLabel + 1;
+        label{indLabel, 1} = tOrig.Label{I}; indLabel = indLabel + 1;
     else  % non-empty label
         labTemp = [labTemp, tOrig.Label{I}];
         if indPart > length(parts)
@@ -137,7 +137,7 @@ for I = 1: length(tOrig.Label)
         if strcmp(labTemp, parts{indPart}) == true  % match
             t1 = [t1, t1Last];
             t2 = [t2, tOrig.T2(I)];
-            label{indLabel} = labTemp; indLabel = indLabel + 1;
+            label{indLabel, 1} = labTemp; indLabel = indLabel + 1;
             labTemp = '';
             indPart = indPart + 1;
         else  % not yet

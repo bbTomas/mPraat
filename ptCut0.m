@@ -58,6 +58,15 @@ if isinf(tEnd) && tEnd<0
     error('infinite tEnd can be positive only')
 end
 
+if isnan(tStart)
+    error('tStart must be a number')
+end
+
+if isnan(tEnd)
+    error('tEnd must be a number')
+end
+
+
 ptNew = pt;
 ptNew.t = pt.t(pt.t >= tStart  &  pt.t <= tEnd);
 ptNew.f = pt.f(pt.t >= tStart  &  pt.t <= tEnd);

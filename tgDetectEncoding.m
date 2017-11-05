@@ -7,8 +7,9 @@ function encoding = tgDetectEncoding(fileName)
 [~,~,e]=fileparts(fileName);
 if isempty(e), fileName=[fileName '.TextGrid'];end;
 encodings{1}='UTF-8';
-encodings{2}='UTF-16BE';
-encodings{3}='UTF-16LE';
+encodings{2}='UTF-16';
+encodings{3}='UTF-16BE';
+encodings{4}='UTF-16LE';
 encodingWeight=NaN*zeros(1,length(encodings));
 wid='MATLAB:iofun:UnsupportedEncoding';
 warning('off',wid);

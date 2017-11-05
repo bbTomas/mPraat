@@ -3,9 +3,9 @@ function res = tgFindLabels(tg, tierInd, labels, returnTime)
 %
 % Find label or consecutive sequence of labels and returns their indices.
 %
-% If returnTime == FALSE (or not specified), returns cell-array with vectors of all occurrences,
+% If returnTime == false (or not specified), returns cell-array with vectors of all occurrences,
 % each cell-array member is one occurence and contains vector of label indices.
-% If returnTime == TRUE, returns structure with vectors containing T1 (begin) and T2 (end) time
+% If returnTime == true, returns structure with vectors containing T1 (begin) and T2 (end) time
 % for each found group of sequence of labels.
 %
 % tg         ... TextGrid object
@@ -64,7 +64,7 @@ end
 
 tierInd = tgI(tg, tierInd);
 
-if length(returnTime) ~= 1 || (returnTime ~= true && returnTime ~= false)s
+if length(returnTime) ~= 1 || (returnTime ~= true && returnTime ~= false)
     error('returnTime must be a logical value.')
 end
 

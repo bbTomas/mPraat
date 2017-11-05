@@ -42,7 +42,11 @@ if ~isInt(npolynomials) || npolynomials <= 0
     error('npolynomials must be integer > 0.')
 end
 
-pt = ptInterpolate(pt, linspace(pt.tmin, pt.tmax, npoints));
+if npoints == 1
+    pt = ptInterpolate(pt, pt.tmin);
+else
+    pt = ptInterpolate(pt, linspace(pt.tmin, pt.tmax, npoints));
+end
 
 y = pt.f;
 
@@ -51,7 +55,11 @@ lP = npoints;  % poèet vzorkù polynomu
 nP = npolynomials;
 
 B = zeros(nP, lP);  % báze
-x = linspace(-1, 1, lP);
+if (lP == 1)
+    x = -1;
+else
+    x = linspace(-1, 1, lP);
+end
 
 for I = 1: nP
     n = I - 1;

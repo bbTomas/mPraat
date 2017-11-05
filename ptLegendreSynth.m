@@ -44,7 +44,11 @@ lP = npoints; % poèet vzorkù polynomu
 nP = length(c);
 
 B = zeros(nP, lP);  % báze
-x = linspace(-1, 1, lP);
+if (lP == 1)
+    x = -1;
+else
+    x = linspace(-1, 1, lP);
+end
 
 for I = 1: nP
     n = I - 1;
