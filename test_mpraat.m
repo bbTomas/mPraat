@@ -123,6 +123,25 @@ tg = tgRead('demo/sppas.TextGrid');
 expect_equal({tg.tier{tgI(tg, 'ORT')}.Label{4}, tg.tier{tgI(tg, 'ORT')}.Label{5}, tg.tier{tgI(tg, 'ORT')}.Label{6}}, ...
     {['wracal', char(10), 'pokus'], ['siebe""', char(10), 'ah""', char(10), 'a'], ['siebie""', char(10), 'a""h""', char(10), 'a']});
 
+
+disp('tgWrite')
+tg = tgRead('demo/2pr.TextGrid');
+f = tempname;
+tgWrite(tg, f);
+tg2 = tgRead(f);
+delete(f);
+expect_equal(isequal(tg, tg2), true);
+
+tg = tgCreateNewTextGrid(0, 3);
+tg = tgInsertNewIntervalTier(tg, 1, 'word');
+tg = tgInsertInterval(tg, 1, 0.8, 1.5, ['s' char(261)]);
+f = tempname;
+tgWrite(tg, f);
+tg2 = tgRead(f);
+delete(f);
+expect_equal(strcmp(tg2.tier{1}.Label(2), ['s' char(261)]), true);
+
+
 disp('tgRepairContinuity')
 tg = tgRead('demo/H_problem.TextGrid');
 tg = tgRepairContinuity(tg, false);
