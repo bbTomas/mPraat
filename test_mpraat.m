@@ -134,12 +134,12 @@ expect_equal(isequal(tg, tg2), true);
 
 tg = tgCreateNewTextGrid(0, 3);
 tg = tgInsertNewIntervalTier(tg, 1, 'word');
-tg = tgInsertInterval(tg, 1, 0.8, 1.5, ['s' char(261)]);
+tg = tgInsertInterval(tg, 1, 0.8, 1.5, ['s' char(261) char(291)]);
 f = tempname;
 tgWrite(tg, f);
 tg2 = tgRead(f);
 delete(f);
-expect_equal(strcmp(tg2.tier{1}.Label(2), ['s' char(261)]), true);
+expect_equal(strcmp(tg2.tier{1}.Label(2), ['s' char(261) char(291)]), true);
 
 
 disp('tgRepairContinuity')
