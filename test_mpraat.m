@@ -21,6 +21,35 @@ expect_equal({length(unique(pt.t)), pt.tmax}, {209, 3.617125});
 pt = ptRead('demo/H_spreadSheet.PitchTier');
 expect_equal({length(unique(pt.t)), pt.tmax}, {209, 3.617125});
 
+disp('ptWrite')
+pt = ptRead('demo/Hround.PitchTier');
+f = tempname;
+ptWrite(pt, f, 'short');
+pt2 = ptRead(f);
+delete(f);
+expect_equal(isequal(pt, pt2), true);
+
+pt = ptRead('demo/Hround.PitchTier');
+f = tempname;
+ptWrite(pt, f, 'text');
+pt2 = ptRead(f);
+delete(f);
+expect_equal(isequal(pt, pt2), true);
+
+pt = ptRead('demo/Hround.PitchTier');
+f = tempname;
+ptWrite(pt, f, 'spreadsheet');
+pt2 = ptRead(f);
+delete(f);
+expect_equal(isequal(pt, pt2), true);
+
+pt = ptRead('demo/Hround.PitchTier');
+f = tempname;
+ptWrite(pt, f);
+pt2 = ptRead(f);
+delete(f);
+expect_equal(isequal(pt, pt2), true);
+
 disp('ptHz2ST')
 pt = ptRead('demo/H.PitchTier');
 pt2 = ptHz2ST(pt);
@@ -129,10 +158,44 @@ expect_equal({tg.tier{tgI(tg, 'ORT')}.Label{4}, tg.tier{tgI(tg, 'ORT')}.Label{5}
 disp('tgWrite')
 tg = tgRead('demo/2pr.TextGrid');
 f = tempname;
+tgWrite(tg, f, 'text');
+tg2 = tgRead(f);
+delete(f);
+expect_equal(isequal(tg, tg2), true);
+
+tg = tgCreateNewTextGrid(0, 3);
+tg = tgInsertNewIntervalTier(tg, 1, 'word');
+tg = tgInsertInterval(tg, 1, 0.8, 1.5, ['s', char(hex2dec('0105')), char(hex2dec('0123'))]);
+f = tempname;
+tgWrite(tg, f, 'text');
+tg2 = tgRead(f);
+delete(f);
+expect_equal(isequal(tg, tg2), true);
+
+tg = tgCreateNewTextGrid(0, 3);
+tg = tgInsertNewIntervalTier(tg, 1, 'word');
+tg = tgInsertInterval(tg, 1, 0.8, 1.5, 'tom');
+f = tempname;
+tgWrite(tg, f, 'text');
+tg2 = tgRead(f);
+delete(f);
+expect_equal(isequal(tg, tg2), true);
+
+tg = tgRead('demo/2pr.TextGrid');
+f = tempname;
 tgWrite(tg, f);
 tg2 = tgRead(f);
 delete(f);
 expect_equal(isequal(tg, tg2), true);
+
+tg = tgRead('demo/2pr.TextGrid');
+f = tempname;
+tgWrite(tg, f, 'short');
+tg2 = tgRead(f);
+delete(f);
+expect_equal(isequal(tg, tg2), true);
+
+
 
 tg = tgCreateNewTextGrid(0, 3);
 tg = tgInsertNewIntervalTier(tg, 1, 'word');

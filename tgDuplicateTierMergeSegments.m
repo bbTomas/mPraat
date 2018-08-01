@@ -124,7 +124,7 @@ for I = 1: length(tOrig.Label)
 
         t1 = [t1, tOrig.T1(I)];
         t2 = [t2, tOrig.T2(I)];
-        label{indLabel, 1} = tOrig.Label{I}; indLabel = indLabel + 1;
+        label{1, indLabel} = tOrig.Label{I}; indLabel = indLabel + 1;
     else  % non-empty label
         labTemp = [labTemp, tOrig.Label{I}];
         if indPart > length(parts)
@@ -137,7 +137,7 @@ for I = 1: length(tOrig.Label)
         if strcmp(labTemp, parts{indPart}) == true  % match
             t1 = [t1, t1Last];
             t2 = [t2, tOrig.T2(I)];
-            label{indLabel, 1} = labTemp; indLabel = indLabel + 1;
+            label{1, indLabel} = labTemp; indLabel = indLabel + 1;
             labTemp = '';
             indPart = indPart + 1;
         else  % not yet

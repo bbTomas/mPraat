@@ -167,10 +167,13 @@ for tier = 1: numberOfTiers
                 end
             end
             label = label(1: end-1);
+            if isempty(label)
+                label = '';   % unification: '' and Empty string: 1-by-0  
+            end
             
             textgrid.tier{tier}.T1 = [textgrid.tier{tier}.T1 t];
             textgrid.tier{tier}.T2 = [textgrid.tier{tier}.T2 t2];
-            textgrid.tier{tier}.Label{I, 1} = label; % trim quotation marks
+            textgrid.tier{tier}.Label{1, I} = label; % trim quotation marks
             
             xmin = min(t, xmin); xmin = min(t2, xmin);
             xmax = max(t, xmax); xmax = max(t2, xmax);
@@ -254,8 +257,12 @@ for tier = 1: numberOfTiers
             end
             label = label(1: end-1);
             
+            if isempty(label)
+                label = '';   % unification: '' and Empty string: 1-by-0  
+            end
+            
             textgrid.tier{tier}.T = [textgrid.tier{tier}.T t];
-            textgrid.tier{tier}.Label{I, 1} = label; % trim quotation marks
+            textgrid.tier{tier}.Label{1, I} = label; % trim quotation marks
             
             xmin = min(t, xmin);
             xmax = max(t, xmax);
