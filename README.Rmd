@@ -31,6 +31,8 @@ The final publication is available at Springer via [DOI 10.1007/978-3-319-45510-
 
 ## What is new
 
+v1.1.0 (2018/08/01): tgWrite() and ptWrite() format support: 'text' (full text format), 'short' (short text format), and in addition for pt: 'spreadsheet' and 'headerless'; tgRead(), ptRead() and pitchRead(): optional file encoding parameter (default: 'UTF-8')
+
 v1.0.9 (2017/10/24): colRead() to read Collection in Text and Short-text format (Collection may store many objects in one file -- TextGrids, PitchTiers, Pitch objects). Big thanks to Pol van Rijn for initiating this and making the major portion of the new code. Support for file encodings in all read functions (thanks to Weirong Chen for his DetectEncoding function).
 
 v1.0.8 (2017/07/15): pitchRead() to read Pitch-object files with time frames of pitch candidates
