@@ -66,6 +66,10 @@ if isnan(tEnd)
     error('tEnd must be a number')
 end
 
+if tEnd < tStart
+    error('tEnd must be >= tStart')
+end
+
 
 ptNew = pt;
 ptNew.t = pt.t(pt.t >= tStart  &  pt.t <= tEnd);

@@ -76,6 +76,7 @@ pt = ptRead('demo/H.PitchTier');
 pt = ptCut(pt, -1, 1);
 expect_equal({pt.tmin, pt.tmax, length(pt.t), length(pt.f), pt.t(1), pt.t(10), pt.t(71), pt.f(1), pt.f(10), pt.f(71)}, ...
         {-1, 1, 71, 71, 0.0935625, 0.1835625, 0.9935625, 210.0627306, 189.5803367, 150.0365144});
+expect_error('ptCut(ptRead(''demo/H.PitchTier''), 3, 2)');
 
 disp('ptCut0')
 expect_error('ptCut0(ptRead(''demo/H.PitchTier''), [])');
@@ -96,6 +97,7 @@ pt = ptRead('demo/H.PitchTier');
 pt = ptCut0(pt, -1, 1);
 expect_equal({pt.tmin, pt.tmax, length(pt.t), length(pt.f), pt.t(1), pt.t(10), pt.t(71), pt.f(1), pt.f(10), pt.f(71)}, ...
         {0, 2, 71, 71, 1.0935625, 1.1835625, 1.9935625, 210.0627306, 189.5803367, 150.0365144});
+expect_error('ptCut0(ptRead(''demo/H.PitchTier''), 3, 2)');
 
 
 
