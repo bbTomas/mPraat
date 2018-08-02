@@ -38,11 +38,8 @@ else
     fid = fileName;
 end
 
-% no need for an extra variable, e.g. xminStr
-xmin = getNumberInLine(fgetl(fid));
-xmax = getNumberInLine(fgetl(fid));
-% xminStr = fgetl(fid); % xmin
-% xmaxStr = fgetl(fid); % xmax
+xminStr = fgetl(fid); % xmin
+xmaxStr = fgetl(fid); % xmax
 r = fgetl(fid); % either '<exists>' -> shorttext or 'tiers? <exists> ' -> full text format
 if ~isempty(strfind(r, 'tiers?'))
     shortFormat = false;
@@ -53,13 +50,8 @@ else
     error('Unknown textgrid format.');
 end
 
-% if shortFormat
-%     xmin = str2double(xminStr); % xmin
-%     xmax = str2double(xmaxStr); % xmax
-% else
-%     xmin = str2double(xminStr(8:end)); % xmin
-%     xmax = str2double(xmaxStr(8:end)); % xmax
-% end
+xmin = getNumberInLine(xminStr, shortFormat);
+xmax = getNumberInLine(xmaxStr, shortFormat);
 
 if shortFormat
     numberOfTiers = str2double(fgetl(fid));

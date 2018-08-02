@@ -174,7 +174,7 @@ t = tgFindLabels(tg, 'word', {'ti', 'reknu', 'co'}, true)
 pt = ptRead('demo/H.PitchTier');
 tStart = t.T1(1)
 tEnd = t.T2(1)
-ptPlot(ptCut(pt, tStart, tEnd))
+figure, ptPlot(ptCut(pt, tStart, tEnd))
 
 
 
@@ -194,7 +194,7 @@ collapsed = horzcat(tg.tier{tgI(tg, 'phone')}.Label{:})
 
 pattern = 'ja:-ci-P\ek-nu-t_so-?u-J\e-la:S- -nej-dP\i:f-naj-deZ-h\ut_S-ku-?a-?a-ta-ma-na:'
 tg2 = tgDuplicateTierMergeSegments(tg, 'phone', 1, 'syll', pattern, '-');
-tgPlot(tg2);
+figure, tgPlot(tg2);
 
 
 
@@ -260,6 +260,7 @@ tgNew2 = tgRepairContinuity(tgNew); % no problem in repaired TextGrid
 pt = ptRead('demo/H.PitchTier');
 pt = ptHz2ST(pt, 100);  % conversion of Hz to Semitones, reference 0 ST = 100 Hz.
 
+figure
 subplot(3,1,1)
 ptPlot(pt); xlabel('Time (sec)'); ylabel('Frequency (ST)');
 
@@ -279,6 +280,7 @@ ptWrite(pt2interp, 'demo/H_cut_interp.PitchTier')
 %% Legendre polynomials modelling
 
 % Orthogonal basis
+figure
 ptLegendreDemo()
 
 % Cut the PitchTier
@@ -311,16 +313,48 @@ p.frame{4}  % 4th frame: pitch candidates
 p.frame{4}.frequency(2)
 p.frame{4}.strength(2)
 
+%% IntensityTier
+% Intensity tier files have very similar structure to PitchTiers. Using this toolbox, you can also interpolate, cut or model Intensity tiers with Legendre polynomials.
+it = itRead('demo/maminka.IntensityTier');
+it = itCut(it, 0.2, 0.4);  % cut IntensityTier and preserve time
+c = itLegendre(it)
+leg = itLegendreSynth(c);
+itLeg = it;
+itLeg.t = linspace(itLeg.tmin, itLeg.tmax, length(leg));
+itLeg.i = leg;
+figure, plot(it.t, it.i, 'ko')
+xlabel('Time (sec)'); ylabel('Intensity (dB)')
+hold on; plot(itLeg.t, itLeg.i, 'b')
+
 %% Read Collections of objects
-coll = colRead('demo/textgrid+pitchtier.Collection');
-length(coll)
-coll{1}
-coll{2}
-coll{2}.tier{2}
-coll{2}.tier{2}.Label{4}
-tgPlot(coll{2}, 2)
-subplot(tgGetNumberOfTiers(coll{2})+1, 1, 1);
-ptPlot(coll{1});
+% With col.read() function, it is convenient to read a lot of objects stored in one Praat .Collection file
+coll = colRead('demo/coll_text.Collection');
+length(coll)  % number of objects in collection
+coll{1}.type  % 1st object type
+coll{1}.name  % 1st object name
+it = coll{1}; % 1st object
+figure, itPlot(it)
+
+coll{2}.type  % 2nd object type
+coll{2}.name  % 2nd object name
+tg = coll{2}; % 2nd object
+figure, tgPlot(tg)
+length(tg.tier)  % number of tiers in TextGrid
+tg.tier{tgI(tg, 'word')}.Label
+
+coll{3}.type  % 3rd object type
+coll{3}.name  % 3rd object name
+pitch = coll{3}; % 3rd object
+pitch.nx         % number of frames
+pitch.t(4)       % time instance of the 4th frame
+pitch.frame{4}   % th frame: pitch candidates
+pitch.frame{4}.frequency(2)
+pitch.frame{4}.strength(2)
+
+coll{4}.type  % 4th object type
+coll{4}.name  % 4th object name
+pt = coll{4}; % 4th object
+figure, ptPlot(pt)
 
 
 %% Process all files in folder
@@ -335,6 +369,7 @@ ptPlot(coll{1});
 %       fileName = file(1:end-9);
 %       fileTextGrid = [inputFolder, '/', fileName, '.TextGrid'];
 %       filePitchTier = [inputFolder, '/', fileName, '.PitchTier'];
+%       fileIntensityTier = [inputFolder, '/', fileName, '.IntensityTier'];
 %       fileSound = [inputFolder, '/', fileName, '.wav'];
 %       %
 %       tg = tgRead(fileTextGrid);

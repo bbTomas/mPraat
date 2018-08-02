@@ -130,6 +130,105 @@ expect_error('ptCut0(ptRead(''demo/H.PitchTier''), 3, 2)');
 
 
 
+disp('IntensityTier')
+
+disp('itRead')
+it = itRead('demo/maminka.IntensityTier');
+expect_equal({length(unique(it.t)), it.tmin, it.tmax, length(it.t), it.t(1), it.t(16), it.t(29), it.t(40), it.i(1), it.i(16), it.i(29), it.i(40)}, ...
+    {40, 0, 0.5460770975056689, 40, 0.0501814058956916, 0.22160997732426302, 0.3701814058956916, 0.4958956916099773, 59.5715903919772, 71.63843325188716, 64.17176220056767, 64.98963270408825});
+it = itRead('demo/maminka_short.IntensityTier');
+expect_equal({length(unique(it.t)), it.tmin, it.tmax, length(it.t), it.t(1), it.t(16), it.t(29), it.t(40), it.i(1), it.i(16), it.i(29), it.i(40)}, ...
+    {40, 0, 0.5460770975056689, 40, 0.0501814058956916, 0.22160997732426302, 0.3701814058956916, 0.4958956916099773, 59.5715903919772, 71.63843325188716, 64.17176220056767, 64.98963270408825});
+
+disp('itWrite')
+it = itRead('demo/maminka.IntensityTier');
+f = tempname;
+itWrite(it, f, 'short');
+it2 = itRead(f);
+delete(f);
+expect_equal({numel(fieldnames(it)), it.t, it.i, it.tmin, it.tmax}, ...
+    {numel(fieldnames(it2)), it2.t, it2.i, it2.tmin, it2.tmax});
+
+it = itRead('demo/maminka.IntensityTier');
+f = tempname;
+itWrite(it, f);
+it2 = itRead(f);
+delete(f);
+expect_equal({numel(fieldnames(it)), it.t, it.i, it.tmin, it.tmax}, ...
+    {numel(fieldnames(it2)), it2.t, it2.i, it2.tmin, it2.tmax});
+
+it = itRead('demo/maminka.IntensityTier');
+f = tempname;
+itWrite(it, f, 'text');
+it2 = itRead(f);
+delete(f);
+expect_equal({numel(fieldnames(it)), it.t, it.i, it.tmin, it.tmax}, ...
+    {numel(fieldnames(it2)), it2.t, it2.i, it2.tmin, it2.tmax});
+
+disp('it.interpolate')
+it = itRead('demo/maminka.IntensityTier');
+t = [-1, 0, 0.1, it.t(3), it.t(end), it.t(end)+1];
+it2 = itInterpolate(it, t);
+expect_equal({it2.tmin, it2.tmax, length(it2.t), length(it2.i), it2.t, it2.i}, ...
+    {it.tmin, it.tmax, length(t), length(t), t, [59.57159039, 59.57159039, 69.76859026, 66.73070258, 64.98963270, 64.98963270]});
+
+disp('itLegendre')
+itSample = itRead('demo/maminka.IntensityTier');
+expect_error('itLegendre(itRead(''demo/maminka.IntensityTier''), -1)');
+expect_error('itLegendre(itRead(''demo/maminka.IntensityTier''), 0, 0)');
+expect_error('itLegendre(itRead(''demo/maminka.IntensityTier''), -1, 1)');
+expect_error('itLegendreSynth(1, NaN)');
+expect_error('itLegendreSynth(1, [])');
+expect_equal(sum(isnan(itLegendre(itSample, 0))), 4);
+expect_equal(isnan(itLegendre(itSample, 0, 1)), true);
+expect_equal(itLegendre(struct('tmin', 0, 'tmax', 0.4, 't', [0, 0.1, 0.2, 0.3, 0.4], 'i', [1, 2, 3, 6, -1])), [2.7472472, 0.8711174, -2.2633733, -2.4655033]);
+expect_equal(itLegendre(struct('tmin', 0, 'tmax', 0.4, 't', [0, 0.1, 0.2, 0.3, 0.4], 'i', [1, 2, 3, 6, -1]), 1000, 1), 2.7472472472472);
+expect_equal(itLegendre(struct('tmin', 0, 'tmax', 0.4, 't', [0, 0.1, 0.2, 0.3, 0.4], 'i', [1, 2, 3, 6, -1]), 2), [0, -3,  0, -7]);
+expect_equal(length(ptLegendreSynth(5, 0)), 0);
+expect_equal(itLegendreSynth(5, 1), 5);
+expect_equal(itLegendreSynth(5, 3), [5, 5, 5]);
+expect_equal(itLegendreSynth([1, 2, 3], 1), 2);
+expect_equal(itLegendreSynth([1, 2, 3], 2), [2, 6]);
+expect_equal(itLegendreSynth([1, 2, 3], 5), [2, -0.375, -0.5, 1.625, 6]);
+
+disp('itCut')
+expect_error('itCut(itRead(''demo/maminka.IntensityTier''), [])');
+expect_error('itCut(itRead(''demo/maminka.IntensityTier''), NaN)');
+itSample = itRead('demo/maminka.IntensityTier');
+it = itCut(itSample, 0.3);
+expect_equal({it.tmin, it.tmax, length(it.t), length(it.i), it.t(1), it.t(10), it.t(18), it.i(1), it.i(10), it.i(18)}, ...
+    {0.3, 0.5460771, 18, 18, 0.3016100, 0.4044671, 0.4958957, 70.8841436, 58.2129565, 64.9896327});
+it = itCut(itSample, 0.2, 0.3);
+expect_equal({it.tmin, it.tmax, length(it.t), length(it.i), it.t(1), it.t(4), it.t(8), it.i(1), it.i(4), it.i(8)}, ...
+    {0.2, 0.3, 8, 8, 0.2101814, 0.2444671, 0.2901814, 71.6253944, 71.1700598, 69.5956455});
+it = itCut(itSample, -Inf, 1);
+expect_equal({it.tmin, it.tmax, length(it.t), length(it.i), it.t(1), it.t(35), it.t(40), it.i(1), it.i(35), it.i(40)}, ...
+    {0, 1, 40, 40, 0.05018141, 0.43875283, 0.49589569, 59.57159039, 64.97294548, 64.98963270});
+it = itCut(itSample, -1, 1);
+expect_equal({it.tmin, it.tmax, length(it.t), length(it.i), it.t(1), it.t(35), it.t(40), it.i(1), it.i(35), it.i(40)}, ...
+    {-1, 1, 40, 40, 0.05018141, 0.43875283, 0.49589569, 59.57159039, 64.97294548, 64.98963270});
+expect_error('itCut(itRead(''demo/maminka.IntensityTier''), 0.3, 0.2)');
+
+disp('itCut0')
+expect_error('itCut0(itRead(''demo/maminka.IntensityTier''), [])');
+expect_error('itCut0(itRead(''demo/maminka.IntensityTier''), NaN)');
+itSample = itRead('demo/maminka.IntensityTier');
+it = itCut0(itSample, 0.3);
+expect_equal({it.tmin, it.tmax, length(it.t), length(it.i), it.t(1), it.t(10), it.t(18), it.i(1), it.i(10), it.i(18)}, ...
+    {0, 0.2460771, 18, 18, 0.001609977, 0.104467120, 0.195895692, 70.8841436, 58.2129565, 64.9896327});
+it = itCut0(itSample, 0.2, 0.3);
+expect_equal({it.tmin, it.tmax, length(it.t), length(it.i), it.t(1), it.t(4), it.t(8), it.i(1), it.i(4), it.i(8)}, ...
+    {0, 0.1, 8, 8, 0.01018141, 0.04446712, 0.09018141, 71.62539439, 71.17005977, 69.59564547});
+it = itCut0(itSample, -Inf, 1);
+expect_equal({it.tmin, it.tmax, length(it.t), length(it.i), it.t(1), it.t(35), it.t(40), it.i(1), it.i(35), it.i(40)}, ...
+    {0, 1, 40, 40, 0.05018141, 0.43875283, 0.49589569, 59.57159039, 64.97294548, 64.98963270});
+it = itCut0(itSample, -1, 1);
+expect_equal({it.tmin, it.tmax, length(it.t), length(it.i), it.t(1), it.t(35), it.t(40), it.i(1), it.i(35), it.i(40)}, ...
+    {0, 2, 40, 40, 1.050181, 1.438753, 1.495896, 59.57159039, 64.97294548, 64.98963270});
+expect_error('itCut0(itRead(''demo/maminka.IntensityTier''), 0.3, 0.2)');
+
+
+
 disp('TextGrid')
 
 disp('tgRead')
@@ -502,6 +601,29 @@ p = pitchRead('demo/sound.Pitch');
 p2 = pitchRead('demo/sound_short.Pitch');
 p3 = pitchRead('demo/sound_UTF16.Pitch', 'UTF-16');
 expect_equal({isequal(p, p2), isequal(p, p3)}, {true, true});
+
+
+
+disp('Collection')
+
+disp('colRead')
+c1 = colRead('demo/coll_short.Collection');
+it = itRead('demo/1.IntensityTier');
+pitch = pitchRead('demo/sound.Pitch');
+pt = ptRead('demo/H.PitchTier');
+tg = tgRead('demo/HC101bA.TextGrid');
+
+expect_equal({length(c1), c1{1}.type, c1{1}.name, c1{2}.type, c1{2}.name, c1{3}.type, c1{3}.name, c1{4}.type, c1{4}.name}, ...
+    {4, 'IntensityTier', '1', 'TextGrid', 'HC101bA', 'Pitch 1', 'sound_short', 'PitchTier', 'H_shortTextFile'});
+expect_equal([isequal(c1{1}.t, it.t), isequal(c1{1}.i, it.i), isequal(c1{1}.tmin, it.tmin), isequal(c1{1}.tmax, it.tmax), ...
+          isequal(length(c1{2}.tier), length(tg.tier)), isequal(c1{2}.tier{1}, tg.tier{1}), isequal(c1{2}.tier{2}, tg.tier{2}), isequal(c1{2}.tier{3}, tg.tier{3}), isequal(c1{2}.tier{4}, tg.tier{4}), ...
+          isequal(c1{3}.xmin, pitch.xmin), isequal(c1{3}.xmax, pitch.xmax), isequal(c1{3}.nx, pitch.nx), isequal(c1{3}.dx, pitch.dx), ...
+                   isequal(c1{3}.x1, pitch.x1), isequal(c1{3}.t, pitch.t), isequal(c1{3}.ceiling, pitch.ceiling), isequal(c1{3}.maxnCandidates, pitch.maxnCandidates), isequal(c1{3}.frame, pitch.frame), ...
+          isequal(c1{4}.t, pt.t), isequal(c1{4}.f, pt.f), isequal(c1{4}.tmin, pt.tmin), isequal(c1{4}.tmax, pt.tmax)], ...
+          [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]);
+c1 = colRead('demo/coll_short.Collection');
+c2 = colRead('demo/coll_text.Collection');
+expect_equal(isequal(c1, c2), true);
 
 
 

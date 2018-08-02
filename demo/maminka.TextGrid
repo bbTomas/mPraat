@@ -1,0 +1,68 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0 
+xmax = 0.546090377430771 
+tiers? <exists> 
+size = 2 
+item []: 
+    item [1]:
+        class = "IntervalTier" 
+        name = "slovo" 
+        xmin = 0 
+        xmax = 0.546090377430771 
+        intervals: size = 3 
+        intervals [1]:
+            xmin = 0 
+            xmax = 0.03628198419046047 
+            text = "" 
+        intervals [2]:
+            xmin = 0.03628198419046047 
+            xmax = 0.515747428115362 
+            text = "maminka" 
+        intervals [3]:
+            xmin = 0.515747428115362 
+            xmax = 0.546090377430771 
+            text = "" 
+    item [2]:
+        class = "IntervalTier" 
+        name = "segment" 
+        xmin = 0 
+        xmax = 0.546090377430771 
+        intervals: size = 9 
+        intervals [1]:
+            xmin = 0 
+            xmax = 0.03628198419046047 
+            text = "" 
+        intervals [2]:
+            xmin = 0.03628198419046047 
+            xmax = 0.08505947190203766 
+            text = "m" 
+        intervals [3]:
+            xmin = 0.08505947190203766 
+            xmax = 0.1627718786526584 
+            text = "a" 
+        intervals [4]:
+            xmin = 0.1627718786526584 
+            xmax = 0.22048282700356525 
+            text = "m" 
+        intervals [5]:
+            xmin = 0.22048282700356525 
+            xmax = 0.2836578447091789 
+            text = "i" 
+        intervals [6]:
+            xmin = 0.2836578447091789 
+            xmax = 0.3753529019038413 
+            text = "n" 
+        intervals [7]:
+            xmin = 0.3753529019038413 
+            xmax = 0.4352202374746894 
+            text = "k" 
+        intervals [8]:
+            xmin = 0.4352202374746894 
+            xmax = 0.5158108815123703 
+            text = "a" 
+        intervals [9]:
+            xmin = 0.5158108815123703 
+            xmax = 0.546090377430771 
+            text = "" 
