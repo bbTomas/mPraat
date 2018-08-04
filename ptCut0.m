@@ -4,8 +4,8 @@ function ptNew = ptCut0(pt, tStart, tEnd)
 % Cut the specified interval from the PitchTier and shift time so that the new tmin = 0
 %
 % pt      ... PitchTier object
-% tStart  ... [optional] beginning time of interval to be cut (default -Inf = cut from the tMin of the PitchTier)
-% tEnd    ... final time of interval to be cut (default Inf = cut to the tMax of the PitchTier)
+% tStart  ... [optional] beginning time of interval to be cut (default -Inf = cut from the tmin of the PitchTier)
+% tEnd    ... [optional] final time of interval to be cut (default Inf = cut to the tmax of the PitchTier)
 % 
 % v1.0, Tomas Boril, borilt@gmail.com
 %

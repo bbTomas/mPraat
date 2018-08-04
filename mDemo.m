@@ -134,6 +134,15 @@ meanDur = mean( dur )
 
 figure, hist(dur)
 
+
+%% Cut TextGrid
+tg = tgRead('demo/H.TextGrid');
+figure
+tgPlot(tgCut(tg, 2, 2.2)); % preserve times
+figure
+tgPlot(tgCut0(tg, 2, 2.2)); % time from 0
+
+
 %% Find labels in TextGrid: find label 'n' in phoneme tier (Point tier)
 tg = tgRead('demo/H_plain.TextGrid');
 i = tgFindLabels(tg, 'phoneme', 'n')   % get result indices

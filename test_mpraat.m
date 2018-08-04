@@ -582,6 +582,83 @@ expect_equal({length(tg2.tier), tg2.tier{1}.name, length(tg2.tier{tgI(tg2, 'syll
     {6, 'syll', 0, 21, true, 0.008, true, 'interval'});
 
 
+disp('tgCut')
+expect_error('tgCut(tgRead(''demo/maminka.TextGrid''), 3, 2)');
+
+tg = tgRead('demo/cut.TextGrid');
+tg1 = tgRead('demo/0.5-4p.TextGrid');
+tg2 = tgCut(tg, 0.5, 4);
+expect_equal(isequal(tg1, tg2), true);
+
+tg1 = tgRead('demo/1.25-3.75p.TextGrid');
+tg2 = tgCut(tg, 1.25, 3.75);
+expect_equal(isequal(tg1, tg2), true);
+
+tg1 = tgRead('demo/1.5-3.5p.TextGrid');
+tg2 = tgCut(tg, 1.5, 3.5);
+expect_equal(isequal(tg1, tg2), true);
+
+tg1 = tgRead('demo/1-4p.TextGrid');
+tg2 = tgCut(tg, 1, 4);
+expect_equal(isequal(tg1, tg2), true);
+
+tg1 = tgRead('demo/-1-6p.TextGrid');
+tg2 = tgCut(tg, -1, 6);
+expect_equal(isequal(tg1, tg2), true);
+
+tg1 = tgRead('demo/0-3p.TextGrid');
+tg2 = tgCut(tg, -Inf, 3);
+expect_equal(isequal(tg1, tg2), true);
+
+tg1 = tgRead('demo/3-5p.TextGrid');
+tg2 = tgCut(tg, 3);
+expect_equal(isequal(tg1, tg2), true);
+
+tg2 = tgCut(tg, -Inf, -1);
+expect_equal([tgGetStartTime(tg2), tgGetEndTime(tg2)], [-1, -1]);
+
+tg2 = tgCut(tg, 6);
+expect_equal([tgGetStartTime(tg2), tgGetEndTime(tg2)], [6, 6]);
+
+
+disp('tgCut0')
+expect_error('tgCut0(tgRead(''demo/maminka.TextGrid''), 3, 2)');
+
+tg = tgRead('demo/cut.TextGrid');
+tg1 = tgRead('demo/0.5-4.TextGrid');
+tg2 = tgCut0(tg, 0.5, 4);
+expect_equal(isequal(tg1, tg2), true);
+
+tg1 = tgRead('demo/1.25-3.75.TextGrid');
+tg2 = tgCut0(tg, 1.25, 3.75);
+expect_equal(isequal(tg1, tg2), true);
+
+tg1 = tgRead('demo/1.5-3.5.TextGrid');
+tg2 = tgCut0(tg, 1.5, 3.5);
+expect_equal(isequal(tg1, tg2), true);
+
+tg1 = tgRead('demo/1-4.TextGrid');
+tg2 = tgCut0(tg, 1, 4);
+expect_equal(isequal(tg1, tg2), true);
+
+tg1 = tgRead('demo/-1-6.TextGrid');
+tg2 = tgCut0(tg, -1, 6);
+expect_equal(isequal(tg1, tg2), true);
+
+tg1 = tgRead('demo/0-3.TextGrid');
+tg2 = tgCut0(tg, -Inf, 3);
+expect_equal(isequal(tg1, tg2), true);
+
+tg1 = tgRead('demo/3-5.TextGrid');
+tg2 = tgCut0(tg, 3);
+expect_equal(isequal(tg1, tg2), true);
+
+tg2 = tgCut0(tg, -Inf, -1);
+expect_equal([tgGetStartTime(tg2), tgGetEndTime(tg2)], [0, 0]);
+
+tg2 = tgCut0(tg, 6);
+expect_equal([tgGetStartTime(tg2), tgGetEndTime(tg2)], [0, 0]);
+
 
 
 disp('Pitch')
