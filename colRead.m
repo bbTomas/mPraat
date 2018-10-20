@@ -2,7 +2,7 @@ function collection = colRead(fileName, encoding)
 % function collection = colRead(fileName, encoding)
 %
 % Loads Collection from Praat in Text or Short text format.
-% Collection may contain combination of TextGrids, PitchTiers, Pitch objects, and IntensityTiers.
+% Collection may contain combination of TextGrids, PitchTiers, Pitch and Formant objects, and IntensityTiers.
 %
 % fileName ... Input file name
 % encoding ... File encoding (default: 'UTF-8'), 'auto' for auto-detect of Unicode encoding
@@ -29,7 +29,7 @@ function collection = colRead(fileName, encoding)
 %   pitch = coll{3}; % 3rd object
 %   pitch.nx         % number of frames
 %   pitch.t(4)       % time instance of the 4th frame
-%   pitch.frame{4}   % th frame: pitch candidates
+%   pitch.frame{4}   % 4th frame: pitch candidates
 %   pitch.frame{4}.frequency(2)
 %   pitch.frame{4}.strength(2)
 %
@@ -37,6 +37,15 @@ function collection = colRead(fileName, encoding)
 %   coll{4}.name  % 4th object name
 %   pt = coll{4}; % 4th object
 %   ptPlot(pt)
+%
+%   coll{5}.type  % 5th object type
+%   coll{5}.name  % 5th object name
+%   formant = coll{5}; % 5th object
+%   formant.nx         % number of frames
+%   formant.t(4)       % time instance of the 4th frame
+%   formant.frame{4}   % 4th frame: formants
+%   formant.frame{4}.frequency(2)
+%   formant.frame{4}.bandwidth(2)
 %
 if nargin < 2
     encoding = 'UTF-8';
@@ -83,6 +92,8 @@ for s = 1:nobjects
         class = 'IntensityTier';
     elseif ~isempty(strfind(r, 'Pitch 1'))
         class = 'Pitch 1';
+    elseif ~isempty(strfind(r, 'Formant 2'))
+        class = 'Formant 2';
     elseif ~isempty(strfind(r, 'Sound'))
         error(['Sound files are currently not supported, because of their inefficient loading and saving duration, rather use WAVE files'])
     else
@@ -98,6 +109,8 @@ for s = 1:nobjects
             [object, fid] = itRead(fid);
         case 'Pitch 1'
             [object, fid] = pitchRead(fid);
+        case 'Formant 2'
+            [object, fid] = formantRead(fid);
     end % end switch case
     object.type = class;
     object.name = name;

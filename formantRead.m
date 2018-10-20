@@ -1,40 +1,38 @@
-function [p, fid] = pitchRead(fileName, encoding)
-% function p = pitchRead(fileName, encoding)
+function [f, fid] = formantRead(fileName, encoding)
+% function f = formantRead(fileName, encoding)
 %
-% Reads Pitch object from Praat. Supported formats: text file, short text file.
+% Reads Formant object from Praat. Supported formats: text file, short text file.
 %
-% fileName ... file name of Pitch object
+% fileName ... file name of Formant object
 % encoding ... [optional, default: 'UTF-8'] file encoding, 'auto' for Unicode
 %              standard autodetection
 %
-% Returns: A Pitch object represents periodicity candidates as a function of time.
-%   [ref: Praat help, http://www.fon.hum.uva.nl/praat/manual/Pitch.html]
+% Returns: A Formant object represents formants as a function of time.
+%   [ref: Praat help, http://www.fon.hum.uva.nl/praat/manual/Formant.html]
 %   p.xmin ... start time (seconds)
 %   p.xmax ... end time (seconds)
 %   p.nx   ... number of frames
 %   p.dx   ... time step = frame duration (seconds)
 %   p.x1   ... time associated with the first frame (seconds)
 %   p.t    ... vector of time instances associated with all frames
-%   p.ceiling        ... a frequency above which a candidate is considered  voiceless (Hz)
-%   p.maxnCandidates ... maximum number of candidates in frame
+%   p.maxnFormants ... maximum number of formants in frame
 %   p.frame{1} to p.frame{p.nx} ... frames
 %      p.frame{1}.intensity   ... intensity of the frame
-%      p.frame{1}.nCandidates ... actual number of candidates in this frame
-%      p.frame{1}.frequency ... vector of candidates' frequency (in Hz)
-%                               (for a voiced candidate), or 0 (for an unvoiced candidate)
-%      p.frame{1}.strength  ... vector of degrees of periodicity of candidates (between 0 and 1)
+%      p.frame{1}.nCandidates ... actual number of formants in this frame
+%      p.frame{1}.frequency ... vector of formant frequencies (in Hz)
+%      p.frame{1}.bandwidth ... vector of formant bandwidths (in Hz)
 %
 % Tomas Boril, borilt@gmail.com + Pol van Rijn
 %
 % Example
-%   p = pitchRead('demo/sound.Pitch');
-%   p
-%   p.t(4)      % time instance of the 4th frame
-%   p.frame{4}  % 4th frame: pitch candidates
-%   p.frame{4}.frequency(2)
-%   p.frame{4}.strength(2)
+%   f = formantRead('demo/maminka.Formant');
+%   f
+%   f.t(4)      % time instance of the 4th frame
+%   f.frame{4}  % 4th frame: formants
+%   f.frame{4}.frequency(2)
+%   f.frame{4}.bandwidth(2)
 
-p = [];
+f = [];
 
 if ~isnumeric(fileName)
     if nargin < 2
@@ -57,21 +55,21 @@ end
 if strcmp(r, 'File type = "ooTextFile"')  % TextFile or shortTextFile
     if ~isnumeric(fileName)
         r = fgetl(fid);  % 2.
-        if ~strcmp(r, 'Object class = "Pitch 1"')
+        if ~strcmp(r, 'Object class = "Formant 2"')
             fclose(fid);
-            error('Unknown Pitch format.')
+            error('Unknown Formant format.')
         end
         
         r = fgetl(fid);  % 3.
         if ~strcmp(r, '')
             fclose(fid);
-            error('Unknown Pitch format.')
+            error('Unknown Formant format.')
         end
         
         r = fgetl(fid);  % 4.
         if length(r) < 1
             fclose(fid);
-            error('Unknown Pitch format.')
+            error('Unknown Formant format.')
         end
     else
         % if a collection
@@ -88,45 +86,43 @@ if strcmp(r, 'File type = "ooTextFile"')  % TextFile or shortTextFile
         r = fgetl(fid);  % 8.
         x1 = getNumberInLine(r);
         r = fgetl(fid);  % 9.
-        ceiling = getNumberInLine(r);
-        r = fgetl(fid);  % 10.
-        maxnCandidates = getNumberInLine(r);
+        maxnFormants = getNumberInLine(r);
         
         frame = cell(1, nx);
         
         r = fgetl(fid);  % 11.
-        if isempty(strfind(r, 'frame []: '))
+        if isempty(strfind(r, 'frames []: '))
             fclose(fid);
-            error('Unknown Pitch format.')
+            error('Unknown Formant format.')
         end
 
         for I = 1: nx
             r = fgetl(fid);
-            if isempty(strfind(r, ['    frame [' num2str(I) ']:']))
+            if isempty(strfind(r, ['    frames [' num2str(I) ']:']))
                 fclose(fid);
-                error(['Unknown Pitch format, wrong frame id (' num2str(I) ').'])
+                error(['Unknown Formant format, wrong frame id (' num2str(I) ').'])
             end
             r = fgetl(fid);
             frame{I}.intensity = getNumberInLine(r);
             r = fgetl(fid);
-            frame{I}.nCandidates = getNumberInLine(r);
+            frame{I}.nFormants = getNumberInLine(r);
             r = fgetl(fid);
-            if isempty(strfind(r, '        candidate []: '))
+            if isempty(strfind(r, '        formant []: '))
                 fclose(fid);
-                error('Unknown Pitch format.')
+                error('Unknown Formant format.')
             end
-            frame{I}.frequency = nan(1, frame{I}.nCandidates);
-            frame{I}.strength = nan(1, frame{I}.nCandidates);
-            for Ic = 1: frame{I}.nCandidates
+            frame{I}.frequency = nan(1, frame{I}.nFormants);
+            frame{I}.bandwidth = nan(1, frame{I}.nFormants);
+            for If = 1: frame{I}.nFormants
                 r = fgetl(fid);
-                if isempty(strfind(r, ['            candidate [' num2str(Ic) ']:']))
+                if isempty(strfind(r, ['            formant [' num2str(If) ']:']))
                     fclose(fid);
-                    error(['Unknown Pitch format, wrong candidate nr. (' num2str(Ic) ') in frame id (' num2str(I) ').'])
+                    error(['Unknown Formant format, wrong candidate nr. (' num2str(If) ') in frame id (' num2str(I) ').'])
                 end
                 r = fgetl(fid);
-                frame{I}.frequency(Ic) = getNumberInLine(r);
+                frame{I}.frequency(If) = getNumberInLine(r);
                 r = fgetl(fid);
-                frame{I}.strength(Ic) = getNumberInLine(r);
+                frame{I}.bandwidth(If) = getNumberInLine(r);
             end
         end
         if ~isnumeric(fileName)
@@ -144,9 +140,7 @@ if strcmp(r, 'File type = "ooTextFile"')  % TextFile or shortTextFile
         r = fgetl(fid);  % 8.
         x1 = str2double(r);
         r = fgetl(fid);  % 9.
-        ceiling = str2double(r);
-        r = fgetl(fid);  % 10.
-        maxnCandidates = str2double(r);
+        maxnFormants = str2double(r);
         
         frame = cell(1, nx);
         
@@ -154,14 +148,14 @@ if strcmp(r, 'File type = "ooTextFile"')  % TextFile or shortTextFile
             r = fgetl(fid);
             frame{I}.intensity = str2double(r);
             r = fgetl(fid);
-            frame{I}.nCandidates = str2double(r);
-            frame{I}.frequency = nan(1, frame{I}.nCandidates);
-            frame{I}.strength = nan(1, frame{I}.nCandidates);
-            for Ic = 1: frame{I}.nCandidates
+            frame{I}.nFormants = str2double(r);
+            frame{I}.frequency = nan(1, frame{I}.nFormants);
+            frame{I}.bandwidth = nan(1, frame{I}.nFormants);
+            for If = 1: frame{I}.nFormants
                 r = fgetl(fid);
-                frame{I}.frequency(Ic) = str2double(r);
+                frame{I}.frequency(If) = str2double(r);
                 r = fgetl(fid);
-                frame{I}.strength(Ic) = str2double(r);
+                frame{I}.bandwidth(If) = str2double(r);
             end
         end
         if ~isnumeric(fileName)
@@ -171,15 +165,14 @@ if strcmp(r, 'File type = "ooTextFile"')  % TextFile or shortTextFile
     
 else   % unknown format
     fclose(fid);
-    error('Unknown Pitch format.')
+    error('Unknown Formant format.')
 end
 
-p.xmin = xmin;
-p.xmax = xmax;
-p.nx = nx;
-p.dx = dx;
-p.x1 = x1;
-p.t = (0: (nx-1))*dx + x1;
-p.ceiling = ceiling;
-p.maxnCandidates = maxnCandidates;
-p.frame = frame;
+f.xmin = xmin;
+f.xmax = xmax;
+f.nx = nx;
+f.dx = dx;
+f.x1 = x1;
+f.t = (0: (nx-1))*dx + x1;
+f.maxnFormants = maxnFormants;
+f.frame = frame;

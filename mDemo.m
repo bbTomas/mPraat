@@ -322,6 +322,15 @@ p.frame{4}  % 4th frame: pitch candidates
 p.frame{4}.frequency(2)
 p.frame{4}.strength(2)
 
+%% Formant object
+% A Formant object represents formant frequencies and bandwidths as a function of time.
+f = formantRead('demo/maminka.Formant');
+f
+f.t(4)      % time instance of the 4th frame
+f.frame{4}  % 4th frame: formants
+f.frame{4}.frequency(2)
+f.frame{4}.bandwidth(2)
+
 %% IntensityTier
 % Intensity tier files have very similar structure to PitchTiers. Using this toolbox, you can also interpolate, cut or model Intensity tiers with Legendre polynomials.
 it = itRead('demo/maminka.IntensityTier');
