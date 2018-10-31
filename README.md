@@ -1,3 +1,6 @@
+mPraat toolbox for Matlab
+=========================
+
 mPraat toolbox for Matlab constitutes an interface between the most
 popular software for phonetic analyses, Praat, and Matlab.
 
