@@ -2,7 +2,7 @@
 
 %% mPraat and rPraat homepage
 % rPraat and mPraat homepage:
-% <http://fu.ff.cuni.cz/praat/>
+% <https://fu.ff.cuni.cz/praat/>
 % 
 % Toolbox mPraat at github:
 % <https://github.com/bbTomas/mPraat>
@@ -13,13 +13,13 @@
 % *Boøil, T., & Skarnitzl, R. (2016). Tools rPraat and mPraat. In P. Sojka, A. Horák, I. Kopeèek, & K. Pala (Eds.), Text, Speech, and Dialogue (pp. 367–374). Springer International Publishing.*
 %
 % Download Tools rPraat and mPraat manuscript .pdf:
-% <http://fu.ff.cuni.cz/praat/boril_skarnitzl_2016_Tools_rPraat_and_mPraat_[manuscript].pdf>
+% <https://fu.ff.cuni.cz/praat/boril_skarnitzl_2016_Tools_rPraat_and_mPraat_[manuscript].pdf>
 %
 % The final publication is available at Springer via
-% <http://dx.doi.org/10.1007/978-3-319-45510-5_42>
+% <https://dx.doi.org/10.1007/978-3-319-45510-5_42>
 %
 % Download BibTeX reference mpraatrpraat2016.bib:
-% <http://fu.ff.cuni.cz/praat/mpraatrpraat2016.bib>
+% <https://fu.ff.cuni.cz/praat/mpraatrpraat2016.bib>
 
 
 
